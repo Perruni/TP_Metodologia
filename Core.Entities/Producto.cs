@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 /*Notas:
  * ID de producto
  * Nombre
- * 
+ * Estado
  */
 
 

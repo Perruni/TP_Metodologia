@@ -11,7 +11,7 @@ using System.Threading.Tasks;
  * Ofertas
  * Precio base
  * Ver como cargar imagenes(Importante)
- * Estado del producto
+ * Estado de la subasta
  * Descripción
  * Cantidad
  * 
