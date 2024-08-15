@@ -14,5 +14,7 @@ namespace Core.Entities
 {
     internal class Oferta
     {
+        public int idOferta { get; set; }
+
     }
 }

@@ -23,6 +23,15 @@ namespace Core.Entities
 {
     internal class Subastas
     {
+        public int idSubasta {  get; set; }
+        public string titulo { get; set; }
+        public DateTime fechaInicio { get; set; }
+        public DateTime fechaFinalizado { get; set; }
+        public int ofertas { get; set; }
+        public double precioBase { get; set; }
+        public bool estadoSubasta { get; set; }
+        public string descripcion {  get; set; }
+        public int cantidadProduct {  get; set; }
 
     }
 }
