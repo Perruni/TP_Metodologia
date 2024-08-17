@@ -25,7 +25,7 @@ namespace Core.Entities
 
         public int dni { get; set; }
 
-        public string email { get; set; }
+        public string email { get; set; }.
 
     }
 }
