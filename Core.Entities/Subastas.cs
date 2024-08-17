@@ -32,6 +32,8 @@ namespace Core.Entities
         public bool estadoSubasta { get; set; }
         public string descripcion {  get; set; }
         public int cantidadProduct {  get; set; }
+        public int usuario_creador { get; set; }
+
 
     }
 }

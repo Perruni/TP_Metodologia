@@ -18,5 +18,6 @@ namespace Core.Entities
         public int idProducto { get; set; }
         public string nombreProducto {  get; set; }
         public bool estadoProducto {  get; set; }
+
     }
 }

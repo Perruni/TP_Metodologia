@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace Core.Entities
 
     internal class Gestion_Subasta
     {
+
+        public virtual ICollection<Subastas> Subastas_Pendientes { get; set; } = new List<Subastas>();
+        public virtual ICollection<Subastas> Subastas_Aprobadas { get; set; }= new List<Subastas>();
         
     }
 }

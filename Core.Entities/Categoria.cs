@@ -17,5 +17,7 @@ namespace Core.Entities
     {
         public string nombreCategoria {  get; set; }
 
+        public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
+
     }
 }
