@@ -15,5 +15,7 @@ namespace Core.Entities
 {
     internal class Categoria
     {
+        public string nombreCategoria {  get; set; }
+
     }
 }

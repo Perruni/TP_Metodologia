@@ -17,5 +17,15 @@ namespace Core.Entities
 {
     internal class Usuarios
     {
+
+        public int usuariosId { get; set; }
+        public string nombreUsuario { get; set; }
+
+        public string apellidoUsuario { get; set; }
+
+        public int dni { get; set; }
+
+        public string email { get; set; }.
+
     }
 }

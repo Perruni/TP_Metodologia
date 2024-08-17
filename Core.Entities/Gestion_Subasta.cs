@@ -19,5 +19,6 @@ namespace Core.Entities
 
     internal class Gestion_Subasta
     {
+        
     }
 }
