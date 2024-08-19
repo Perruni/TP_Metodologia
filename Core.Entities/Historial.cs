@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +16,7 @@ namespace Core.Entities
 {
     internal class Historial
     {
-
+        
         public virtual ICollection<Subastas> Subastas_Creadas { get; set; } = new List<Subastas>();
 
         public virtual ICollection<Subastas> Subastas_Ofertadas { get; set; } = new List<Subastas>();

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,7 @@ namespace Core.Entities
 {
     internal class Subastas
     {
+        [Key]
         public int SubastaID {  get; set; }
         public string titulo { get; set; }
         public DateTime fechaInicio { get; set; }
@@ -33,7 +36,10 @@ namespace Core.Entities
         public string descripcion {  get; set; }
         public int cantidadProduct {  get; set; }
         public int usuario_creador { get; set; }
+        public int productoID { get; set; }
 
+        /*[ForeignKey]
+        public int oferta_ID { get; set; }*/
 
     }
 }

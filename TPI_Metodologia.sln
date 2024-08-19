@@ -7,15 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiApp", "MauiApp1\MauiApp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1EEE5E43-E05E-4AB3-A5D6-92D3D4C1ADCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Entities", "Core.Entities\Core.Entities.csproj", "{F0F1DF7F-895E-4A10-9515-D1B9E5213EF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Entities", "Core.Entities\Core.Entities.csproj", "{F0F1DF7F-895E-4A10-9515-D1B9E5213EF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Busisness", "Core.Busisness\Core.Busisness.csproj", "{7DD2E91D-D1CA-42B9-AB0C-C4889B61A13A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Busisness", "Core.Busisness\Core.Busisness.csproj", "{7DD2E91D-D1CA-42B9-AB0C-C4889B61A13A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Data", "Core.Data\Core.Data.csproj", "{11F8A8D0-36E4-4C0E-BB43-F4C658EE11E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Data", "Core.Data\Core.Data.csproj", "{11F8A8D0-36E4-4C0E-BB43-F4C658EE11E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Configuration", "Core.Configuration\Core.Configuration.csproj", "{FBED0704-7814-4876-9894-D1D1C67A0955}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Configuration", "Core.Configuration\Core.Configuration.csproj", "{FBED0704-7814-4876-9894-D1D1C67A0955}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master_API", "Master_API\Master_API.csproj", "{C58CD50A-0EE2-4F11-B664-433F4E71FC40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master_API", "Master_API\Master_API.csproj", "{C58CD50A-0EE2-4F11-B664-433F4E71FC40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_Subasta", "Web_Subasta\Web_Subasta.csproj", "{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{C58CD50A-0EE2-4F11-B664-433F4E71FC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C58CD50A-0EE2-4F11-B664-433F4E71FC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C58CD50A-0EE2-4F11-B664-433F4E71FC40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
