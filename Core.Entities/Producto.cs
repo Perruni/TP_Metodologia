@@ -15,7 +15,7 @@ namespace Core.Entities
 {
     internal class Producto
     {
-        public int idProducto { get; set; }
+        public int ProductoID { get; set; }
         public string nombreProducto {  get; set; }
         public bool estadoProducto {  get; set; }
 
