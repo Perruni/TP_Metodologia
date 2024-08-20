@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -20,7 +21,8 @@ namespace Core.Entities
 
     internal class Gestion_Subasta
     {
-
+        [Key]
+        public int GestorID { get; set; }
         public virtual ICollection<Subastas> Subastas_Pendientes { get; set; } = new List<Subastas>();
         public virtual ICollection<Subastas> Subastas_Aprobadas { get; set; }= new List<Subastas>();
         

@@ -16,7 +16,8 @@ namespace Core.Entities
 {
     internal class Historial
     {
-        
+        [Key]
+        public int HistorialID { get; set; }
         public virtual ICollection<Subastas> Subastas_Creadas { get; set; } = new List<Subastas>();
 
         public virtual ICollection<Subastas> Subastas_Ofertadas { get; set; } = new List<Subastas>();
