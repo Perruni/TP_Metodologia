@@ -7,5 +7,6 @@ namespace Master_API.Controllers
     [ApiController]
     public class SubastaController : ControllerBase
     {
+        
     }
 }
