@@ -15,15 +15,15 @@ using System.Threading.Tasks;
 namespace Core.Entities
 {
     [Table("Historial")]
-    internal class Historial
+    public class Historial
     {
         [Key]
         public int HistorialID { get; set; }
-        public virtual ICollection<Subastas> Subastas_Creadas { get; set; } = new List<Subastas>();
+        public virtual ICollection<Subasta> Subastas_Creadas { get; set; } = new List<Subasta>();
 
-        public virtual ICollection<Subastas> Subastas_Ofertadas { get; set; } = new List<Subastas>();
+        public virtual ICollection<Subasta> Subastas_Ofertadas { get; set; } = new List<Subasta>();
 
-        public virtual ICollection<Subastas> Subastas_General { get; set; } = new List<Subastas>();
+        public virtual ICollection<Subasta> Subastas_General { get; set; } = new List<Subasta>();
 
 
     }

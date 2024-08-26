@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Master_API.Controllers
 {
-    [Route("api/[controller]")]
+    /*[Route("api/[controller]")]
     [ApiController]
     public class CategoriaController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace Master_API.Controllers
 
         [HttpPost]
         [Route("")]
-    }
+    }*/
     
 }
 

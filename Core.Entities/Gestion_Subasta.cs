@@ -21,12 +21,12 @@ namespace Core.Entities
      */
 
     [Table("Gestor_Subastas")]
-    internal class Gestion_Subasta
+    public class Gestion_Subasta
     {
         [Key]
         public int GestorID { get; set; }
-        public virtual ICollection<Subastas> Subastas_Pendientes { get; set; } = new List<Subastas>();
-        public virtual ICollection<Subastas> Subastas_Aprobadas { get; set; }= new List<Subastas>();
+        public virtual ICollection<Subasta> Subastas_Pendientes { get; set; } = new List<Subasta>();
+        public virtual ICollection<Subasta> Subastas_Aprobadas { get; set; }= new List<Subasta>();
         
     }
 }

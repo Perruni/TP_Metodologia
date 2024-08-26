@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Master_API.Controllers
 {
-    [Route("api/[controller]")]
+    /*[Route("api/[controller]")]
     [ApiController]
     public class ProductoController : ControllerBase
     {
@@ -20,5 +20,5 @@ namespace Master_API.Controllers
 
             return product;
         }
-    }
+    }*/
 }

@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 namespace Core.Entities
 {
     [Table("Subastas")]
-    internal class Subastas
+    public class Subasta
     {
         [Key]
         public int SubastaID {  get; set; }

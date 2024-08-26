@@ -19,9 +19,13 @@ namespace Core.Data
             _config = config;
         }
 
-        public TPI_DbContext(DbContextOptions<TPI_DbContext> options) : base(options) { }  
-
         public DbSet<Producto> Productos { get; set; }
-        
+        public DbSet<Categoria> Categoriaa { get; set; }
+        public DbSet<Gestion_Subasta> Gestion_Subastas { get; set; }
+        public DbSet<Historial> Historiales { get; set; }
+        public DbSet<Oferta> Ofertas { get; set; }
+        public DbSet<Subasta> Subastas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+
     }
 }

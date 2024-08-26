@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Core.Entities
 {
     [Table("Ofertas")]
-    internal class Oferta
+    public class Oferta
     {
         [Key]
         public int OfertaID { get; set; }

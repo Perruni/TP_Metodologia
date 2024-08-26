@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Core.Entities
 {
     [Table("Usuarios")]
-    internal class Usuarios
+    public class Usuario
     {
 
         [Key]
@@ -27,7 +27,7 @@ namespace Core.Entities
         public string apellidoUsuario { get; set; }
         public int dni { get; set; }
         public string email { get; set; }
+        public float ganancia { get; set; }
         
-
     }
 }
