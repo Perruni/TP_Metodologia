@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    internal class Producto
+    public class Producto
     {
         [Key]
         public int ProductoID { get; set; }
