@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
+    [Table("Historial")]
     internal class Historial
     {
         [Key]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Core.Entities
     Rechazadas(opcional)
      */
 
+    [Table("Gestor_Subastas")]
     internal class Gestion_Subasta
     {
         [Key]

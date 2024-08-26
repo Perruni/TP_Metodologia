@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
+    [Table("Subastas")]
     internal class Subastas
     {
         [Key]

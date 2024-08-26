@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
+    [Table("Usuarios")]
     internal class Usuarios
     {
 
