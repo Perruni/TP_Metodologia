@@ -27,7 +27,6 @@ namespace Core.Data
 
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Categoria> Categoriaa { get; set; }
-        public DbSet<Gestion_Subasta> Gestion_Subastas { get; set; }
         public DbSet<Historial> Historiales { get; set; }
         public DbSet<Oferta> Ofertas { get; set; }
         public DbSet<Subasta> Subastas { get; set; }

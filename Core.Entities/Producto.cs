@@ -20,8 +20,12 @@ namespace Core.Entities
     {
         [Key]
         public int ProductoID { get; set; }
-        public string nombreProducto {  get; set; }
-        public bool estadoProducto {  get; set; }
+        public string nombreProducto { get; set; }
+        public bool estadoProducto { get; set; }
 
+        // Foreign Key a Categoria
+        public int CategoriaID { get; set; }
+        [ForeignKey("CategoriaID")]
+        public virtual Categoria Categoria { get; set; }
     }
 }

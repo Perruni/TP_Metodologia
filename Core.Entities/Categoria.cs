@@ -20,8 +20,9 @@ namespace Core.Entities
     {
         [Key]
         public int CategoriaID { get; set; }
-        public string nombreCategoria {  get; set; }
-        public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
+        public string nombreCategoria { get; set; }
 
+        // Relación uno a muchos con Producto
+        public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
     }
 }

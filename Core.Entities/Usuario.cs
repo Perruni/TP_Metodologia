@@ -20,7 +20,6 @@ namespace Core.Entities
     [Table("Usuarios")]
     public class Usuario
     {
-
         [Key]
         public int UsuarioID { get; set; }
         public string nombreUsuario { get; set; }
@@ -28,6 +27,11 @@ namespace Core.Entities
         public int dni { get; set; }
         public string email { get; set; }
         public float ganancia { get; set; }
-        
+
+        // Relación uno a muchos con Subasta
+        public virtual ICollection<Subasta> SubastasCreadas { get; set; } = new List<Subasta>();
+
+        // Relación uno a muchos con Oferta
+        public virtual ICollection<Oferta> Ofertas { get; set; } = new List<Oferta>();
     }
 }
