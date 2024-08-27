@@ -3,6 +3,7 @@ using Core.Data;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 //Connection String
 var ConnectionString = builder.Configuration.GetConnectionString("Connection");
 
-var connectionString = builder.Configuration.GetConnectionString("connection");
+var connectionString = builder.Configuration.GetConnectionString("Connection");
 
-var config = new Core.Configuration.Config()
+/*var config = new Core.Configuration.Config()
 {
     ConnectionString = connectionString
 };
@@ -22,7 +23,12 @@ var config = new Core.Configuration.Config()
 builder.Services.AddScoped<Config>(p =>
 {
     return config;
-});
+});*/
+
+builder.Services.AddDbContext<TPI_DbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("Connection"),
+        new MySqlServerVersion(new Version(8, 0, 39))));
 
 #endregion
 //Registro de Conexion
@@ -49,3 +55,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

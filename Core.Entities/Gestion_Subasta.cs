@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace Core.Entities
 {
     /*Nota:Se encarga de la verificacion de la subasta, si esta pendiente por aprobar,
-     si ya fue aprobada o si es rechazada(opcional)
+     si ya fue aprobada o si es rechazada(opcional), esto a travez de un atributo de las subasta
+    llamado controlSubasta(1 aprobado, 0 pendiente)
 
     *IMPORTANTE: estos es solo para escritorio y deberia poder filtrar por subasta con mayor oferta
     
@@ -20,10 +21,9 @@ namespace Core.Entities
     Rechazadas(opcional)
      */
 
-    [Table("Gestor_Subastas")]
+   
     public class Gestion_Subasta
-    {
-        [Key]
+    {        
         public int GestorID { get; set; }
         public virtual ICollection<Subasta> Subastas_Pendientes { get; set; } = new List<Subasta>();
         public virtual ICollection<Subasta> Subastas_Aprobadas { get; set; }= new List<Subasta>();

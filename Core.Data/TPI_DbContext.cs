@@ -6,18 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Core.Data
 {
     public class TPI_DbContext : DbContext
     {
 
+        public TPI_DbContext(DbContextOptions<TPI_DbContext> options)
+       : base(options)
+        {
+        }
 
-        private readonly Config _config;
+        /*private readonly Config _config;
+
         public TPI_DbContext(Config config)
         {
             _config = config;
-        }
+        }*/
 
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Categoria> Categoriaa { get; set; }

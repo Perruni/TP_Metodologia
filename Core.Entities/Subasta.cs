@@ -38,7 +38,7 @@ namespace Core.Entities
         public int cantidadProduct {  get; set; }
         public int usuario_creador { get; set; }
         public int productoID { get; set; }
-
+        public int controlSubasta { get; set; }
         /*[ForeignKey]
         public int oferta_ID { get; set; }*/
 
