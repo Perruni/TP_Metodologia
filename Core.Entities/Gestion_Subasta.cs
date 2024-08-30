@@ -9,11 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    /*Nota:Se encarga de la verificacion de la subasta, si esta pendiente por aprobar,
-     si ya fue aprobada o si es rechazada(opcional), esto a travez de un atributo de las subasta
-    llamado controlSubasta(1 aprobado, 0 pendiente)
-
-    *IMPORTANTE: estos es solo para escritorio y deberia poder filtrar por subasta con mayor oferta
+    /*Nota: Esto se encarga de aceptar o no los productos a rematar en las subastas
     
     Deberia tener 3 listas:
     Pendientes

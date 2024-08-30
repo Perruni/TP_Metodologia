@@ -52,6 +52,28 @@ namespace Core.Data.Migrations
                     b.ToTable("Historial");
                 });
 
+            modelBuilder.Entity("Core.Entities.ListaProductos", b =>
+                {
+                    b.Property<int>("IdListaProductos")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdListaProductos"));
+
+                    b.Property<int>("CategoriaID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombreProducto")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("IdListaProductos");
+
+                    b.HasIndex("CategoriaID");
+
+                    b.ToTable("ListaProductos");
+                });
+
             modelBuilder.Entity("Core.Entities.Oferta", b =>
                 {
                     b.Property<int>("OfertaID")
@@ -86,8 +108,15 @@ namespace Core.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ProductoID"));
 
-                    b.Property<int>("CategoriaID")
+                    b.Property<int?>("CategoriaID")
                         .HasColumnType("int");
+
+                    b.Property<int>("IdListaProductos")
+                        .HasColumnType("int");
+
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("estadoProducto")
                         .HasColumnType("tinyint(1)");
@@ -96,9 +125,14 @@ namespace Core.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<double>("precioBase")
+                        .HasColumnType("double");
+
                     b.HasKey("ProductoID");
 
                     b.HasIndex("CategoriaID");
+
+                    b.HasIndex("IdListaProductos");
 
                     b.ToTable("Productos");
                 });
@@ -129,10 +163,6 @@ namespace Core.Data.Migrations
                     b.Property<int>("cantidadProduct")
                         .HasColumnType("int");
 
-                    b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("estadoSubasta")
                         .HasColumnType("tinyint(1)");
 
@@ -144,9 +174,6 @@ namespace Core.Data.Migrations
 
                     b.Property<int>("ofertas")
                         .HasColumnType("int");
-
-                    b.Property<double>("precioBase")
-                        .HasColumnType("double");
 
                     b.Property<string>("titulo")
                         .IsRequired()
@@ -198,6 +225,17 @@ namespace Core.Data.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("Core.Entities.ListaProductos", b =>
+                {
+                    b.HasOne("Core.Entities.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
             modelBuilder.Entity("Core.Entities.Oferta", b =>
                 {
                     b.HasOne("Core.Entities.Subasta", "Subasta")
@@ -219,27 +257,31 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Producto", b =>
                 {
-                    b.HasOne("Core.Entities.Categoria", "Categoria")
+                    b.HasOne("Core.Entities.Categoria", null)
                         .WithMany("Productos")
-                        .HasForeignKey("CategoriaID")
+                        .HasForeignKey("CategoriaID");
+
+                    b.HasOne("Core.Entities.ListaProductos", "ListaProductos")
+                        .WithMany("Productos")
+                        .HasForeignKey("IdListaProductos")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categoria");
+                    b.Navigation("ListaProductos");
                 });
 
             modelBuilder.Entity("Core.Entities.Subasta", b =>
                 {
                     b.HasOne("Core.Entities.Historial", null)
-                        .WithMany("Subastas_Creadas")
+                        .WithMany("Subastas_General")
                         .HasForeignKey("HistorialID");
 
                     b.HasOne("Core.Entities.Historial", null)
-                        .WithMany("Subastas_General")
+                        .WithMany("Subastas_Ofertadas")
                         .HasForeignKey("HistorialID1");
 
                     b.HasOne("Core.Entities.Historial", null)
-                        .WithMany("Subastas_Ofertadas")
+                        .WithMany("Subastas_Rematando")
                         .HasForeignKey("HistorialID2");
 
                     b.HasOne("Core.Entities.Producto", "Producto")
@@ -266,11 +308,16 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Historial", b =>
                 {
-                    b.Navigation("Subastas_Creadas");
-
                     b.Navigation("Subastas_General");
 
                     b.Navigation("Subastas_Ofertadas");
+
+                    b.Navigation("Subastas_Rematando");
+                });
+
+            modelBuilder.Entity("Core.Entities.ListaProductos", b =>
+                {
+                    b.Navigation("Productos");
                 });
 
             modelBuilder.Entity("Core.Entities.Subasta", b =>

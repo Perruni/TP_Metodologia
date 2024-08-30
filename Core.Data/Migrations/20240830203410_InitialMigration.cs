@@ -65,6 +65,28 @@ namespace Core.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "ListaProductos",
+                columns: table => new
+                {
+                    IdListaProductos = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NombreProducto = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CategoriaID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ListaProductos", x => x.IdListaProductos);
+                    table.ForeignKey(
+                        name: "FK_ListaProductos_Categorias_CategoriaID",
+                        column: x => x.CategoriaID,
+                        principalTable: "Categorias",
+                        principalColumn: "CategoriaID",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -73,7 +95,11 @@ namespace Core.Data.Migrations
                     nombreProducto = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     estadoProducto = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CategoriaID = table.Column<int>(type: "int", nullable: false)
+                    descripcion = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    precioBase = table.Column<double>(type: "double", nullable: false),
+                    IdListaProductos = table.Column<int>(type: "int", nullable: false),
+                    CategoriaID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -82,7 +108,12 @@ namespace Core.Data.Migrations
                         name: "FK_Productos_Categorias_CategoriaID",
                         column: x => x.CategoriaID,
                         principalTable: "Categorias",
-                        principalColumn: "CategoriaID",
+                        principalColumn: "CategoriaID");
+                    table.ForeignKey(
+                        name: "FK_Productos_ListaProductos_IdListaProductos",
+                        column: x => x.IdListaProductos,
+                        principalTable: "ListaProductos",
+                        principalColumn: "IdListaProductos",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -98,10 +129,7 @@ namespace Core.Data.Migrations
                     fechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     fechaFinalizado = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ofertas = table.Column<int>(type: "int", nullable: false),
-                    precioBase = table.Column<double>(type: "double", nullable: false),
                     estadoSubasta = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    descripcion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     cantidadProduct = table.Column<int>(type: "int", nullable: false),
                     UsuarioCreadorID = table.Column<int>(type: "int", nullable: false),
                     ProductoID = table.Column<int>(type: "int", nullable: false),
@@ -171,6 +199,11 @@ namespace Core.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ListaProductos_CategoriaID",
+                table: "ListaProductos",
+                column: "CategoriaID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ofertas_SubastaID",
                 table: "Ofertas",
                 column: "SubastaID");
@@ -184,6 +217,11 @@ namespace Core.Data.Migrations
                 name: "IX_Productos_CategoriaID",
                 table: "Productos",
                 column: "CategoriaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Productos_IdListaProductos",
+                table: "Productos",
+                column: "IdListaProductos");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subastas_HistorialID",
@@ -228,6 +266,9 @@ namespace Core.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "ListaProductos");
 
             migrationBuilder.DropTable(
                 name: "Categorias");
