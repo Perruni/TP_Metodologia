@@ -22,7 +22,5 @@ namespace Core.Entities
         public int CategoriaID { get; set; }
         public string nombreCategoria { get; set; }
 
-        // Relación uno a muchos con Producto
-        public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
     }
 }

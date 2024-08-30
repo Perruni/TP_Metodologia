@@ -27,8 +27,8 @@ namespace Core.Entities
         public virtual Usuario Usuario { get; set; }
 
         // Foreign Key a Subasta
-        public int SubastaID { get; set; }
-        [ForeignKey("SubastaID")]
-        public virtual Subasta Subasta { get; set; }
+        public int ProductoID { get; set; }
+        [ForeignKey("ProductoID")]
+        public virtual Producto Producto { get; set; }
     }
 }

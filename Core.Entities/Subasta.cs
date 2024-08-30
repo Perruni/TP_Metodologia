@@ -31,7 +31,6 @@ namespace Core.Entities
         public string titulo { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFinalizado { get; set; }
-        public int ofertas { get; set; }
         public bool estadoSubasta { get; set; }
         public int cantidadProduct { get; set; }
 
@@ -45,8 +44,6 @@ namespace Core.Entities
         [ForeignKey("ProductoID")]
         public virtual Producto Producto { get; set; }
 
-        // Relación uno a muchos con Oferta
-        public virtual ICollection<Oferta> Ofertas { get; set; } = new List<Oferta>();
     }
 }
 

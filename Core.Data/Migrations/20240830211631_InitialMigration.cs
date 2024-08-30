@@ -98,22 +98,45 @@ namespace Core.Data.Migrations
                     descripcion = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     precioBase = table.Column<double>(type: "double", nullable: false),
-                    IdListaProductos = table.Column<int>(type: "int", nullable: false),
-                    CategoriaID = table.Column<int>(type: "int", nullable: true)
+                    ofertas = table.Column<int>(type: "int", nullable: false),
+                    IdListaProductos = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Productos", x => x.ProductoID);
                     table.ForeignKey(
-                        name: "FK_Productos_Categorias_CategoriaID",
-                        column: x => x.CategoriaID,
-                        principalTable: "Categorias",
-                        principalColumn: "CategoriaID");
-                    table.ForeignKey(
                         name: "FK_Productos_ListaProductos_IdListaProductos",
                         column: x => x.IdListaProductos,
                         principalTable: "ListaProductos",
                         principalColumn: "IdListaProductos",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Ofertas",
+                columns: table => new
+                {
+                    OfertaID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    MontoOferta = table.Column<int>(type: "int", nullable: false),
+                    UsuarioID = table.Column<int>(type: "int", nullable: false),
+                    ProductoID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ofertas", x => x.OfertaID);
+                    table.ForeignKey(
+                        name: "FK_Ofertas_Productos_ProductoID",
+                        column: x => x.ProductoID,
+                        principalTable: "Productos",
+                        principalColumn: "ProductoID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ofertas_Usuarios_UsuarioID",
+                        column: x => x.UsuarioID,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuarioID",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -128,7 +151,6 @@ namespace Core.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     fechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     fechaFinalizado = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ofertas = table.Column<int>(type: "int", nullable: false),
                     estadoSubasta = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     cantidadProduct = table.Column<int>(type: "int", nullable: false),
                     UsuarioCreadorID = table.Column<int>(type: "int", nullable: false),
@@ -170,53 +192,20 @@ namespace Core.Data.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "Ofertas",
-                columns: table => new
-                {
-                    OfertaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    MontoOferta = table.Column<int>(type: "int", nullable: false),
-                    UsuarioID = table.Column<int>(type: "int", nullable: false),
-                    SubastaID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ofertas", x => x.OfertaID);
-                    table.ForeignKey(
-                        name: "FK_Ofertas_Subastas_SubastaID",
-                        column: x => x.SubastaID,
-                        principalTable: "Subastas",
-                        principalColumn: "SubastaID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Ofertas_Usuarios_UsuarioID",
-                        column: x => x.UsuarioID,
-                        principalTable: "Usuarios",
-                        principalColumn: "UsuarioID",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateIndex(
                 name: "IX_ListaProductos_CategoriaID",
                 table: "ListaProductos",
                 column: "CategoriaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ofertas_SubastaID",
+                name: "IX_Ofertas_ProductoID",
                 table: "Ofertas",
-                column: "SubastaID");
+                column: "ProductoID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ofertas_UsuarioID",
                 table: "Ofertas",
                 column: "UsuarioID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Productos_CategoriaID",
-                table: "Productos",
-                column: "CategoriaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_IdListaProductos",

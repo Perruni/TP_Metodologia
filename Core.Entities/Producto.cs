@@ -24,6 +24,7 @@ namespace Core.Entities
         public bool estadoProducto { get; set; }
         public string descripcion { get; set; }
         public double precioBase { get; set; }
+        public int ofertas { get; set; }
 
         // Foreign Key a ListaProductos
         public int IdListaProductos { get; set; }

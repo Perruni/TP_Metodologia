@@ -10,5 +10,6 @@ namespace Core.Entities
      *Esto queda a decidir*/
     public class Ganancias
     {
+
     }
 }
