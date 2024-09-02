@@ -24,11 +24,8 @@ builder.Services.AddScoped<Config>(p =>
 {
     return config;
 });*/
+builder.Services.AddDbContext<TPI_DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddDbContext<TPI_DbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("Connection"),
-        new MySqlServerVersion(new Version(8, 0, 39))));
 
 #endregion
 //Registro de Conexion
