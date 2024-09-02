@@ -24,52 +24,72 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Categoria", b =>
                 {
-                    b.Property<int>("CategoriaID")
+                    b.Property<int>("categoriaID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("CategoriaID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("categoriaID"));
 
                     b.Property<string>("nombreCategoria")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("CategoriaID");
+                    b.HasKey("categoriaID");
 
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("Core.Entities.Historial", b =>
+            modelBuilder.Entity("Core.Entities.Factura", b =>
                 {
-                    b.Property<int>("HistorialID")
+                    b.Property<int>("facturaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("HistorialID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("facturaId"));
 
-                    b.HasKey("HistorialID");
-
-                    b.ToTable("Historial");
-                });
-
-            modelBuilder.Entity("Core.Entities.ListaProductos", b =>
-                {
-                    b.Property<int>("IdListaProductos")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("dni")
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("IdListaProductos"));
+                    b.Property<DateTime>("fechaEmision")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<int>("CategoriaID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NombreProducto")
+                    b.Property<string>("metodoPago")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("IdListaProductos");
+                    b.Property<int>("montoOferta")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CategoriaID");
+                    b.Property<int>("tipoFactura")
+                        .HasColumnType("int");
+
+                    b.HasKey("facturaId");
+
+                    b.HasIndex("dni");
+
+                    b.HasIndex("montoOferta");
+
+                    b.ToTable("Facturas");
+                });
+
+            modelBuilder.Entity("Core.Entities.ListaProducto", b =>
+                {
+                    b.Property<int>("idListaProductos")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("idListaProductos"));
+
+                    b.Property<int>("categoriaID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("nombreProducto")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("idListaProductos");
+
+                    b.HasIndex("categoriaID");
 
                     b.ToTable("ListaProductos");
                 });
@@ -82,20 +102,23 @@ namespace Core.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("OfertaID"));
 
-                    b.Property<int>("MontoOferta")
+                    b.Property<int>("estadoOferta")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductoID")
+                    b.Property<int>("montoOferta")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioID")
+                    b.Property<int>("productoID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("usuarioID")
                         .HasColumnType("int");
 
                     b.HasKey("OfertaID");
 
-                    b.HasIndex("ProductoID");
+                    b.HasIndex("productoID");
 
-                    b.HasIndex("UsuarioID");
+                    b.HasIndex("usuarioID");
 
                     b.ToTable("Ofertas");
                 });
@@ -108,15 +131,18 @@ namespace Core.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ProductoID"));
 
-                    b.Property<int>("IdListaProductos")
-                        .HasColumnType("int");
-
                     b.Property<string>("descripcion")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("estadoProducto")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("estadoProducto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("habilitacionProducto")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idListaProductos")
+                        .HasColumnType("int");
 
                     b.Property<string>("nombreProducto")
                         .IsRequired()
@@ -130,33 +156,18 @@ namespace Core.Data.Migrations
 
                     b.HasKey("ProductoID");
 
-                    b.HasIndex("IdListaProductos");
+                    b.HasIndex("idListaProductos");
 
                     b.ToTable("Productos");
                 });
 
             modelBuilder.Entity("Core.Entities.Subasta", b =>
                 {
-                    b.Property<int>("SubastaID")
+                    b.Property<int>("subastaID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("SubastaID"));
-
-                    b.Property<int?>("HistorialID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HistorialID1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HistorialID2")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductoID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsuarioCreadorID")
-                        .HasColumnType("int");
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("subastaID"));
 
                     b.Property<int>("cantidadProduct")
                         .HasColumnType("int");
@@ -170,32 +181,32 @@ namespace Core.Data.Migrations
                     b.Property<DateTime>("fechaInicio")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("productoID")
+                        .HasColumnType("int");
+
                     b.Property<string>("titulo")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("SubastaID");
+                    b.Property<int>("usuarioCreadorID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("HistorialID");
+                    b.HasKey("subastaID");
 
-                    b.HasIndex("HistorialID1");
+                    b.HasIndex("productoID");
 
-                    b.HasIndex("HistorialID2");
-
-                    b.HasIndex("ProductoID");
-
-                    b.HasIndex("UsuarioCreadorID");
+                    b.HasIndex("usuarioCreadorID");
 
                     b.ToTable("Subastas");
                 });
 
             modelBuilder.Entity("Core.Entities.Usuario", b =>
                 {
-                    b.Property<int>("UsuarioID")
+                    b.Property<int>("usuarioID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UsuarioID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("usuarioID"));
 
                     b.Property<string>("apellidoUsuario")
                         .IsRequired()
@@ -203,6 +214,10 @@ namespace Core.Data.Migrations
 
                     b.Property<int>("dni")
                         .HasColumnType("int");
+
+                    b.Property<string>("domicilio")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -215,16 +230,38 @@ namespace Core.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("UsuarioID");
+                    b.Property<int>("roles")
+                        .HasColumnType("int");
+
+                    b.HasKey("usuarioID");
 
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Core.Entities.ListaProductos", b =>
+            modelBuilder.Entity("Core.Entities.Factura", b =>
+                {
+                    b.HasOne("Core.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("dni")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Oferta", "Oferta")
+                        .WithMany()
+                        .HasForeignKey("montoOferta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Oferta");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Core.Entities.ListaProducto", b =>
                 {
                     b.HasOne("Core.Entities.Categoria", "Categoria")
                         .WithMany()
-                        .HasForeignKey("CategoriaID")
+                        .HasForeignKey("categoriaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -235,13 +272,13 @@ namespace Core.Data.Migrations
                 {
                     b.HasOne("Core.Entities.Producto", "Producto")
                         .WithMany()
-                        .HasForeignKey("ProductoID")
+                        .HasForeignKey("productoID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Usuario", "Usuario")
-                        .WithMany("Ofertas")
-                        .HasForeignKey("UsuarioID")
+                        .WithMany()
+                        .HasForeignKey("usuarioID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -252,65 +289,37 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Producto", b =>
                 {
-                    b.HasOne("Core.Entities.ListaProductos", "ListaProductos")
+                    b.HasOne("Core.Entities.ListaProducto", "ListaProducto")
                         .WithMany("Productos")
-                        .HasForeignKey("IdListaProductos")
+                        .HasForeignKey("idListaProductos")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ListaProductos");
+                    b.Navigation("ListaProducto");
                 });
 
             modelBuilder.Entity("Core.Entities.Subasta", b =>
                 {
-                    b.HasOne("Core.Entities.Historial", null)
-                        .WithMany("Subastas_General")
-                        .HasForeignKey("HistorialID");
-
-                    b.HasOne("Core.Entities.Historial", null)
-                        .WithMany("Subastas_Ofertadas")
-                        .HasForeignKey("HistorialID1");
-
-                    b.HasOne("Core.Entities.Historial", null)
-                        .WithMany("Subastas_Rematando")
-                        .HasForeignKey("HistorialID2");
-
                     b.HasOne("Core.Entities.Producto", "Producto")
                         .WithMany()
-                        .HasForeignKey("ProductoID")
+                        .HasForeignKey("productoID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Usuario", "UsuarioCreador")
-                        .WithMany("SubastasCreadas")
-                        .HasForeignKey("UsuarioCreadorID")
+                    b.HasOne("Core.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("usuarioCreadorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Producto");
 
-                    b.Navigation("UsuarioCreador");
+                    b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("Core.Entities.Historial", b =>
-                {
-                    b.Navigation("Subastas_General");
-
-                    b.Navigation("Subastas_Ofertadas");
-
-                    b.Navigation("Subastas_Rematando");
-                });
-
-            modelBuilder.Entity("Core.Entities.ListaProductos", b =>
+            modelBuilder.Entity("Core.Entities.ListaProducto", b =>
                 {
                     b.Navigation("Productos");
-                });
-
-            modelBuilder.Entity("Core.Entities.Usuario", b =>
-                {
-                    b.Navigation("Ofertas");
-
-                    b.Navigation("SubastasCreadas");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,7 +19,7 @@ namespace Core.Entities
     public class Categoria
     {
         [Key]
-        public int CategoriaID { get; set; }
+        public int categoriaID { get; set; }
         public string nombreCategoria { get; set; }
 
     }

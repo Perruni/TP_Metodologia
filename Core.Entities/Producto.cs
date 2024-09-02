@@ -21,14 +21,15 @@ namespace Core.Entities
         [Key]
         public int ProductoID { get; set; }
         public string nombreProducto { get; set; }
-        public bool estadoProducto { get; set; }
+        public int estadoProducto { get; set; }
         public string descripcion { get; set; }
         public double precioBase { get; set; }
         public int ofertas { get; set; }
+        public int habilitacionProducto { get; set; }
 
         // Foreign Key a ListaProductos
-        public int IdListaProductos { get; set; }
-        [ForeignKey("IdListaProductos")]
-        public virtual ListaProductos ListaProductos { get; set; }
+        public int idListaProductos { get; set; }
+        [ForeignKey("idListaProductos")]
+        public virtual ListaProducto ListaProducto { get; set; }
     }
 }

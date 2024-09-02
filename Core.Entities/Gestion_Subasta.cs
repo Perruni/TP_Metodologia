@@ -20,9 +20,9 @@ namespace Core.Entities
    
     public class Gestion_Subasta
     {        
-        public int GestorID { get; set; }
-        public virtual ICollection<Subasta> Subastas_Pendientes { get; set; } = new List<Subasta>();
-        public virtual ICollection<Subasta> Subastas_Aprobadas { get; set; }= new List<Subasta>();
+        public int gestorID { get; set; }
+        public virtual ICollection<Subasta> subastasPendientes { get; set; } = new List<Subasta>();
+        public virtual ICollection<Subasta> subastasAprobadas { get; set; }= new List<Subasta>();
         
     }
 }

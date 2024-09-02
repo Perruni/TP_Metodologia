@@ -27,7 +27,7 @@ namespace Core.Entities
     public class Subasta
     {
         [Key]
-        public int SubastaID { get; set; }
+        public int subastaID { get; set; }
         public string titulo { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFinalizado { get; set; }
@@ -35,13 +35,13 @@ namespace Core.Entities
         public int cantidadProduct { get; set; }
 
         // Foreign Key a Usuario (Creador de la subasta)
-        public int UsuarioCreadorID { get; set; }
-        [ForeignKey("UsuarioCreadorID")]
-        public virtual Usuario UsuarioCreador { get; set; }
+        public int usuarioCreadorID { get; set; }
+        [ForeignKey("usuarioCreadorID")]
+        public virtual Usuario Usuario { get; set; }
 
         // Foreign Key a Producto
-        public int ProductoID { get; set; }
-        [ForeignKey("ProductoID")]
+        public int productoID { get; set; }
+        [ForeignKey("productoID")]
         public virtual Producto Producto { get; set; }
 
     }

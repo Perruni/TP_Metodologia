@@ -15,15 +15,12 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    [Table("Historial")]
     public class Historial
     {
-        [Key]
-        public int HistorialID { get; set; }
+        public int historialID { get; set; }
 
-        // Relación uno a muchos con Subastas
-        public virtual ICollection<Subasta> Subastas_Rematando { get; set; } = new List<Subasta>();
-        public virtual ICollection<Subasta> Subastas_Ofertadas { get; set; } = new List<Subasta>();
-        public virtual ICollection<Subasta> Subastas_General { get; set; } = new List<Subasta>();
+        public virtual ICollection<Subasta> subastasRematando { get; set; } = new List<Subasta>();
+        public virtual ICollection<Subasta> subastasOfertadas { get; set; } = new List<Subasta>();
+        public virtual ICollection<Subasta> subastasGeneral { get; set; } = new List<Subasta>();
     }
 }

@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class ListaProductos
+    [Table("ListaProductos")]
+    public class ListaProducto
     {
         [Key]
-        public int IdListaProductos { get; set; }
-        public string NombreProducto { get; set; }
+        public int idListaProductos { get; set; }
+        public string nombreProducto { get; set; }
 
-        public int CategoriaID { get; set; }
-        [ForeignKey("CategoriaID")]
+        public int categoriaID { get; set; }
+        [ForeignKey("categoriaID")]
         public virtual Categoria Categoria { get; set; }
         public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
 
