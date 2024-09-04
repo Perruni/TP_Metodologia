@@ -154,9 +154,14 @@ namespace Core.Data.Migrations
                     b.Property<double>("precioBase")
                         .HasColumnType("double");
 
+                    b.Property<int>("usuarioID")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductoID");
 
                     b.HasIndex("idListaProductos");
+
+                    b.HasIndex("usuarioID");
 
                     b.ToTable("Productos");
                 });
@@ -180,6 +185,9 @@ namespace Core.Data.Migrations
 
                     b.Property<DateTime>("fechaInicio")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("metodosdePago")
+                        .HasColumnType("int");
 
                     b.Property<int>("productoID")
                         .HasColumnType("int");
@@ -295,7 +303,15 @@ namespace Core.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("usuarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ListaProducto");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Core.Entities.Subasta", b =>

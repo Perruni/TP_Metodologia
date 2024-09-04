@@ -33,6 +33,7 @@ namespace Core.Entities
         public DateTime fechaFinalizado { get; set; }
         public bool estadoSubasta { get; set; }
         public int cantidadProduct { get; set; }
+        public int metodosdePago { get; set; }
 
         // Foreign Key a Usuario (Creador de la subasta)
         public int usuarioCreadorID { get; set; }

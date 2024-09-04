@@ -90,7 +90,8 @@ namespace Core.Data.Migrations
                     precioBase = table.Column<double>(type: "double", nullable: false),
                     ofertas = table.Column<int>(type: "int", nullable: false),
                     habilitacionProducto = table.Column<int>(type: "int", nullable: false),
-                    idListaProductos = table.Column<int>(type: "int", nullable: false)
+                    idListaProductos = table.Column<int>(type: "int", nullable: false),
+                    usuarioID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,6 +101,12 @@ namespace Core.Data.Migrations
                         column: x => x.idListaProductos,
                         principalTable: "ListaProductos",
                         principalColumn: "idListaProductos",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Productos_Usuarios_usuarioID",
+                        column: x => x.usuarioID,
+                        principalTable: "Usuarios",
+                        principalColumn: "usuarioID",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -145,6 +152,7 @@ namespace Core.Data.Migrations
                     fechaFinalizado = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     estadoSubasta = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     cantidadProduct = table.Column<int>(type: "int", nullable: false),
+                    metodosdePago = table.Column<int>(type: "int", nullable: false),
                     usuarioCreadorID = table.Column<int>(type: "int", nullable: false),
                     productoID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -228,6 +236,11 @@ namespace Core.Data.Migrations
                 column: "idListaProductos");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Productos_usuarioID",
+                table: "Productos",
+                column: "usuarioID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subastas_productoID",
                 table: "Subastas",
                 column: "productoID");
@@ -254,10 +267,10 @@ namespace Core.Data.Migrations
                 name: "Productos");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "ListaProductos");
 
             migrationBuilder.DropTable(
-                name: "ListaProductos");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Categorias");
