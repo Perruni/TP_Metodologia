@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Core.Entities
 {
     [Table("Productos")]
-    public class Producto
+    public class Producto 
     {
         [Key]
         public int ProductoID { get; set; }
