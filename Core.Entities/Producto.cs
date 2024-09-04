@@ -27,11 +27,6 @@ namespace Core.Entities
         public int ofertas { get; set; }
         public int habilitacionProducto { get; set; }
 
-        // Foreign Key a ListaProductos
-        public int idListaProductos { get; set; }
-        [ForeignKey("idListaProductos")]
-        public virtual ListaProducto ListaProducto { get; set; }
-
         public int usuarioID { get; set; }
         [ForeignKey("usuarioID")]
         public virtual Usuario Usuario { get; set; }

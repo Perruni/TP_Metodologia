@@ -15,10 +15,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    [Table("Categorias")]
+    
     public class Categoria
     {
-        [Key]
         public int categoriaID { get; set; }
         public string nombreCategoria { get; set; }
 
