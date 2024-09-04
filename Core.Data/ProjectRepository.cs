@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Data
 {
-    public class ProjectRepository : IProjectRepository
+    public class ProjectRepository
     {
     }
 }

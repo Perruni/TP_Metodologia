@@ -16,7 +16,6 @@ namespace Core.Data.Interface
         public void UpdateSubasta(Subasta subasta, int subastaId);
         public void HabilitarSubasta(int subastaID, int estadoSubasta);
 
-    }
         public List<Producto> GetAll();
         public void GetProducto(int ProductoID);
         public void AddProducto(Producto producto);
