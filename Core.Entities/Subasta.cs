@@ -29,6 +29,7 @@ namespace Core.Entities
         [Key]
         public int subastaID { get; set; }
         public string titulo { get; set; }
+        public string descripcion { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFinalizado { get; set; }
         public bool estadoSubasta { get; set; }
