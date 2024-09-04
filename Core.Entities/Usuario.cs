@@ -22,7 +22,6 @@ namespace Core.Entities
         public string apellidoUsuario { get; set; }
         public int dni { get; set; }
         public string email { get; set; }
-        public float ganancia { get; set; }
         public string domicilio { get; set; }
         public int roles { get; set; }
 
