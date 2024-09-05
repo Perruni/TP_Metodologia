@@ -12,9 +12,9 @@ namespace Core.Busisness
 {
     public class UsuarioBusiness : IUsuarioBussiness
     {
-        private readonly IRepository _Repository;
+        private readonly IProyectRepository _Repository;
 
-        public UsuarioBusiness(IRepository usuarioRepository)
+        public UsuarioBusiness(IProyectRepository usuarioRepository)
         {
             _Repository = usuarioRepository;
         }
