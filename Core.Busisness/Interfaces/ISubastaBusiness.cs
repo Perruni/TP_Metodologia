@@ -12,7 +12,8 @@ namespace Core.Busisness.Interfaces
         public void AddSubasta (Subasta subastaNueva);
         public List<Subasta> GetAllSubasta ();
         public Subasta GetSubastabyID (int id);
-        public void UpdateSubasta (Subasta subasta, int id);
+        public void UpdateSubasta (Subasta subasta, int subastaID);
+        public void HabilitarSubasta(int subastaID, int estadoSubasta);
         public void DeleteSubastabyID (Subasta subasta);
 
     }

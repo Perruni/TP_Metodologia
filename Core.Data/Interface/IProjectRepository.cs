@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Data.Interface
 {
-     public class IProjectRepository
+    public interface IProjectRepository
     {
         /*
         public List<Producto> GetAll();

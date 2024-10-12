@@ -1,0 +1,20 @@
+
+body {
+    background-image: url('img/fondo.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px; 
+    padding: 20px;
+  }
+  
+  .sidebar {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white;
+    padding: 15px;
+  }

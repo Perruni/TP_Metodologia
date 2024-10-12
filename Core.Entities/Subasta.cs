@@ -32,7 +32,7 @@ namespace Core.Entities
         public string descripcion { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFinalizado { get; set; }
-        public bool estadoSubasta { get; set; }
+        public int estadoSubasta { get; set; }
         public int cantidadProduct { get; set; }
         public int metodosdePago { get; set; }
 
