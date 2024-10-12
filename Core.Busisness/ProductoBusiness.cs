@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
+	/*
     public class ProductoBusiness : IProductoBusiness
     {
 
@@ -17,7 +18,7 @@ namespace Core.Busisness
         }
         void AddProducto(Producto producto)
         {
-            -repository.AddProducto(producto)
+            -repository.AddProducto(producto);
         }
 
         void DeleteProducto(int ProductoID)
@@ -44,5 +45,7 @@ namespace Core.Busisness
         {
             -repository.UpdateProducto(producto);
         }
-    }
+    */
 }
+
+
