@@ -18,11 +18,12 @@ namespace Core.Entities
      */
 
    
-    public class Gestion_Subasta
+    public class Mis_Productos
     {        
-        public int gestorID { get; set; }
-        public virtual ICollection<Subasta> subastasPendientes { get; set; } = new List<Subasta>();
-        public virtual ICollection<Subasta> subastasAprobadas { get; set; }= new List<Subasta>();
-        
+        public virtual ICollection<Producto> productosPendientes { get; set; } = new List<Producto>();
+        public virtual ICollection<Producto> productosAprobadas { get; set; } = new List<Producto>();
+        public virtual ICollection<Producto> productosRechazados { get; set; } = new List<Producto>();
+
+
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
-    /* Comentado Temporalmente
+    /*Comentado Temporalmente
     public class ProductoBusiness : IProductoBusiness
     {
 

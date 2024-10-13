@@ -15,12 +15,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class Historial
+    public class Mis_Ofertas
     {
-        public int historialID { get; set; }
 
-        public virtual ICollection<Subasta> subastasRematando { get; set; } = new List<Subasta>();
-        public virtual ICollection<Subasta> subastasOfertadas { get; set; } = new List<Subasta>();
-        public virtual ICollection<Subasta> subastasGeneral { get; set; } = new List<Subasta>();
+        public virtual ICollection<Oferta> listaOfertas { get; set; } = new List<Oferta>();
     }
 }

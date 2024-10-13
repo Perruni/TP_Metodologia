@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
-    public class UsuarioBusiness : IUsuarioBussiness
+    /*public class UsuarioBusiness : IUsuarioBussiness
     {
         private readonly IRepository _Repository;
 
@@ -48,5 +48,5 @@ namespace Core.Busisness
             }
             return false;
         }
-    }
+    }*/
 }

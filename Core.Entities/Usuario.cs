@@ -17,13 +17,13 @@ namespace Core.Entities
     public class Usuario
     {
         [Key]
-        public int usuarioID { get; set; }
-        public string nombreUsuario { get; set; }
-        public string apellidoUsuario { get; set; }
-        public int dni { get; set; }
+        public int usuarioID { get; set; }        
         public string email { get; set; }
-        public string domicilio { get; set; }
-        public int roles { get; set; }
+        public string contrasenia {  get; set; }
+
+        List<Producto> listaProductos { get; set; }
+        List<Oferta> listaOfertas{ get; set; }
+
 
     }
 }

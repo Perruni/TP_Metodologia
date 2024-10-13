@@ -19,17 +19,19 @@ namespace Core.Entities
     {
         [Key]
         public int OfertaID { get; set; }
-        public int montoOferta { get; set; }
+        public float montoOferta { get; set; }
         public int estadoOferta { get; set; }
 
         // Foreign Key a Usuario
         public int usuarioID { get; set; }
         [ForeignKey("usuarioID")]
-        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario usuario { get; set; }
 
         // Foreign Key a Subasta
         public int productoID { get; set; }
         [ForeignKey("productoID")]
-        public virtual Producto Producto { get; set; }
+        public virtual Producto producto { get; set; }
+
+        public List<Datos_ofertante> datosOfertante { get; set; }
     }
 }
