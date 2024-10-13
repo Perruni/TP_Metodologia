@@ -29,22 +29,14 @@ namespace Core.Entities
         [Key]
         public int subastaID { get; set; }
         public string titulo { get; set; }
-        public string descripcion { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFinalizado { get; set; }
         public int estadoSubasta { get; set; }
-        public int cantidadProduct { get; set; }
         public int metodosdePago { get; set; }
 
-        // Foreign Key a Usuario (Creador de la subasta)
-        public int usuarioCreadorID { get; set; }
-        [ForeignKey("usuarioCreadorID")]
-        public virtual Usuario Usuario { get; set; }
+        public List<Producto> listaProductos { get; set; }
 
-        // Foreign Key a Producto
-        public int productoID { get; set; }
-        [ForeignKey("productoID")]
-        public virtual Producto Producto { get; set; }
+
 
     }
 }

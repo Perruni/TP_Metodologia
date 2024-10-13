@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
+    /*
     public class OfertaBusiness : IOfertaBussiness
     {
         private readonly IProyectRepository _ofertaRepository;
@@ -40,5 +41,5 @@ namespace Core.Busisness
            
             _ofertaRepository.Deleteoferta(id); 
         }
-    }
+    }*/
 }

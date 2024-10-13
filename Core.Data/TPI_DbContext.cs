@@ -29,8 +29,31 @@ namespace Core.Data
         public DbSet<Oferta> Ofertas { get; set; }
         public DbSet<Subasta> Subastas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Factura> Facturas { get; set; }
+        public DbSet<Certificado> Certificado { get; set; }
+        public DbSet<Datos_ofertante> DatosOfertante { get; set; }
+        public DbSet<Datos_vendedor> DatosVendedor { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Datos_ofertante>()
+                .HasKey(d => new { d.DNI, d.oferID }); 
+
+            modelBuilder.Entity<Datos_ofertante>()
+                .HasOne(d => d.Oferta)
+                .WithMany()
+                .HasForeignKey(d => d.oferID);
+
+            modelBuilder.Entity<Datos_vendedor>()
+                .HasKey(d => new { d.DNI, d.producID });
+
+            modelBuilder.Entity<Datos_vendedor>()
+                .HasOne(d => d.Producto)
+                .WithMany()
+                .HasForeignKey(d => d.producID);
 
 
+        }
+
+        
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
+    /*
     public class FacturaBusiness : IFacturaBussiness
     {
         private readonly IProyectRepository _facturaRepository;
@@ -36,5 +37,5 @@ namespace Core.Busisness
         {
             _facturaRepository.Deletefactura(id); 
         }
-    }
+    }*/
 }

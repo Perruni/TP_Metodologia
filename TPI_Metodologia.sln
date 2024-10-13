@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master_API", "Master_API\Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web_Subasta", "Web_Subasta\Web_Subasta.csproj", "{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiApp_WebyMovil", "MauiApp_WebyMovil\MauiApp_WebyMovil.csproj", "{1EC91FB5-6181-45FE-80FB-A6817211BD25}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,12 +47,6 @@ Global
 		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EC91FB5-6181-45FE-80FB-A6817211BD25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EC91FB5-6181-45FE-80FB-A6817211BD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EC91FB5-6181-45FE-80FB-A6817211BD25}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{1EC91FB5-6181-45FE-80FB-A6817211BD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EC91FB5-6181-45FE-80FB-A6817211BD25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EC91FB5-6181-45FE-80FB-A6817211BD25}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
