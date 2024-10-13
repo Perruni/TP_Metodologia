@@ -18,7 +18,7 @@ namespace Core.Entities
     public class Oferta
     {
         [Key]
-        public int OfertaID { get; set; }
+        public int ofertaID { get; set; }
         public float montoOferta { get; set; }
         public int estadoOferta { get; set; }
 

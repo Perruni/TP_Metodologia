@@ -20,7 +20,6 @@ namespace Core.Entities
         public int usuarioID { get; set; }        
         public string email { get; set; }
         public string contrasenia {  get; set; }
-
         List<Producto> listaProductos { get; set; }
         List<Oferta> listaOfertas{ get; set; }
 

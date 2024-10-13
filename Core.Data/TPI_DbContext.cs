@@ -36,20 +36,20 @@ namespace Core.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Datos_ofertante>()
-                .HasKey(d => new { d.DNI, d.ofertaID }); 
+                .HasKey(d => new { d.DNI, d.oferID }); 
 
             modelBuilder.Entity<Datos_ofertante>()
                 .HasOne(d => d.Oferta)
                 .WithMany()
-                .HasForeignKey(d => d.ofertaID);
+                .HasForeignKey(d => d.oferID);
 
             modelBuilder.Entity<Datos_vendedor>()
-                .HasKey(d => new { d.DNI, d.productoID });
+                .HasKey(d => new { d.DNI, d.producID });
 
             modelBuilder.Entity<Datos_vendedor>()
                 .HasOne(d => d.Producto)
                 .WithMany()
-                .HasForeignKey(d => d.productoID);
+                .HasForeignKey(d => d.producID);
 
 
         }

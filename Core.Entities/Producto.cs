@@ -19,7 +19,7 @@ namespace Core.Entities
     public class Producto
     {
         [Key]
-        public int? productoID { get; set; }
+        public int productoID { get; set; }
         public string nombreProducto { get; set; }
         public int estadoProducto { get; set; }
         public string descripcion { get; set; }
@@ -27,6 +27,7 @@ namespace Core.Entities
         public string metodoEntrega { get; set; }
         public DateTime fechaSolicitud { get; set; }
         public int estadoSolicitud { get; set; }
+        public string? motivo { get; set; }
 
         public int usuarioID { get; set; }
         [ForeignKey("usuarioID")]

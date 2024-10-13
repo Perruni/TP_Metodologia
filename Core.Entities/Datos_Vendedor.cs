@@ -17,7 +17,7 @@ namespace Core.Entities
 
         [Key]
         [Column(Order = 1)]
-        public int productoID { get; set; }
+        public int producID { get; set; }
 
         public string nombre { get; set; }
         public string apellido { get; set; }
