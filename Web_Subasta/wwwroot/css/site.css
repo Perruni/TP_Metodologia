@@ -31,3 +31,152 @@ body {
 }
 
 
+/* Estilos para el navbar */
+.navbar {
+    background-color: #282828;
+}
+
+    
+    /* Estilo para los enlaces del navbar */
+    .navbar .nav-link {
+        color: white;     
+        font-size: 1rem; /* Mismo tamaño para todos los enlaces */
+        font-weight: normal; /* No negrita para los enlaces */
+        margin-right: 20px; /* Separación entre los enlaces */
+    }
+
+        /* Para las opciones activas (quitar negrita) */
+        .navbar .nav-link.active {
+            font-weight: normal; /* Sin negrita */
+            color: #f1f1f1; /* Mantener el color activo */
+        }
+
+/* Estilo para los botones del navbar */
+
+/* Botón "Iniciar Sesión" (blanco opaco) */
+.navbar-buttons .nav-inicio {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #282828;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    /* Hover para el botón "Iniciar Sesión" */
+    .navbar-buttons .nav-inicio:hover {
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+/* Botón "Registrarse" (color D8AE3A) */
+.navbar-buttons .nav-registro {
+    background-color: #D8AE3A;
+    color: #282828;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    /* Hover para el botón "Registrarse" */
+    .navbar-buttons .nav-registro:hover {
+        background-color: #C99C2D;
+    }
+
+/* Para los botones en dispositivos móviles */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28155, 155, 155, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+
+.footer {
+    background-color: #282828; /* Fondo igual que el navbar */
+    padding: 20px 0;
+    color: white; /* Texto blanco */
+    text-align: center;
+    border-top: 1px solid #fff; /* Borde superior */
+}
+
+    .footer a {
+        color: white; /* Enlaces en blanco */
+        margin-left: 15px;
+        text-decoration: none;
+        font-weight: bold; /* Enlaces con texto en negrita */
+    }
+
+        /* Efecto hover para los enlaces del footer */
+        .footer a:hover {
+            color: #f1f1f1; /* Cambiar a tono más claro al hacer hover */
+        }
+
+    /* Ajustes para el contenedor */
+    .footer .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* Espacio entre los elementos */
+        flex-wrap: wrap; /* Ajuste en pantallas pequeñas */
+    }
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .footer .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+/*Logo Boton*/
+.icono-mew {
+    width: 120px; /* Tamaño base */
+    height: auto; /* Mantiene la proporción de aspecto */
+    cursor: pointer; /* Hacer que la imagen se comporte como un botón */
+    margin-right: 35px;
+}
+
+    .icono-mew {
+        opacity: 0.8; /* Reduce la opacidad en hover */
+    }
+
+
+    /*Side Bar*/
+
+/* Estilos para el sidebar */
+.sidebar {
+    background-color: #90827a;
+    padding: 20px;
+    width: 200px;
+    height: 100%;
+    position: fixed;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #796e64;
+}
+
+.sidebar-button {
+    display: block;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 10px 0;
+    position: relative;
+    transition: background-color 0.5s, box-shadow 0.5s;
+}
+
+    .sidebar-button:hover, .sidebar-button.active {
+        background-color: #6e6158; /* Color más oscuro para el efecto hover */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Efecto de difuminado */
+    }
