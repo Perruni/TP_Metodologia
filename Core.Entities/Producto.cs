@@ -39,7 +39,7 @@ namespace Core.Entities
 
         public List<Oferta> listaOfertas { get; set; }
 
-        public List<Datos_vendedor> datosVendedor { get; set; }
+        public List<Datos_usuario> datosUsuario { get; set; }
 
     }
 }

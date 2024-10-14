@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    [Table("Certificado")]
+    
 
     public class Certificado
     {
-        [Key]
+        
         public int certificadoId { get; set; }
         public string metodoPago { get; set; }
         public DateTime fechaEmision { get; set; }
-        public int productoID { get; set; }
-        [ForeignKey("productoID")]
-        public virtual Producto Producto { get; set; }
+
 
     }
 }

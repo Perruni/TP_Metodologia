@@ -32,6 +32,5 @@ namespace Core.Entities
         [ForeignKey("productoID")]
         public virtual Producto producto { get; set; }
 
-        public List<Datos_ofertante> datosOfertante { get; set; }
     }
 }

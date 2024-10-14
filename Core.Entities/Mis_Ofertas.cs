@@ -19,5 +19,6 @@ namespace Core.Entities
     {
 
         public virtual ICollection<Oferta> listaOfertas { get; set; } = new List<Oferta>();
+
     }
 }

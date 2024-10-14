@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Data.Migrations
 {
     [DbContext(typeof(TPI_DbContext))]
-    [Migration("20241013201557_Initial Migration")]
+    [Migration("20241014204154_Initial Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -40,25 +40,18 @@ namespace Core.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("productoID")
-                        .HasColumnType("int");
-
                     b.HasKey("certificadoId");
-
-                    b.HasIndex("productoID");
 
                     b.ToTable("Certificado");
                 });
 
-            modelBuilder.Entity("Core.Entities.Datos_ofertante", b =>
+            modelBuilder.Entity("Core.Entities.Datos_usuario", b =>
                 {
-                    b.Property<string>("DNI")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnOrder(0);
+                    b.Property<int>("DNI")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<int>("oferID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DNI"));
 
                     b.Property<string>("apellido")
                         .IsRequired()
@@ -75,59 +68,22 @@ namespace Core.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ofertaID")
+                    b.Property<int?>("productoID")
                         .HasColumnType("int");
 
                     b.Property<int>("telefono")
                         .HasColumnType("int");
 
-                    b.HasKey("DNI", "oferID");
-
-                    b.HasIndex("oferID");
-
-                    b.HasIndex("ofertaID");
-
-                    b.ToTable("Datos_ofertante");
-                });
-
-            modelBuilder.Entity("Core.Entities.Datos_vendedor", b =>
-                {
-                    b.Property<string>("DNI")
-                        .HasColumnType("varchar(255)")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("producID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("apellido")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("codigoArea")
+                    b.Property<int>("usuarioID")
                         .HasColumnType("int");
 
-                    b.Property<string>("direccion")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("productoID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("telefono")
-                        .HasColumnType("int");
-
-                    b.HasKey("DNI", "producID");
-
-                    b.HasIndex("producID");
+                    b.HasKey("DNI");
 
                     b.HasIndex("productoID");
 
-                    b.ToTable("Datos_vendedor");
+                    b.HasIndex("usuarioID");
+
+                    b.ToTable("Datos_usuario");
                 });
 
             modelBuilder.Entity("Core.Entities.Oferta", b =>
@@ -259,49 +215,19 @@ namespace Core.Data.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Core.Entities.Certificado", b =>
+            modelBuilder.Entity("Core.Entities.Datos_usuario", b =>
                 {
-                    b.HasOne("Core.Entities.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("productoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Producto");
-                });
-
-            modelBuilder.Entity("Core.Entities.Datos_ofertante", b =>
-                {
-                    b.HasOne("Core.Entities.Oferta", "Oferta")
-                        .WithMany()
-                        .HasForeignKey("oferID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Oferta", null)
-                        .WithMany("datosOfertante")
-                        .HasForeignKey("ofertaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Oferta");
-                });
-
-            modelBuilder.Entity("Core.Entities.Datos_vendedor", b =>
-                {
-                    b.HasOne("Core.Entities.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("producID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Core.Entities.Producto", null)
-                        .WithMany("datosVendedor")
-                        .HasForeignKey("productoID")
+                        .WithMany("datosUsuario")
+                        .HasForeignKey("productoID");
+
+                    b.HasOne("Core.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("usuarioID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Producto");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Core.Entities.Oferta", b =>
@@ -342,14 +268,9 @@ namespace Core.Data.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("Core.Entities.Oferta", b =>
-                {
-                    b.Navigation("datosOfertante");
-                });
-
             modelBuilder.Entity("Core.Entities.Producto", b =>
                 {
-                    b.Navigation("datosVendedor");
+                    b.Navigation("datosUsuario");
 
                     b.Navigation("listaOfertas");
                 });
