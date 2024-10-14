@@ -180,3 +180,25 @@ body {
         background-color: #6e6158; /* Color más oscuro para el efecto hover */
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Efecto de difuminado */
     }
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
+    border-radius: 10px; /* Bordes redondeados */
+    transition: transform 0.2s ease-in-out; /* Efecto de zoom al hover */
+}
+
+    .card:hover {
+        transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    }
+
+    .card img {
+        max-width: 100%; /* La imagen no será más grande que la tarjeta */
+        height: auto; /* Mantiene la proporción de la imagen */
+        border-radius: 10px; /* Mantiene los bordes redondeados en la imagen */
+    }
+
+@media (max-width: 768px) {
+    .row {
+        justify-content: center; /* Centra las cards en pantallas pequeñas */
+    }
+}
