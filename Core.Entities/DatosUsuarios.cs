@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    [Table("Datos_ofertante")]
-    public class Datos_ofertante
+    [Table("Datos_vendedor")]
+    public class DatosUsuarios
     {
         [Key]
         [Column(Order = 0)]
@@ -18,7 +17,7 @@ namespace Core.Entities
 
         [Key]
         [Column(Order = 1)]
-        public int oferID { get; set; }
+        public int producID { get; set; }
 
         public string nombre { get; set; }
         public string apellido { get; set; }
@@ -26,16 +25,17 @@ namespace Core.Entities
         public int telefono { get; set; }
         public int codigoArea { get; set; }
 
-        [ForeignKey("ofertaID")]
-        public virtual Oferta Oferta { get; set; }
+        [ForeignKey("productoID")]
+        public virtual Producto Producto { get; set; }
     }
 
-    public class DatosOfertanteId
+    public class DatosVendedorId
     {
         [Required]
         public string DNI { get; set; }
 
         [Required]
-        public int OfertaID { get; set; }
+        public int ProductoID { get; set; }
     }
 }
+

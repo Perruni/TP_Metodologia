@@ -31,7 +31,7 @@ namespace Core.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Certificado> Certificado { get; set; }
         public DbSet<Datos_ofertante> DatosOfertante { get; set; }
-        public DbSet<Datos_vendedor> DatosVendedor { get; set; }
+        public DbSet<DatosUsuarios> DatosVendedor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,10 +43,10 @@ namespace Core.Data
                 .WithMany()
                 .HasForeignKey(d => d.oferID);
 
-            modelBuilder.Entity<Datos_vendedor>()
+            modelBuilder.Entity<DatosUsuarios>()
                 .HasKey(d => new { d.DNI, d.producID });
 
-            modelBuilder.Entity<Datos_vendedor>()
+            modelBuilder.Entity<DatosUsuarios>()
                 .HasOne(d => d.Producto)
                 .WithMany()
                 .HasForeignKey(d => d.producID);

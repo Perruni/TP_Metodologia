@@ -34,14 +34,14 @@
         </nav>
     </header>
     <div class="contents">
-            
+            @if (IsSectionDefined("ShowSidebar")) {
             <div class="sidebar">
                 <div class="sidebar-title">Subastas</div>
                 <a href="/subastas/activas" class="sidebar-button">Activas</a>
                 <a href="/subastas/proximas" class="sidebar-button">Próximas</a>
                 <a href="/subastas/finalizadas" class="sidebar-button">Finalizadas</a>
             </div>
-       
+        }
       <!-- Esto hace que las demas vistas puedan agregar su contenido en el centro -->
     <div class="container">
         <main role="main" class="pb-3">
