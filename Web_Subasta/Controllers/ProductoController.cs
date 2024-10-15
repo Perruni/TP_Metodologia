@@ -82,11 +82,11 @@ namespace Master_API.Controllers
             return usuarioDTO;
         }
 
-        [HttpPost("/CargarProducto/")]
-        public async Task<ActionResult<UsuarioDTO>> PostProducto()
+      /*  [HttpPost("/CargarProducto/")]
+        public async Task<ActionResult<UsuarioDTO>>
         {
 
         }
-
+      */
     }
 }
