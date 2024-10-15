@@ -1,6 +1,8 @@
 ﻿using Core.Data;
+using Master_API.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Master_API.Controllers
 {
@@ -8,6 +10,42 @@ namespace Master_API.Controllers
     [ApiController]
     public class SubastaController : ControllerBase
     {
-        
+
+        private readonly TPI_DbContext _context;
+
+        public SubastaController(TPI_DbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet("/SubastaActiva/{id}")]
+        public async Task<ActionResult<SubastaProductosDTO>> GetSubastaActivaProductos(int id)
+        {
+            var subasta = await _context.Subastas
+                .Include(s => s.listaProductos)
+                .FirstOrDefaultAsync(s => s.subastaID == id);
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            var subastaProductosDTO = new SubastaProductosDTO
+            {
+                subastaID = subasta.subastaID,
+                listaProductos = subasta.listaProductos.Select(p => new ProductoDTO
+                {
+                    ProductoID = p.productoID,
+                    NombreProducto = p.nombreProducto,
+                    PrecioBase = p.precioBase,
+                    MetodoEntrega = p.metodoEntrega,
+                    FechaSolicitud = p.fechaSolicitud,
+                    EstadoProducto = p.estadoProducto
+                }).ToList(),
+
+            };
+
+            return subastaProductosDTO;
+        }
     }
 }

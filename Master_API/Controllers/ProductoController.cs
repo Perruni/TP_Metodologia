@@ -35,7 +35,7 @@ namespace Master_API.Controllers
         }
 
         [HttpGet("Productos")]
-        public async Task<ActionResult<Producto>> GetAllProduct()
+        public async Task<ActionResult<ProductoDTO>> GetAllProduct()
         {
 
 
@@ -66,9 +66,8 @@ namespace Master_API.Controllers
             // Mapeo manual del Usuario a UsuarioDTO
             var usuarioDTO = new UsuarioDTO
             {
-                UsuarioID = usuario.usuarioID,
-                Email = usuario.email,
-                ListaProductos = usuario.listaProductos.Select(p => new ProductoDTO
+                usuarioID = usuario.usuarioID,
+                listaProductos = usuario.listaProductos.Select(p => new ProductoDTO
                 {
                     ProductoID = p.productoID,
                     NombreProducto = p.nombreProducto,
@@ -83,6 +82,7 @@ namespace Master_API.Controllers
             return usuarioDTO;
         }
 
+        //[HttpPost(/CargarProducto/)]
 
     }
 }
