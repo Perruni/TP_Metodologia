@@ -17,6 +17,20 @@ namespace Web_Subasta.Controllers
         {
             return View();
         }
+        public IActionResult Activas()
+        {
+            return View();
+        }
+
+        public IActionResult Proximas()
+        {
+            return View();
+        }
+
+        public IActionResult Finalizadas()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

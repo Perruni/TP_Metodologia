@@ -16,7 +16,11 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Asegurar que la altura de html y body sea del 100% */
+}
 body {
   margin-bottom: 60px;
 }
@@ -34,6 +38,11 @@ body {
 /* Estilos para el navbar */
 .navbar {
     background-color: #282828;
+    margin-bottom: 0;
+    padding: 0; /* Eliminar padding superior e inferior */
+    position: fixed;
+    width: 100%;
+    z-index: 999; /* Asegura que esté encima del sidebar */
 }
 
     
@@ -103,6 +112,7 @@ body {
     color: white; /* Texto blanco */
     text-align: center;
     border-top: 1px solid #fff; /* Borde superior */
+    z-index: 1000 !important;
 }
 
     .footer a {
@@ -154,9 +164,13 @@ body {
 .sidebar {
     background-color: #90827a;
     padding: 20px;
-    width: 200px;
-    height: 100%;
+    width: 150px; /* Ancho fijo del sidebar */
+    height: 76.8vh; /* Ocupa toda la altura de la ventana */
     position: fixed;
+    top: 84.3px;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-title {
@@ -172,11 +186,43 @@ body {
     color: #fff !important;
     text-decoration: none;
     padding: 10px 0;
-    position: relative;
     transition: background-color 0.5s, box-shadow 0.5s;
 }
 
     .sidebar-button:hover, .sidebar-button.active {
-        background-color: #6e6158; /* Color más oscuro para el efecto hover */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Efecto de difuminado */
+        background-color: #6e6158;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
+
+.contents {
+    margin-left: 200px; /* El contenido principal se desplaza a la derecha, ajustado al ancho del sidebar */
+    padding: 20px;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
+    border-radius: 10px; /* Bordes redondeados */
+    transition: transform 0.2s ease-in-out; /* Efecto de zoom al hover */
+}
+
+    .card:hover {
+        transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    }
+
+    .card img {
+        max-width: 100%; /* La imagen ocupa el 100% del ancho de la tarjeta */
+        height: auto; /* Mantiene las proporciones de la imagen */
+        border-radius: 10px; /* Bordes redondeados para las imágenes también */
+    }
+
+@media (max-width: 768px) {
+    .card {
+        width: 90%; /* Las tarjetas ocupan el 90% del ancho en móviles */
+        margin-bottom: 20px; /* Espacio entre las tarjetas */
+    }
+
+    .row {
+        justify-content: center; /* Centra las tarjetas */
+        flex-direction: column; /* Acomoda las tarjetas en una columna */
+    }
+}

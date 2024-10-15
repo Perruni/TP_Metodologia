@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web_Subasta.styles.css" asp-append-version="true" />
-
 </head>
 <body>
     <header>
@@ -22,19 +21,20 @@
                         <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                         <a class="nav-link" href="#">Subastas</a>
                         <a class="nav-link" href="#">Mis Ofertas</a>
-                        <a class="nav-link" href="#"> Mis Productos</a>
+                        <a class="nav-link" href="#">Mis Productos</a>
                     </div>
                     <div class="navbar-buttons ms-auto">
                         <button class="nav-inicio" id="nav-inicio">Iniciar Sesión</button>
                         <button class="nav-registro">Registrate</button>
                     </div>
-
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="contents">
-            @if (IsSectionDefined("ShowSidebar")) {
+        @if (ViewData["ShowSidebar"] != null && (bool)ViewData["ShowSidebar"])
+        {
             <div class="sidebar">
                 <div class="sidebar-title">Subastas</div>
                 <a href="/subastas/activas" class="sidebar-button">Activas</a>
@@ -42,11 +42,13 @@
                 <a href="/subastas/finalizadas" class="sidebar-button">Finalizadas</a>
             </div>
         }
-      <!-- Esto hace que las demas vistas puedan agregar su contenido en el centro -->
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        <!-- Esto hace que las demás vistas puedan agregar su contenido en el centro -->
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
