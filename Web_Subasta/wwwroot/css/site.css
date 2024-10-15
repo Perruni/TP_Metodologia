@@ -222,7 +222,10 @@ body {
     }
 
     .row {
+        display: flex; /* Activa Flexbox */
         justify-content: center; /* Centra las tarjetas */
+        align-items: center; /* Opcional: centra verticalmente si es necesario */
+        flex-wrap: wrap; /* Permite que las tarjetas pasen a la siguiente fila si es necesario */
         flex-direction: column; /* Acomoda las tarjetas en una columna */
     }
 }
