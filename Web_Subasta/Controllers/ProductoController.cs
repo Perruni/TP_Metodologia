@@ -4,6 +4,10 @@ using Core.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text;
+using Core.Shared.DTOs.SubastasDTO;
 
 namespace Master_API.Controllers
 {
@@ -11,11 +15,16 @@ namespace Master_API.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
+
+        private readonly IHttpClientFactory _httpClientFactory;
+        
+
         private readonly TPI_DbContext _context;
 
-        public ProductoController(TPI_DbContext context)
+        public ProductoController(TPI_DbContext context, IHttpClientFactory httpClientFactory)
         {
             _context = context;
+            _httpClientFactory = httpClientFactory;
         }
 
         
@@ -82,11 +91,6 @@ namespace Master_API.Controllers
             return usuarioDTO;
         }
 
-        [HttpPost("/CargarProducto/")]
-        public async Task<ActionResult<UsuarioDTO>> PostProducto()
-        {
-
-        }
-
+        
     }
 }

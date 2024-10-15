@@ -1,6 +1,7 @@
 ﻿using Core.Data;
 using Core.Entities;
 using Core.Shared;
+using Core.Shared.DTOs.SubastasDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -83,9 +84,40 @@ namespace Master_API.Controllers
         }
 
         [HttpPost("/CargarProducto/")]
-        public async Task<ActionResult<UsuarioDTO>> PostProducto()
+        public async Task<ActionResult<ProductoDTO>> PostProducto(ProductoDTO productoDTO, [FromBody] SubastaIdDTO subastaIdDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var nuevoProducto = new Producto
+            {
+                nombreProducto = productoDTO.NombreProducto,
+                precioBase = productoDTO.PrecioBase,
+                metodoEntrega = productoDTO.MetodoEntrega,
+                fechaSolicitud = productoDTO.FechaSolicitud,
+                estadoProducto = productoDTO.EstadoProducto,
+                // Asociar el producto a la subasta
+                subastaID = subastaIdDTO.subastaID // Suponiendo que hay una propiedad SubastaID en la entidad Producto
+            };
+
+            // Agregar el nuevo producto al contexto
+            await _context.Productos.AddAsync(nuevoProducto);
+            await _context.SaveChangesAsync(); // Guardar los cambios en la base de datos
+
+            // Convertir a DTO para la respuesta
+            var productoResponseDTO = new ProductoDTO
+            {
+                ProductoID = nuevoProducto.productoID, // Asumiendo que el ID se genera al guardar
+                NombreProducto = nuevoProducto.nombreProducto,
+                PrecioBase = nuevoProducto.precioBase,
+                MetodoEntrega = nuevoProducto.metodoEntrega,
+                FechaSolicitud = nuevoProducto.fechaSolicitud,
+                EstadoProducto = nuevoProducto.estadoProducto,
+            };
+
+            return CreatedAtAction(nameof(GetProductID), new { ProductoID = productoResponseDTO.ProductoID }, productoResponseDTO);
         }
 
     }
