@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace Master_API.DTOs
+namespace Core.Shared
 {
     public class ProductoDTO
     {
