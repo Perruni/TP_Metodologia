@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Data;
+using Master_API.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Master_API.Controllers
 {
-    public class UsuarioController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsuarioController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly TPI_DbContext _context;
+
+        public UsuarioController(TPI_DbContext context)
         {
-            return View();
+            _context = context;
         }
+
+        
     }
 }
