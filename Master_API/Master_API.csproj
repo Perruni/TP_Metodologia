@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Core.Configuration\Core.Configuration.csproj" />
     <ProjectReference Include="..\Core.Data\Core.Data.csproj" />
     <ProjectReference Include="..\Core.Entities\Core.Entities.csproj" />
+    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

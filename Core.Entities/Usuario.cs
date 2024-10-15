@@ -23,6 +23,7 @@ namespace Core.Entities
         public List<Producto> listaProductos { get; set; }
         public List<Oferta> listaOfertas{ get; set; }
 
+        public Datos_usuario DatosUsuario { get; set; }
 
     }
 }

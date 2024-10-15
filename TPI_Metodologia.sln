@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master_API", "Master_API\Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web_Subasta", "Web_Subasta\Web_Subasta.csproj", "{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Shared", "Core.Shared\Core.Shared.csproj", "{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC51E6F8-CEB5-4CBD-ABB7-88D8A7DCA8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{7DD2E91D-D1CA-42B9-AB0C-C4889B61A13A} = {1EEE5E43-E05E-4AB3-A5D6-92D3D4C1ADCB}
 		{11F8A8D0-36E4-4C0E-BB43-F4C658EE11E5} = {1EEE5E43-E05E-4AB3-A5D6-92D3D4C1ADCB}
 		{FBED0704-7814-4876-9894-D1D1C67A0955} = {1EEE5E43-E05E-4AB3-A5D6-92D3D4C1ADCB}
+		{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F} = {1EEE5E43-E05E-4AB3-A5D6-92D3D4C1ADCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1C8E7DE-F15F-4FB1-AA88-74D91113DE29}

@@ -17,6 +17,10 @@ namespace Web_Subasta.Controllers
         {
             return View();
         }
+        public IActionResult Activas()
+        {
+            return View();
+        }
 
         public IActionResult Proximas()
         {
@@ -27,11 +31,15 @@ namespace Web_Subasta.Controllers
         {
             return View();
         }
-        public IActionResult producto()
+        public IActionResult SubastasActivas()
         {
             return View();
         }
 
+        public IActionResult Vender()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

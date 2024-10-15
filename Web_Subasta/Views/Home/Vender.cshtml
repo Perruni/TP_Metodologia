@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Imagen del Producto-->
+            <div class="col-md-4 text-center">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250" class="card-img-center" alt="Producto o Propiedad">
+                    <div class="card-body">
+                        <button class="btn btn-outline-secondary">Subir fotos del producto</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="mb-4">Introduzca los Datos</h3>
+                        <form>
+                            <div class="row mb-3">
+                                <!-- Nombre -->
+                                <div class="col-md-6">
+                                    <label for="nombrePublicacion" class="form-label">Nombre de la publicación</label>
+                                    <input type="text" class="form-control" id="nombrePublicacion" placeholder="Escriba el nombre">
+                                </div>
+
+                                <!-- Método de Entrega -->
+                                <div class="col-md-6">
+                                    <label for="metodoEntrega" class="form-label">Método de Entrega</label>
+                                    <input type="text" class="form-control" id="metodoEntrega" placeholder="Escriba el método">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <!-- Seleccionar Subasta -->
+                                <div class="col-md-6">
+                                    <label for="seleccionarSubasta" class="form-label">Seleccionar Subasta</label>
+                                    <select class="form-select" id="seleccionarSubasta">
+                                        <option selected>Seleccione una subasta...</option>
+                                        <option value="1">Subasta 1</option>
+                                        <option value="2">Subasta 2</option>
+                                    </select>
+                                </div>
+
+                                <!-- Precio Base -->
+                                <div class="col-md-6">
+                                    <label for="precioBase" class="form-label">Precio Base</label>
+                                    <input type="number" class="form-control" id="precioBase" placeholder="Ingrese el precio base">
+                                </div>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción del producto o propiedad"></textarea>
+                            </div>
+
+                            <!-- Botón de Solicitar -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-danger">Solicitar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
