@@ -17,6 +17,10 @@ namespace Web_Subasta.Controllers
         {
             return View();
         }
+        public IActionResult Activas()
+        {
+            return View();
+        }
 
         public IActionResult Proximas()
         {
