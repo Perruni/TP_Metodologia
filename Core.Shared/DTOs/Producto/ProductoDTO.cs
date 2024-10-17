@@ -10,7 +10,7 @@ namespace Core.Shared.DTOs.Producto
         public string MetodoEntrega { get; set; }
         public DateTime FechaSolicitud { get; set; }
         public string Descripcion { get; set; }
-        public EstadoProducto estadoProducto { get; set; }
+        public EstadoProducto EstadoProducto { get; set; }
         
 
     }
