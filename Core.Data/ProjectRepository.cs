@@ -39,7 +39,7 @@ namespace Core.Data
         public void DuenoProducto(int productoID)
         {
             _dbContext.Productos.Where(p => p.productoID == productoID)
-                                .Include(u => u.datosUsuario)
+                                
                                 .FirstOrDefault();
         }
 

@@ -38,8 +38,6 @@ namespace Core.Entities
 
         public List<Oferta>? listaOfertas { get; set; }
 
-        public List<Datos_usuario>? datosUsuario { get; set; }
-
         public enum EstadoProducto
         {
             EnSubasta = 1,

@@ -5,12 +5,12 @@ namespace Core.Shared.DTOs.Producto
 {
     public class ProductoDTO
     {
-        public string NombreProducto { get; set; }
-        public double PrecioBase { get; set; }
-        public string MetodoEntrega { get; set; }
-        public DateTime FechaSolicitud { get; set; }
-        public string Descripcion { get; set; }
-        public EstadoProducto EstadoProducto { get; set; }
+        public string nombreProducto { get; set; }
+        public double precioBase { get; set; }
+        public string metodoEntrega { get; set; }
+        public DateTime fechaSolicitud { get; set; }
+        public string descripcion { get; set; }
+        public EstadoProducto estadoProducto { get; set; }
         
 
     }
