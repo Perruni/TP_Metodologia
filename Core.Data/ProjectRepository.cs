@@ -38,7 +38,9 @@ namespace Core.Data
 
         public void DuenoProducto(int productoID)
         {
-            throw new NotImplementedException();
+            _dbContext.Productos.Where(p => p.productoID == productoID)
+                                .Include(u => u.datosUsuario)
+                                .FirstOrDefault();
         }
 
         public List<Producto> GetAll()

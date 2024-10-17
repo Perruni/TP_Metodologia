@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Connection String
 var ConnectionString = builder.Configuration.GetConnectionString("Connection");
 
-var connectionString = builder.Configuration.GetConnectionString("connection");
+var connectionString = builder.Configuration.GetConnectionString("Connection");
 
 var config = new Core.Configuration.Config()
 {
@@ -20,6 +20,14 @@ var config = new Core.Configuration.Config()
 builder.Services.AddScoped<Config>(p =>
 {
     return config;
+});
+
+builder.Services.AddScoped<TPI_DbContext>(provider =>
+{
+    var config = provider.GetRequiredService<Config>();
+    var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
+    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString));
+    return new TPI_DbContext(optionsBuilder.Options, config);
 });
 
 #endregion
