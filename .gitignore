@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /Master_API/appsettings.json
 /Master_API/appsettings.Development.json
+/Web_Subasta/appsettings.json
+/Web_Subasta/appsettings.Development.json

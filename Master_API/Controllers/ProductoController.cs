@@ -82,7 +82,7 @@ namespace Master_API.Controllers
 
             return usuarioDTO;
         }
-
+    /*
         [HttpPost("/CargarProducto/")]
         public async Task<ActionResult<ProductoDTO>> PostProducto(ProductoDTO productoDTO, [FromBody] SubastaIdDTO subastaIdDTO)
         {
@@ -119,6 +119,6 @@ namespace Master_API.Controllers
 
             return CreatedAtAction(nameof(GetProductID), new { ProductoID = productoResponseDTO.ProductoID }, productoResponseDTO);
         }
-
+        */
     }
 }
