@@ -1,1 +1,33 @@
-﻿
+﻿/* Estilos para centrar el contenido */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px); /* Resta altura del navbar y footer */
+    margin-top: 60px; /* Espacio para el navbar */
+    padding-bottom: 60px; /* Espacio para el footer */
+}
+
+.form-wrapper {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+    .form-wrapper h3 {
+        text-align: center;
+    }
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .form-wrapper {
+        width: 100%;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,73 @@
+﻿
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Datos del Producto</title>
+    <link rel="stylesheet" href="~/css/navbar.css" />
+</head>
+<body>
+    <div>
+        <h2>Datos del Producto</h2>
+
+        <div style="display: flex;">
+            <!-- Parte izquierda con la imagen -->
+            <div>
+                <img id="imagenPreview" src="/images/placeholder.png" alt="Imagen del producto" width="300" height="300" />
+                <br />
+                <input type="file" id="imagen" name="imagen" accept="image/*" onchange="mostrarImagen(event)" />
+                <p>Subir fotos del producto o propiedad</p>
+            </div>
+
+            <!-- Parte derecha con los campos del formulario -->
+            <div>
+                <h3>Introduzca los Datos</h3>
+                <form asp-action="Crear" method="post" enctype="multipart/form-data">
+                    <div>
+                        <label for="Nombre">Nombre de la publicación</label>
+                        <input type="text" id="Nombre" name="Nombre" required />
+                    </div>
+
+                    <div>
+                        <label for="SubastaSeleccionada">Seleccionar subasta</label>
+                        <input type="text" id="SubastaSeleccionada" name="SubastaSeleccionada" required />
+                    </div>
+
+                    <div>
+                        <label for="PrecioBase">Precio base</label>
+                        <input type="number" id="PrecioBase" name="PrecioBase" step="0.01" required />
+                    </div>
+
+                    <div>
+                        <label for="Descripcion">Descripción</label>
+                        <textarea id="Descripcion" name="Descripcion" rows="3" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="MetodoEntrega">Método de Entrega</label>
+                        <select id="MetodoEntrega" name="MetodoEntrega" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Envio a domicilio">Envío a domicilio</option>
+                            <option value="Acuerdo con el vendedor">Acuerdo con el vendedor</option>                       
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit">Solicitar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar la imagen seleccionada
+        function mostrarImagen(event) {
+            var imagenPreview = document.getElementById('imagenPreview');
+            imagenPreview.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>

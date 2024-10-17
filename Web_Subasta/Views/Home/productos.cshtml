@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    Layout = "_Layout";
+}
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,9 +13,9 @@
     <h2>Subasta: @Model.Titulo</h2>
 
     <div>
-        <img src="@Model.ImagenUrl" alt="@Model.Titulo" width="300" /> <!-- Imagen traída de la base de datos -->
+       <img src="@Model.ImagenUrl" alt="@Model.Titulo" width="300" /> <!-- Imagen traída de la base de datos -->
     </div>
-
+  
     <h3>@Model.Titulo</h3> <!-- Título de la subasta -->
     <p><strong>Inicia:</strong> @Model.FechaInicio.ToString("dd/MM/yyyy HH:mm")</p>
     <p><strong>Finaliza:</strong> @Model.FechaFin.ToString("dd/MM/yyyy HH:mm")</p>
