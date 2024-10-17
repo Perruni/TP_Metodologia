@@ -80,11 +80,10 @@ namespace Master_API.Controllers
                 usuarioID = usuario.usuarioID,
                 listaProductos = usuario.listaProductos.Select(p => new ProductoDTO
                 {
-                    //ProductoID = p.productoID,
-                    NombreProducto = p.nombreProducto,
-                    PrecioBase = p.precioBase,
-                    MetodoEntrega = p.metodoEntrega,
-                    FechaSolicitud = p.fechaSolicitud,
+                    nombreProducto = p.nombreProducto,
+                    precioBase = p.precioBase,
+                    metodoEntrega = p.metodoEntrega,
+                    fechaSolicitud = p.fechaSolicitud,
                     estadoProducto = p.estadoProducto
                 }).ToList(),
 

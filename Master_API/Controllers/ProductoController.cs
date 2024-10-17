@@ -72,11 +72,11 @@ namespace Master_API.Controllers
             {
                 usuarioID = userId,
                 subastaID = subastaId,
-                nombreProducto = request.NombreProducto,
-                precioBase = request.PrecioBase,
-                metodoEntrega = request.MetodoEntrega,
-                fechaSolicitud = request.FechaSolicitud,
-                descripcion = request.Descripcion,
+                nombreProducto = request.nombreProducto,
+                precioBase = request.precioBase,
+                metodoEntrega = request.metodoEntrega,
+                fechaSolicitud = request.fechaSolicitud,
+                descripcion = request.descripcion,
                 estadoProducto = request.estadoProducto,                
             };
 
