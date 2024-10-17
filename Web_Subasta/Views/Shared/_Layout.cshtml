@@ -37,15 +37,17 @@
     </header>
 
     <main role="main" class="pb-3">
-        <div class="sidebar">
+        @if (ViewData["ShowSidebar"] != null && (bool)ViewData["ShowSidebar"])
+        {
+            <div class="sidebar">
 
-            <div class="sidebar-title">Subastas</div>
-            <a href="/subastas/activas" class="sidebar-button">Activas</a>
-            <a href="/subastas/proximas" class="sidebar-button">Próximas</a>
-            <a href="/subastas/finalizadas" class="sidebar-button">Finalizadas</a>
+                <div class="sidebar-title">Subastas</div>
+                <a href="/subastas/activas" class="sidebar-button">Activas</a>
+                <a href="/subastas/proximas" class="sidebar-button">Próximas</a>
+                <a href="/subastas/finalizadas" class="sidebar-button">Finalizadas</a>
 
-        </div>
-
+            </div>
+        }
         <div class="content">
             <!-- aca cada plantilla sube su contenido en el centro -->
             @RenderBody()
