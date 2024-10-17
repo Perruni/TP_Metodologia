@@ -9,13 +9,20 @@ namespace Core.Data.Interface
 {
     public interface IProjectRepository
     {
-        /*
+     
         public List<Producto> GetAll();
+        public List<Oferta> GetProductoOfertas(int ProductoID);
+        public List<Producto> GetProductoUsuario(int userID);
         public void GetProducto(int ProductoID);
         public void AddProducto(Producto producto);
         public void UpdateProducto(Producto producto);
         public void HabilitarProducto(int PrudctoID, int habilitacionProducto);
         public void DeleteProducto(int ProductoID);
-        */
-     }
+        public void DuenoProducto(int PrudctoID);
+        
+
+
+
+
+    }
 }

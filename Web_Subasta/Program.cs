@@ -30,7 +30,17 @@ builder.Services.AddDbContext<TPI_DbContext>(options => options.UseMySql(connect
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+
+
+//Loggin
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // Habilitar logging en la consola
+builder.Logging.AddDebug();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Shared.DTOs.SubastasDTO
+namespace Core.Shared.DTOs.Subastas
 {
     public class SubastaIdDTO
     {

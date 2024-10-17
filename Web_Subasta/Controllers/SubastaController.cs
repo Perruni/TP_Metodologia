@@ -1,5 +1,7 @@
 ﻿using Core.Data;
 using Core.Shared;
+using Core.Shared.DTOs.Producto;
+using Core.Shared.DTOs.Subastas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +42,7 @@ namespace Master_API.Controllers
                     PrecioBase = p.precioBase,
                     MetodoEntrega = p.metodoEntrega,
                     FechaSolicitud = p.fechaSolicitud,
-                    EstadoProducto = p.estadoProducto
+                    estadoProducto = p.estadoProducto
                 }).ToList(),
 
             };

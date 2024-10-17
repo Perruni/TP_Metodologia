@@ -83,10 +83,8 @@ namespace Core.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     fechaSolicitud = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     estadoSolicitud = table.Column<int>(type: "int", nullable: false),
-                    motivo = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    usuarioID = table.Column<int>(type: "int", nullable: false),
-                    subastaID = table.Column<int>(type: "int", nullable: false)
+                    usuarioID = table.Column<int>(type: "int", nullable: true),
+                    subastaID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,14 +93,12 @@ namespace Core.Data.Migrations
                         name: "FK_Productos_Subastas_subastaID",
                         column: x => x.subastaID,
                         principalTable: "Subastas",
-                        principalColumn: "subastaID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "subastaID");
                     table.ForeignKey(
                         name: "FK_Productos_Usuarios_usuarioID",
                         column: x => x.usuarioID,
                         principalTable: "Usuarios",
-                        principalColumn: "usuarioID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "usuarioID");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -110,22 +106,21 @@ namespace Core.Data.Migrations
                 name: "Datos_usuario",
                 columns: table => new
                 {
-                    DNI = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nombre = table.Column<string>(type: "longtext", nullable: false)
+                    usuarioID = table.Column<int>(type: "int", nullable: false),
+                    DNI = table.Column<int>(type: "int", nullable: false),
+                    nombre = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    apellido = table.Column<string>(type: "longtext", nullable: false)
+                    apellido = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    direccion = table.Column<string>(type: "longtext", nullable: false)
+                    direccion = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     telefono = table.Column<int>(type: "int", nullable: false),
                     codigoArea = table.Column<int>(type: "int", nullable: false),
-                    usuarioID = table.Column<int>(type: "int", nullable: false),
                     productoID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Datos_usuario", x => x.DNI);
+                    table.PrimaryKey("PK_Datos_usuario", x => x.usuarioID);
                     table.ForeignKey(
                         name: "FK_Datos_usuario_Productos_productoID",
                         column: x => x.productoID,
@@ -148,8 +143,8 @@ namespace Core.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     montoOferta = table.Column<float>(type: "float", nullable: false),
                     estadoOferta = table.Column<int>(type: "int", nullable: false),
-                    usuarioID = table.Column<int>(type: "int", nullable: false),
-                    productoID = table.Column<int>(type: "int", nullable: false)
+                    usuarioID = table.Column<int>(type: "int", nullable: true),
+                    productoID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,14 +153,12 @@ namespace Core.Data.Migrations
                         name: "FK_Ofertas_Productos_productoID",
                         column: x => x.productoID,
                         principalTable: "Productos",
-                        principalColumn: "productoID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "productoID");
                     table.ForeignKey(
                         name: "FK_Ofertas_Usuarios_usuarioID",
                         column: x => x.usuarioID,
                         principalTable: "Usuarios",
-                        principalColumn: "usuarioID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "usuarioID");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -173,11 +166,6 @@ namespace Core.Data.Migrations
                 name: "IX_Datos_usuario_productoID",
                 table: "Datos_usuario",
                 column: "productoID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Datos_usuario_usuarioID",
-                table: "Datos_usuario",
-                column: "usuarioID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ofertas_productoID",

@@ -1,4 +1,5 @@
 ﻿using Core.Busisness.Interfaces;
+using Core.Data.Interface;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
@@ -9,43 +10,52 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
-    /*Comentado Temporalmente
+    
     public class ProductoBusiness : IProductoBusiness
     {
+        private readonly IProjectRepository _repository;
 
-        public ProductoBusiness(IRepository Repository) {
-            -repository = Repository;
-        }
-        void AddProducto(Producto producto)
+        public ProductoBusiness(IProjectRepository Repository) {
+            _repository = Repository;
+        }      
+
+      
+        void IProductoBusiness.AddProducto(Producto producto)
         {
-            -repository.AddProducto(producto);
+            _repository.AddProducto(producto);
         }
 
         void DeleteProducto(int ProductoID)
         {
-            -repository.DeleteProducto(ProductoID);
+            _repository.DeleteProducto(ProductoID);
         }
 
-        List<Producto> GetAll()
+        void IProductoBusiness.DeleteProducto(int ProductoID)
         {
-            -repository.GetAll();
+            throw new NotImplementedException();
         }
 
-        Producto GetProducto(int ProductoID)
+        List<Producto> IProductoBusiness.GetAll()
         {
-            -repository.GetProducto(ProductoID);
+            return _repository.GetAll();
         }
 
-        void UpdateProducto(int habilitacionProducto)
+        public void DuenoProducto(int PrudctoID)
         {
-            -repository.UpdateProducto(habilitacionProducto);
+            throw new NotImplementedException();
         }
 
-        void UpdateProducto(Producto producto)
+        public List<Oferta> GetProductoOfertas(int ProductoID)
         {
-            -repository.UpdateProducto(producto);
+            throw new NotImplementedException();
         }
-    }*/
+
+        public List<Producto> GetProductoUsuario(int userID)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 
 
+    

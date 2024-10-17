@@ -1,5 +1,7 @@
 ﻿using Core.Data;
 using Core.Shared;
+using Core.Shared.DTOs.Producto;
+using Core.Shared.DTOs.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,7 +38,7 @@ namespace Master_API.Controllers
                     NombreProducto = p.nombreProducto,
                     PrecioBase = p.precioBase,
                     MetodoEntrega = p.metodoEntrega,
-                    EstadoProducto = p.estadoProducto
+                    estadoProducto = p.estadoProducto,
                 }).ToList(),
 
             };

@@ -31,11 +31,26 @@ namespace Core.Entities
         public string titulo { get; set; }
         public DateTime fechaInicio { get; set; }
         public DateTime fechaFinalizado { get; set; }
-        public int estadoSubasta { get; set; }
-        public int metodosdePago { get; set; }
+        public EstadoSubasta estadoSubasta { get; set; }
+        public MetodosdePago metodosdePago { get; set; }
 
-        public List<Producto> listaProductos { get; set; }
+        public List<Producto>? listaProductos { get; set; }
 
+        public enum EstadoSubasta
+        {
+            Proxima = 1,
+            Activa = 2,
+            Finalizadas = 3,
+            Deshabilitado = 4,
+
+        }
+
+        public enum MetodosdePago
+        {
+            Tarjetas = 1,
+            Transferencia = 2,
+            Ambos = 3,
+        }
 
 
     }

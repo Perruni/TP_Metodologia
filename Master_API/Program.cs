@@ -1,5 +1,8 @@
+using Core.Busisness.Interfaces;
+using Core.Busisness;
 using Core.Configuration;
 using Core.Data;
+using Core.Data.Interface;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -15,7 +18,7 @@ var ConnectionString = builder.Configuration.GetConnectionString("Connection");
 
 var connectionString = builder.Configuration.GetConnectionString("Connection");
 
-/*var config = new Core.Configuration.Config()
+var config = new Core.Configuration.Config()
 {
     ConnectionString = connectionString
 };
@@ -23,16 +26,31 @@ var connectionString = builder.Configuration.GetConnectionString("Connection");
 builder.Services.AddScoped<Config>(p =>
 {
     return config;
-});*/
+});
 
-//Registro de Conexion
-builder.Services.AddDbContext<TPI_DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddScoped<TPI_DbContext>(provider =>
+{
+    var config = provider.GetRequiredService<Config>();
+    var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
+    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString));
+    return new TPI_DbContext(optionsBuilder.Options, config);
+});
+
 
 #endregion
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
+//loggin
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // Habilitar logging en la consola
+builder.Logging.AddDebug();
 
 var app = builder.Build();
 

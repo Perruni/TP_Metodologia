@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text;
-using Core.Shared.DTOs.SubastasDTO;
+using Core.Shared.DTOs.Subastas;
+using Core.Shared.DTOs.Producto;
+using Core.Shared.DTOs.Usuario;
 
 namespace Master_API.Controllers
 {
@@ -83,14 +85,13 @@ namespace Master_API.Controllers
                     PrecioBase = p.precioBase,
                     MetodoEntrega = p.metodoEntrega,
                     FechaSolicitud = p.fechaSolicitud,
-                    EstadoProducto = p.estadoProducto
+                    estadoProducto = p.estadoProducto
                 }).ToList(),
 
             };
 
             return usuarioDTO;
         }
-
-        
+      
     }
 }

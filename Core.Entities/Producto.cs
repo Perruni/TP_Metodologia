@@ -21,25 +21,40 @@ namespace Core.Entities
         [Key]
         public int productoID { get; set; }
         public string nombreProducto { get; set; }
-        public int estadoProducto { get; set; }
+        public EstadoProducto estadoProducto { get; set; }
         public string descripcion { get; set; }
         public double precioBase { get; set; }
         public string metodoEntrega { get; set; }
         public DateTime fechaSolicitud { get; set; }
         public int estadoSolicitud { get; set; }
-        public string? motivo { get; set; }
 
-        public int usuarioID { get; set; }
+        public int? usuarioID { get; set; }
         [ForeignKey("usuarioID")]
-        public virtual Usuario Usuario { get; set; }
+        public virtual Usuario? Usuario { get; set; }
 
-        public int subastaID { get; set; }
+        public int? subastaID { get; set; }
         [ForeignKey("subastaID")]
-        public virtual Subasta Subasta { get; set; }
+        public virtual Subasta? Subasta { get; set; }
 
-        public List<Oferta> listaOfertas { get; set; }
+        public List<Oferta>? listaOfertas { get; set; }
 
-        public List<Datos_usuario> datosUsuario { get; set; }
+        public List<Datos_usuario>? datosUsuario { get; set; }
 
+        public enum EstadoProducto
+        {
+            EnSubasta = 1,
+            Vendido = 2,
+            NoVendido = 3,
+            EnRevision = 4,
+
+        }
+
+        public enum EstadOSolicitud
+        {
+            Pendiente = 1,
+            Aprobado = 2,
+            Rechazado = 3,
+            Cancelado = 4,
+        }
     }
 }

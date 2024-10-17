@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
+using static Core.Entities.Producto;
 
-namespace Core.Shared
+namespace Core.Shared.DTOs.Producto
 {
     public class ProductoDTO
     {
@@ -9,9 +10,9 @@ namespace Core.Shared
         public double PrecioBase { get; set; }
         public string MetodoEntrega { get; set; }
         public DateTime FechaSolicitud { get; set; }
-        public int EstadoProducto { get; set; }
-
-        /*public Datos_usuarioDTO DatosUsuario { get; set; }*/
+        public EstadoProducto estadoProducto { get; set; }
+        public string Descripcion { get; set; }
+        
 
     }
 }

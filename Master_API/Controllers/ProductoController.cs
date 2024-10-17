@@ -1,7 +1,10 @@
-﻿using Core.Data;
+﻿using Core.Busisness.Interfaces;
+using Core.Data;
 using Core.Entities;
 using Core.Shared;
-using Core.Shared.DTOs.SubastasDTO;
+using Core.Shared.DTOs.Producto;
+using Core.Shared.DTOs.Subastas;
+using Core.Shared.DTOs.Usuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +15,13 @@ namespace Master_API.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
+        private readonly IProductoBusiness _productoBusiness;
         private readonly TPI_DbContext _context;
 
-        public ProductoController(TPI_DbContext context)
+        public ProductoController(TPI_DbContext context, IProductoBusiness productoBusiness)
         {
             _context = context;
+            _productoBusiness = productoBusiness;
         }
 
         
@@ -36,11 +41,11 @@ namespace Master_API.Controllers
         }
 
         [HttpGet("Productos")]
-        public async Task<ActionResult<ProductoDTO>> GetAllProduct()
+        public async Task<ActionResult<ProductoDTO>> GetAll()
         {
 
 
-            var product = await _context.Productos.FirstOrDefaultAsync();
+            var product = _productoBusiness.GetAll();
 
             if (product == null)
             {
@@ -49,76 +54,39 @@ namespace Master_API.Controllers
 
             return Ok(product);
 
-        }
+        }    
 
-
-        [HttpGet("/MisOfertas/{id}")]
-        public async Task<ActionResult<UsuarioDTO>> GetUsuarioOfertas(int id)
+        
+        [HttpPost("{userId}/{subastaId}")]
+        public async Task<ActionResult<Producto?>> PostProducto(CrearProductoDTO request, int userId, int subastaId)
         {
-            var usuario = await _context.Usuarios
-                .Include(u => u.listaOfertas)
-                .FirstOrDefaultAsync(u => u.usuarioID == id);
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            // Mapeo manual del Usuario a UsuarioDTO
-            var usuarioDTO = new UsuarioDTO
-            {
-                usuarioID = usuario.usuarioID,
-                listaProductos = usuario.listaProductos.Select(p => new ProductoDTO
-                {
-                    ProductoID = p.productoID,
-                    NombreProducto = p.nombreProducto,
-                    PrecioBase = p.precioBase,
-                    MetodoEntrega = p.metodoEntrega,
-                    FechaSolicitud = p.fechaSolicitud,
-                    EstadoProducto = p.estadoProducto
-                }).ToList(),
-
-            };
-
-            return usuarioDTO;
-        }
-    /*
-        [HttpPost("/CargarProducto/")]
-        public async Task<ActionResult<ProductoDTO>> PostProducto(ProductoDTO productoDTO, [FromBody] SubastaIdDTO subastaIdDTO)
-        {
+            // Validación del modelo
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }           
+            
 
+            // Crear una nueva instancia de Producto
             var nuevoProducto = new Producto
             {
-                nombreProducto = productoDTO.NombreProducto,
-                precioBase = productoDTO.PrecioBase,
-                metodoEntrega = productoDTO.MetodoEntrega,
-                fechaSolicitud = productoDTO.FechaSolicitud,
-                estadoProducto = productoDTO.EstadoProducto,
-                // Asociar el producto a la subasta
-                subastaID = subastaIdDTO.subastaID // Suponiendo que hay una propiedad SubastaID en la entidad Producto
+                usuarioID = userId,
+                subastaID = subastaId,
+                nombreProducto = request.NombreProducto,
+                precioBase = request.PrecioBase,
+                metodoEntrega = request.MetodoEntrega,
+                fechaSolicitud = request.FechaSolicitud,
+                descripcion = request.Descripcion,
+                estadoProducto = request.estadoProducto,                
             };
 
             // Agregar el nuevo producto al contexto
             await _context.Productos.AddAsync(nuevoProducto);
-            await _context.SaveChangesAsync(); // Guardar los cambios en la base de datos
+            await _context.SaveChangesAsync(); // Guardar los cambios en la base de datos            
 
-            // Convertir a DTO para la respuesta
-            var productoResponseDTO = new ProductoDTO
-            {
-                ProductoID = nuevoProducto.productoID, // Asumiendo que el ID se genera al guardar
-                NombreProducto = nuevoProducto.nombreProducto,
-                PrecioBase = nuevoProducto.precioBase,
-                MetodoEntrega = nuevoProducto.metodoEntrega,
-                FechaSolicitud = nuevoProducto.fechaSolicitud,
-                EstadoProducto = nuevoProducto.estadoProducto,
-            };
+            return Ok(nuevoProducto);
 
-            return CreatedAtAction(nameof(GetProductID), new { ProductoID = productoResponseDTO.ProductoID }, productoResponseDTO);
         }
-        */
+
     }
 }

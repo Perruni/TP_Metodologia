@@ -20,10 +20,10 @@ namespace Core.Entities
         public int usuarioID { get; set; }        
         public string email { get; set; }
         public string contrasenia {  get; set; }
-        public List<Producto> listaProductos { get; set; }
-        public List<Oferta> listaOfertas{ get; set; }
+        public List<Producto>? listaProductos { get; set; }
+        public List<Oferta>? listaOfertas{ get; set; }
 
-        public Datos_usuario DatosUsuario { get; set; }
+        public Datos_usuario? DatosUsuario { get; set; }
 
     }
 }

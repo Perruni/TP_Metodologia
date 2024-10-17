@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core.Data\Core.Data.csproj" />
     <ProjectReference Include="..\Core.Entities\Core.Entities.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,47 @@
+﻿@using Core.Shared
+@model Core.Shared.DTOs.Producto.CrearProductoDTO
+
+<h1>Cargar Nuevo Producto</h1>
+
+<form asp-action="CargarProducto" method="post">
+    <div>
+        <label>Nombre del Producto:</label>
+        <input asp-for="NombreProducto" required />
+    </div>
+    <div>
+        <label>Precio Base:</label>
+        <input asp-for="PrecioBase" type="number" required />
+    </div>
+    <div>
+        <label>Método de Entrega:</label>
+        <input asp-for="MetodoEntrega" required />
+    </div>
+    <div>
+        <label>Descripción:</label>
+        <input asp-for="Descripcion" required />
+    </div>
+    <div>
+        <label>Fecha de Solicitud:</label>
+        <input asp-for="FechaSolicitud" type="date" required />
+    </div>
+    <div>
+        <label>Estado del Producto:</label>
+        <input asp-for="estadoProducto" required />
+    </div>
+    <div>
+        <label>ID de Subasta:</label>
+        <input type="number" name="subastaID" required />
+    </div>
+
+    <!-- Campo oculto para ID de usuario -->
+    <input type="hidden" name="usuarioID" value="@ViewBag.UsuarioID" />
+
+    <button type="submit">Cargar Producto</button>
+</form>
+
+<div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <p style="color:red;">Error al cargar el producto. Por favor, verifica los datos.</p>
+    }
+</div>
