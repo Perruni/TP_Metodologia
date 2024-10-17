@@ -3,63 +3,68 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web_Subasta</title>
+    <title>@ViewData["Title"] - pruebaLayout</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web_Subasta.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/pruebaLayout.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <img src="~/img/logo.png" alt="Icono MEW" class="icono-mew">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
+            <img src="~/img/logo.png" alt="Icono MEW" class="icono-mew">
+            <div class="container">
+                <a class="nav-link" asp-area="" asp-page="/Index">Subastas</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                        <a class="nav-link" href="#">Subastas</a>
-                        <a class="nav-link" href="#">Mis Ofertas</a>
-                        <a class="nav-link" href="#">Mis Productos</a>
-                    </div>
-                    <div class="navbar-buttons ms-auto">
-                        <button class="nav-inicio" id="nav-inicio">Iniciar Sesión</button>
-                        <button class="nav-registro">Registrate</button>
-                    </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Index">MisOfertas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">MisProductos</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-buttons ms-auto">
+                    <button class="nav-inicio" id="nav-inicio">Iniciar Sesión</button>
+                    <button class="nav-registro">Registrate</button>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="contents">
+    <main role="main" class="pb-3">
         @if (ViewData["ShowSidebar"] != null && (bool)ViewData["ShowSidebar"])
         {
             <div class="sidebar">
+
                 <div class="sidebar-title">Subastas</div>
                 <a href="/subastas/activas" class="sidebar-button">Activas</a>
                 <a href="/subastas/proximas" class="sidebar-button">Próximas</a>
                 <a href="/subastas/finalizadas" class="sidebar-button">Finalizadas</a>
+
             </div>
         }
-
-        <!-- Esto hace que las demás vistas puedan agregar su contenido en el centro -->
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+        <div class="content">
+            <!-- aca cada plantilla sube su contenido en el centro -->
+            @RenderBody()
         </div>
-    </div>
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Copyright &copy; 2024 - 2024 M.E.W Auctions <a asp-area="" asp-controller="Home" asp-action="TerminosYCondiciones">Terminos y Condiciones</a>
-            <a asp-controller="poli-priva" asp-action="Politicias y Privacidad">Politicas y Privacidad</a>
+            Copyright &copy; 2024 - M.E.W Auctions - <a asp-area="" asp-page="/Privacy">Terminos y Condiciones</a>
+            <a asp-area="" asp-page="/Privacy">Sobre Nosotros</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

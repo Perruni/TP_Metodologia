@@ -60,8 +60,10 @@ namespace Web_Subasta.Controllers
         }
 
 
-
-
+        public IActionResult VenderProducto()
+        {
+            return View();
+        }
 
         public IActionResult productos()
         {

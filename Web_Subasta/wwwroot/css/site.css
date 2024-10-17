@@ -1,231 +1,155 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%; /* Asegurar que la altura de html y body sea del 100% */
-}
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, .footer {
+    background-color: #282828;
+    color: white;
+    text-align: center;
+    padding: 10px;
+   
+}
+
+    header a {
+        text-decoration: none;
+        color: white !important;
+        font-size: 1rem;
+        font-weight: normal;
+        margin-right: 20px;
+    }
+
+    header img.icono-mew {
+        height: auto; /* Ajusta el tamaño del logo */
+        margin-right: 35px; /* Añade espacio entre el logo y el contenido */
+        width: 120px;
+        opacity: 0.8;
+    }
+
+.navbar {
+    padding: 0px;
+    background-color: #282828;
+    
+}
+
+    .navbar .navbar-brand {
+        color: #EDEDED; /* Cambia el color de la marca */
+        font-size: 24px;
+    }
+
+.navbar-nav .nav-item .nav-link {
+    color: #EDEDED;
+    margin-right: 20px; /* Espacio entre los enlaces del navbar */
 }
 
 .navbar-buttons {
     display: flex;
-    margin-left: auto; 
+    gap: 10px;
 }
 
-.nav-inicio, .nav-registro {
-    margin-left: 10px;
-}
-
-
-/* Estilos para el navbar */
-.navbar {
-    background-color: #282828;
-    margin-bottom: 0;
-    padding: 0; /* Eliminar padding superior e inferior */
-    position: fixed;
-    width: 100%;
-    z-index: 999; /* Asegura que esté encima del sidebar */
-}
-
-    
-    /* Estilo para los enlaces del navbar */
-    .navbar .nav-link {
-        color: white;     
-        font-size: 1rem; /* Mismo tamaño para todos los enlaces */
-        font-weight: normal; /* No negrita para los enlaces */
-        margin-right: 20px; /* Separación entre los enlaces */
+    .navbar-buttons .nav-inicio,
+    .navbar-buttons .nav-registro {
+        background-color: #796e64;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
     }
 
-        /* Para las opciones activas (quitar negrita) */
-        .navbar .nav-link.active {
-            font-weight: normal; /* Sin negrita */
-            color: #f1f1f1; /* Mantener el color activo */
-        }
-
-/* Estilo para los botones del navbar */
-
-/* Botón "Iniciar Sesión" (blanco opaco) */
-.navbar-buttons .nav-inicio {
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #282828;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-    /* Hover para el botón "Iniciar Sesión" */
-    .navbar-buttons .nav-inicio:hover {
-        background-color: rgba(255, 255, 255, 1);
+    .navbar-buttons .nav-registro {
+        background-color: #D4A517;
     }
 
-/* Botón "Registrarse" (color D8AE3A) */
-.navbar-buttons .nav-registro {
-    background-color: #D8AE3A;
-    color: #282828;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-    /* Hover para el botón "Registrarse" */
-    .navbar-buttons .nav-registro:hover {
-        background-color: #C99C2D;
-    }
-
-/* Para los botones en dispositivos móviles */
-.navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28155, 155, 155, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-
-.footer {
-    background-color: #282828; /* Fondo igual que el navbar */
-    padding: 20px 0;
-    color: white; /* Texto blanco */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
     text-align: center;
-    border-top: 1px solid #fff; /* Borde superior */
-    z-index: 1000 !important;
+    margin: 0; /* Elimina todos los márgenes de main */
+    flex: 1;
 }
 
-    .footer a {
-        color: white; /* Enlaces en blanco */
-        margin-left: 15px;
-        text-decoration: none;
-        font-weight: bold; /* Enlaces con texto en negrita */
-    }
-
-        /* Efecto hover para los enlaces del footer */
-        .footer a:hover {
-            color: #f1f1f1; /* Cambiar a tono más claro al hacer hover */
-        }
-
-    /* Ajustes para el contenedor */
-    .footer .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px; /* Espacio entre los elementos */
-        flex-wrap: wrap; /* Ajuste en pantallas pequeñas */
-    }
-
-/* Responsive para pantallas pequeñas */
-@media (max-width: 768px) {
-    .footer .container {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-
-/*Logo Boton*/
-.icono-mew {
-    width: 120px; /* Tamaño base */
-    height: auto; /* Mantiene la proporción de aspecto */
-    cursor: pointer; /* Hacer que la imagen se comporte como un botón */
-    margin-right: 35px;
-}
-
-    .icono-mew {
-        opacity: 0.8; /* Reduce la opacidad en hover */
-    }
-
-
-    /*Side Bar*/
-
-/* Estilos para el sidebar */
 .sidebar {
+    flex: .350;
     background-color: #90827a;
     padding: 20px;
-    width: 150px; /* Ancho fijo del sidebar */
-    height: 76.8vh; /* Ocupa toda la altura de la ventana */
-    position: fixed;
-    top: 84.3px;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 20px;
+    height: 100vh;
+    margin-bottom:-16px;
+    
 }
 
 .sidebar-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    padding-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
     border-bottom: 2px solid #796e64;
 }
 
 .sidebar-button {
+    font-size: 20px;
     display: block;
-    color: #fff !important;
+    color: #fff
+ !important;
     text-decoration: none;
-    padding: 10px 0;
+    padding: 15px 0;
     transition: background-color 0.5s, box-shadow 0.5s;
+    border-radius: 10px;
 }
 
-    .sidebar-button:hover, .sidebar-button.active {
+    .sidebar-button:hover {
         background-color: #6e6158;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-.contents {
-    margin-left: 200px; /* El contenido principal se desplaza a la derecha, ajustado al ancho del sidebar */
+.content {
+    flex: 3;
+    background-color: #EDEDED;
+    padding: 20px; /* Asegura que haya padding dentro del contenido */
+    margin: 20px; /* Aplica margen en todos los lados (top, right, bottom, left) */
+    min-height: 100%;
+    color: #333;
+}
+
+footer {
+    background-color: #333;
+    color: white;
     padding: 20px;
+    text-align: center;
 }
 
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
-    border-radius: 10px; /* Bordes redondeados */
-    transition: transform 0.2s ease-in-out; /* Efecto de zoom al hover */
-}
-
-    .card:hover {
-        transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    footer a {
+        color: #f4a71d;
+        margin-left: 20px;
+        text-decoration: none;
     }
 
-    .card img {
-        max-width: 100%; /* La imagen ocupa el 100% del ancho de la tarjeta */
-        height: auto; /* Mantiene las proporciones de la imagen */
-        border-radius: 10px; /* Bordes redondeados para las imágenes también */
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+@media only screen and (max-width: 768px) {
+    main {
+        flex-direction: column;
     }
 
-@media (max-width: 768px) {
-    .card {
-        width: 90%; /* Las tarjetas ocupan el 90% del ancho en móviles */
-        margin-bottom: 20px; /* Espacio entre las tarjetas */
+    .content {
+        margin-left: 0;
+        margin-top: 20px;
     }
 
-    .row {
-        display: flex; /* Activa Flexbox */
-        justify-content: center; /* Centra las tarjetas */
-        align-items: center; /* Opcional: centra verticalmente si es necesario */
-        flex-wrap: wrap; /* Permite que las tarjetas pasen a la siguiente fila si es necesario */
-        flex-direction: column; /* Acomoda las tarjetas en una columna */
+    .sidebar, .content {
+        flex: 1;
     }
 }
