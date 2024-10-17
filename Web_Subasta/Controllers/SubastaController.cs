@@ -37,7 +37,6 @@ namespace Master_API.Controllers
                 subastaID = subasta.subastaID,
                 listaProductos = subasta.listaProductos.Select(p => new ProductoDTO
                 {
-                    ProductoID = p.productoID,
                     NombreProducto = p.nombreProducto,
                     PrecioBase = p.precioBase,
                     MetodoEntrega = p.metodoEntrega,
