@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Datos de Usuario";
+}
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<div class="container mt-5">
+    <h2>Datos de usuario</h2>
+    <p>NECESITAREMOS UNOS DATOS ADICIONALES PARA LA CUENTA</p>
+
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for/="Nombre" class="form-label">Nombre</label>
+                <input asp-for/="Nombre" class="form-control" placeholder="Ingrese su nombre" />
+                <span asp-validation-for/="Nombre" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for/="Apellido" class="form-label">Apellido</label>
+                <input asp-for/="Apellido" class="form-control" placeholder="Ingrese su apellido" />
+                <span asp-validation-for/="Apellido" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for/="DNI" class="form-label">DNI</label>
+                <input asp-for/="DNI" class="form-control" placeholder="Ingrese su DNI" />
+                <span asp-validation-for/="DNI" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for/="CodigoArea" class="form-label">Código de área</label>
+                <input asp-for/="CodigoArea" class="form-control" placeholder="Ingrese su código de área" />
+                <span asp-validation-for/="CodigoArea" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for/="Direccion" class="form-label">Dirección</label>
+                <input asp-for/="Direccion" class="form-control" placeholder="Ingrese su dirección" />
+                <span asp-validation-for/="Direccion" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for/="Telefono" class="form-label">Teléfono</label>
+                <input asp-for/="Telefono" class="form-control" placeholder="Ingrese su teléfono" />
+                <span asp-validation-for/="Telefono" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for/="MontoOfertar" class="form-label">Monto a Ofertar</label>
+            <input asp-for/="MontoOfertar" class="form-control" type="text" placeholder="Ingrese un monto" />
+            <span asp-validation-for/="MontoOfertar" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-danger">ENVIAR</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

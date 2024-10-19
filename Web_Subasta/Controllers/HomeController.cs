@@ -30,7 +30,7 @@ namespace Web_Subasta.Controllers
             return View("Index");
         }
 
-        /*
+        
         public IActionResult Activas()
         {
             return View();
@@ -68,7 +68,12 @@ namespace Web_Subasta.Controllers
         public IActionResult productos()
         {
             return View();
-        }*/
+        }
+
+        public IActionResult DatosUsuario()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
