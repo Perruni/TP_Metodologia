@@ -1,35 +1,87 @@
 ﻿@{
-    ViewData["Title"] = "Crear Producto";
+    ViewData["Title"] = "Formulario de Producto";
 }
-<!--SE DEBEN SACAR LAS BARRAS DE ADELANTE DE TODOS LOS ASP FOR PARA LOS MODELS-->
-<div class="form-container">
-    <div class="form-section">
-        <h3>Datos del Producto</h3>
-        <img src="~/images/placeholder.png" alt="Imagen del Producto" style="width:100%; border-radius:8px;">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            <input type="file" /asp-for="ProductImage" class="form-control" />
-            <p style="text-align:center;">Subir fotos del producto o propiedad</p>
-            <div class="form-group">
-                <label /asp-for="PublicationName"></label>
-                <input /asp-for="PublicationName" class="form-control" />
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Columna izquierda para subir fotos -->
+        <div class="col-md-6">
+            <div class="card text-center">
+                <!-- Imagen de vista previa -->
+                <img id="imgPreview" src="~/images/house-placeholder.jpg" class="card-img-top" alt="Vista previa de la propiedad" style="max-height: 300px;" />
+                <div class="card-body">
+                    <label asp-for/="ProductImage" class="form-label">Subir fotos del producto o propiedad</label>
+                    <input asp-for/="ProductImage" type="file" class="form-control" id="productImageInput" accept="image/*" />
+                    <span asp-validation-for/="ProductImage" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label /asp-for="AuctionType"></label>
-                <select /asp-for="AuctionType" class="form-control">
-                    <option value="">Seleccione una opción</option>
-                    <option value="Tipo1">Subasta Tipo 1</option>
-                    <option value="Tipo2">Subasta Tipo 2</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label /asp-for="BasePrice"></label>
-                <input /asp-for="BasePrice" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label /asp-for="Description"></label>
-                <textarea /asp-for="Description" class="form-control" rows="4"></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Solicitar</button>
-        </form>
+        </div>
+
+        
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for/="Title" class="form-label">Titulo de la publicación</label>
+                    <input asp-for/="Title" class="form-control" />
+                    <span asp-validation-for/="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for/="AuctionType" class="form-label">Seleccionar subasta</label>
+                    <select asp-for/="AuctionType" class="form-select">
+                        <option value="">Elegir...</option>
+                        <option value="Subasta1">Subasta 1</option>
+                        <option value="Subasta2">Subasta 2</option>
+                    </select>
+                    <span asp-validation-for/="AuctionType" class="text-danger"></span>
+                </div>
+
+                 <div class="mb-3">
+                    <label asp-for/="BasePrice" class="form-label">Precio base</label>
+                    <input asp-for/="BasePrice" class="form-control" type="text" id="BasePrice" />
+                    <span asp-validation-for/="BasePrice" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for/="Description" class="form-label">Descripción</label>
+                    <textarea asp-for/="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for/="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for/="DeliveryMethod" class="form-label">Método de Entrega</label>
+                    <select asp-for/="DeliveryMethod" class="form-select">
+                        <option value="">Elegir...</option>
+                        <option value="Envio">Envío a domicilio</option>
+                        <option value="Acuerdo">Acuerdo con el vendedor</option>
+                    </select>
+                    <span asp-validation-for/="DeliveryMethod" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-danger">Solicitar</button>
+            </form>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <!-- Script para vista previa de la imagen -->
+    <script>
+        document.getElementById('productImageInput').addEventListener('change', function(event) {
+            var input = event.target;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    document.getElementById('imgPreview').src = e.target.result;
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
+}
