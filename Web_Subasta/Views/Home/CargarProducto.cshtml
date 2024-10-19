@@ -6,29 +6,20 @@
 <form asp-action="CargarProducto" method="post">
     <div>
         <label>Nombre del Producto:</label>
-        <input asp-for="NombreProducto" required />
+        <input asp-for="nombreProducto" required />
     </div>
     <div>
         <label>Precio Base:</label>
-        <input asp-for="PrecioBase" type="number" required />
+        <input asp-for="precioBase" type="number" required />
     </div>
     <div>
         <label>Método de Entrega:</label>
-        <input asp-for="MetodoEntrega" required />
+        <input asp-for="metodoEntrega" required />
     </div>
     <div>
         <label>Descripción:</label>
-        <input asp-for="Descripcion" required />
-    </div>
-    <div>
-        <label>Fecha de Solicitud:</label>
-        <input asp-for="FechaSolicitud" type="date" required />
-    </div>
-    <div>
-        <label>Estado del Producto:</label>
-        <input asp-for="estadoProducto" required />
-    </div>
-    <div>
+        <input asp-for="descripcion" required />
+    </div>    
         <label>ID de Subasta:</label>
         <input type="number" name="subastaID" required />
     </div>

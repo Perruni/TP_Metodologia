@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 /*Notas IMPORTANTE:
@@ -21,8 +22,7 @@ namespace Core.Entities
         public string email { get; set; }
         public string contrasenia {  get; set; }
         public List<Producto>? listaProductos { get; set; }
-        public List<Oferta>? listaOfertas{ get; set; }
-
+        public List<Oferta>? listaOfertas{ get; set; }        
         public Datos_usuario? DatosUsuario { get; set; }
 
     }

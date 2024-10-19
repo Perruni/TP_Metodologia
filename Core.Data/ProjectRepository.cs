@@ -20,59 +20,79 @@ namespace Core.Data
         }
 
         #region PORDUCTO
-        public void AddProducto(Producto producto)
+        public async Task<Producto> AddProducto(Producto producto)
         {
             _dbContext.Add(producto);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
+
+             return producto;
+           
         }
 
-        public void DeleteProducto(int productoID)
+        public async Task<Producto> DeleteProducto(int productoID)
         {
             var producto = _dbContext.Productos.Find(productoID);
             if (producto != null)
             {
                 _dbContext.Remove(producto);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
+
+                return producto;
             }
+            return null;
         }
 
-        public void DuenoProducto(int productoID)
+        public Task<Producto> DuenoProducto(int productoID)
         {
-            _dbContext.Productos.Where(p => p.productoID == productoID)
-                                
-                                .FirstOrDefault();
+            var DuenoProducto =  _dbContext.Productos.Where(p => p.productoID == productoID)
+                                .Include(u => u.Usuario.DatosUsuario)                                
+                                .FirstOrDefaultAsync();
+
+            return DuenoProducto;
         }
 
-        public List<Producto> GetAll()
+        public Task<List<Producto>> GetAll()
         {
-            return _dbContext.Productos.ToList();
+            return _dbContext.Productos.ToListAsync();
         }
 
-        public void GetProducto(int productoID)
+        public Task<Producto> GetProducto(int productoID)
+        {
+            var producto = _dbContext.Productos.Where(p => p.productoID == productoID).FirstOrDefaultAsync();
+
+            return producto;
+        }
+
+        public Task<List<Oferta>> GetProductoOfertas(int productoID)
+        {
+            var ofertas =  _dbContext.Ofertas.Where(p => p.productoID == productoID)                                                    
+                                                   .ToListAsync();
+
+            return ofertas;
+
+        }
+
+        public Task<List<Producto>> GetProductoUsuario(int userID)
         {
             throw new NotImplementedException();
         }
 
-        public List<Oferta> GetProductoOfertas(int productoID)
+        public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto)
         {
             throw new NotImplementedException();
         }
 
-        public List<Producto> GetProductoUsuario(int userID)
+        public Task<Producto> UpdateProducto(Producto producto)
         {
             throw new NotImplementedException();
         }
+          
 
-        public void HabilitarProducto(int productoID, int habilitacionProducto)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void UpdateProducto(Producto producto)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
+        #region SUBASTA
+
+        #endregion
     }
 }

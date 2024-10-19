@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Shared.DTOs.Subastas
+namespace Core.Busisness.Interfaces
 {
-    public class SubastaIdDTO
+    internal class IDatosUsuarioBusiness
     {
-        public int subastaID { get; set; }
-
-
     }
 }

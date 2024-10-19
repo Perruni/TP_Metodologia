@@ -26,7 +26,7 @@ namespace Core.Entities
         public double precioBase { get; set; }
         public string metodoEntrega { get; set; }
         public DateTime fechaSolicitud { get; set; }
-        public int estadoSolicitud { get; set; }
+        public EstadoSolicitud estadoSolicitud { get; set; }
 
         public int? usuarioID { get; set; }
         [ForeignKey("usuarioID")]
@@ -47,7 +47,7 @@ namespace Core.Entities
 
         }
 
-        public enum EstadOSolicitud
+        public enum EstadoSolicitud
         {
             Pendiente = 1,
             Aprobado = 2,

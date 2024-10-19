@@ -9,12 +9,10 @@ namespace Core.Shared.DTOs.Producto
 {
     public class CrearProductoDTO
     {
-        public string NombreProducto { get; set; }
-        public double PrecioBase { get; set; }
-        public string MetodoEntrega { get; set; }
-        public DateTime FechaSolicitud { get; set; }
-        public EstadoProducto estadoProducto { get; set; }
-        public string Descripcion { get; set; }
+        public string nombreProducto { get; set; }
+        public double precioBase { get; set; }
+        public string metodoEntrega { get; set; }
+        public string descripcion { get; set; }
 
 
 

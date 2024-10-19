@@ -1,5 +1,6 @@
 ﻿using Core.Busisness.Interfaces;
 using Core.Data;
+using Core.Data.Interface;
 using Core.Entities;
 using Core.Shared;
 using Core.Shared.DTOs.Producto;
@@ -16,20 +17,20 @@ namespace Master_API.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly IProductoBusiness _productoBusiness;
-        private readonly TPI_DbContext _context;
+        private readonly IProjectRepository _repository;
 
-        public ProductoController(TPI_DbContext context, IProductoBusiness productoBusiness)
+        public ProductoController(IProductoBusiness productoBusiness,IProjectRepository repository)
         {
-            _context = context;
             _productoBusiness = productoBusiness;
+            _repository = repository;
         }
 
         
         [HttpGet("{ProductoID}")]
-        public async Task<ActionResult<Producto>> GetProductID(int ProductoID)        {
+        public async Task<ActionResult<Producto>> GetProductID(int ProductoID)
+        {
 
-
-            var product = await _context.Productos.FindAsync(ProductoID);
+            var product = await _productoBusiness.GetProducto(ProductoID);
 
             if (product == null)
             {
@@ -40,12 +41,46 @@ namespace Master_API.Controllers
 
         }
 
-        [HttpGet("Productos")]
-        public async Task<ActionResult<ProductoDTO>> GetAll()
+        [HttpGet("UserOwner/{productoID}")]
+        public async Task<ActionResult<ProductoDTO>> GetUserOwner(int productoID)
         {
 
 
-            var product = _productoBusiness.GetAll();
+            var product = await _repository.DuenoProducto(productoID);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var productoDto = new ProductoDTO
+            {
+                nombreProducto = product.nombreProducto,
+                precioBase = product.precioBase,
+                metodoEntrega = product.metodoEntrega,
+                fechaSolicitud = product.fechaSolicitud,
+                descripcion = product.descripcion,
+                estadoProducto = product.estadoProducto
+                Usuario = new UsuarioDTO
+                {
+                    DNI = product.Usuario.DatosUsuario.DNI
+                    nombre = product.Usuario.DatosUsuario.nombre
+
+
+                                                            
+
+                }
+            };
+
+            return Ok(product);
+
+        }
+
+        [HttpGet("Productos")]
+        public async Task<ActionResult<Producto>> GetAll()
+        {
+
+
+            var product = await _productoBusiness.GetAll();
 
             if (product == null)
             {
@@ -58,14 +93,14 @@ namespace Master_API.Controllers
 
         
         [HttpPost("{userId}/{subastaId}")]
-        public async Task<ActionResult<Producto?>> PostProducto(ProductoDTO request, int userId, int subastaId)
+        public async Task<ActionResult<Producto?>> PostProducto(CrearProductoDTO request, int userId, int subastaId)
         {
             // Validación del modelo
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }           
-            
+            }
+
 
             // Crear una nueva instancia de Producto
             var nuevoProducto = new Producto
@@ -75,14 +110,14 @@ namespace Master_API.Controllers
                 nombreProducto = request.nombreProducto,
                 precioBase = request.precioBase,
                 metodoEntrega = request.metodoEntrega,
-                fechaSolicitud = request.fechaSolicitud,
+                fechaSolicitud = DateTime.Now,
                 descripcion = request.descripcion,
-                estadoProducto = request.estadoProducto,                
+                estadoProducto = Producto.EstadoProducto.EnRevision,
+                estadoSolicitud = Producto.EstadoSolicitud.Pendiente,
             };
 
             // Agregar el nuevo producto al contexto
-            await _context.Productos.AddAsync(nuevoProducto);
-            await _context.SaveChangesAsync(); // Guardar los cambios en la base de datos            
+            await _productoBusiness.AddProducto(nuevoProducto);            
 
             return Ok(nuevoProducto);
 

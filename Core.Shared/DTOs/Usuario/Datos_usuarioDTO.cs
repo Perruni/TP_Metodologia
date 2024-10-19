@@ -1,4 +1,4 @@
-﻿namespace Master_API.DTOs
+﻿namespace Core.Shared.DTOs.Usuario
 {
     public class Datos_usuarioDTO
     {

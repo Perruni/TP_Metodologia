@@ -17,34 +17,26 @@ namespace Core.Busisness
 
         public ProductoBusiness(IProjectRepository Repository) {
             _repository = Repository;
-        }      
-
-      
-        void IProductoBusiness.AddProducto(Producto producto)
-        {
-            _repository.AddProducto(producto);
         }
 
-        void DeleteProducto(int ProductoID)
+
+        public async Task<Producto> AddProducto(Producto producto)
         {
-            _repository.DeleteProducto(ProductoID);
+            var newProducto = await _repository.AddProducto(producto);
+            return newProducto; 
         }
 
-        void IProductoBusiness.DeleteProducto(int ProductoID)
+        public async Task<Producto> DeleteProducto(int ProductoID)
         {
-            throw new NotImplementedException();
+            var deleteProducto = await _repository.DeleteProducto(ProductoID);
+            return deleteProducto;
         }
 
-        List<Producto> IProductoBusiness.GetAll()
+        Task<List<Producto>> IProductoBusiness.GetAll()
         {
             return _repository.GetAll();
         }
-
-        public void DuenoProducto(int PrudctoID)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public List<Oferta> GetProductoOfertas(int ProductoID)
         {
             throw new NotImplementedException();
@@ -53,6 +45,26 @@ namespace Core.Busisness
         public List<Producto> GetProductoUsuario(int userID)
         {
             throw new NotImplementedException();
+        }
+
+        Task<List<Oferta>> IProductoBusiness.GetProductoOfertas(int ProductoID)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Producto>> IProductoBusiness.GetProductoUsuario(int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Producto> IProductoBusiness.DuenoProducto(int productoID)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Producto> IProductoBusiness.GetProducto(int ProductoID)
+        {
+            return _repository.GetProducto(ProductoID);
         }
     }
 }
