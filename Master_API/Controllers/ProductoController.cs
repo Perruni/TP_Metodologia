@@ -59,10 +59,10 @@ namespace Master_API.Controllers
                 metodoEntrega = product.metodoEntrega,
                 fechaSolicitud = product.fechaSolicitud,
                 descripcion = product.descripcion,
-                estadoProducto = product.estadoProducto
-                Usuario = new UsuarioDTO
+                estadoProducto = product.estadoProducto,
+                usuario = new UsuarioDTO
                 {
-                    DNI = product.Usuario.DatosUsuario.DNI
+                    DNI = product.Usuario.DatosUsuario.DNI,
                     nombre = product.Usuario.DatosUsuario.nombre
 
 
