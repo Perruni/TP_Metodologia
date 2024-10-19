@@ -18,7 +18,8 @@ namespace Core.Data.Interface
         public Task<Producto> UpdateProducto(Producto producto);
         public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto);
         public Task<Producto> DeleteProducto(int ProductoID);
-        public Task<Producto> DuenoProducto(int productoID);
+        public Task<Producto> DatosProducto(int productoID);
+        public Task<Producto> CancelarProducto(Producto producto);
 
 
 

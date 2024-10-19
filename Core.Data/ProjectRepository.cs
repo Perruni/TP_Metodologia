@@ -42,13 +42,13 @@ namespace Core.Data
             return null;
         }
 
-        public Task<Producto> DuenoProducto(int productoID)
+        public Task<Producto> DatosProducto(int productoID)
         {
-            var DuenoProducto =  _dbContext.Productos.Where(p => p.productoID == productoID)
+            var DatosProducto =  _dbContext.Productos.Where(p => p.productoID == productoID)
                                 .Include(u => u.Usuario.DatosUsuario)                                
                                 .FirstOrDefaultAsync();
 
-            return DuenoProducto;
+            return DatosProducto;
         }
 
         public Task<List<Producto>> GetAll()
@@ -67,7 +67,6 @@ namespace Core.Data
         {
             var ofertas =  _dbContext.Ofertas.Where(p => p.productoID == productoID)                                                    
                                                    .ToListAsync();
-
             return ofertas;
 
         }
@@ -86,7 +85,15 @@ namespace Core.Data
         {
             throw new NotImplementedException();
         }
-          
+
+        public async Task<Producto> CancelarProducto(Producto producto)
+        {
+            _dbContext.Update(producto);
+            await _dbContext.SaveChangesAsync();
+
+            return producto;
+
+        }
 
 
         #endregion

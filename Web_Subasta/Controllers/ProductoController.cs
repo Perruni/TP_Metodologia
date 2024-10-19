@@ -46,7 +46,7 @@ namespace Master_API.Controllers
         }
 
         [HttpGet("Productos")]
-        public async Task<ActionResult<ProductoDTO>> GetAllProduct()
+        public async Task<ActionResult<ProductoDatosDTO>> GetAllProduct()
         {
 
 
@@ -62,7 +62,7 @@ namespace Master_API.Controllers
         }
 
 
-        [HttpGet("/MisOfertas/{id}")]
+        /*[HttpGet("/MisOfertas/{id}")]
         public async Task<ActionResult<UsuarioDTO>> GetUsuarioOfertas(int id)
         {
             var usuario = await _context.Usuarios
@@ -90,7 +90,7 @@ namespace Master_API.Controllers
             };
 
             return usuarioDTO;
-        }
+        }*/
       
     }
 }

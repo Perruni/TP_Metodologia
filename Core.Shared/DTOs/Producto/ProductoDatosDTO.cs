@@ -4,7 +4,9 @@ using static Core.Entities.Producto;
 
 namespace Core.Shared.DTOs.Producto
 {
-    public class ProductoDTO
+
+    //Trae los datos del producto y del usuario
+    public class ProductoDatosDTO
     {
         public string? nombreProducto { get; set; }
         public double precioBase { get; set; }

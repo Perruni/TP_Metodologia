@@ -42,17 +42,17 @@ namespace Master_API.Controllers
         }
 
         [HttpGet("UserOwner/{productoID}")]
-        public async Task<ActionResult<ProductoDTO>> GetUserOwner(int productoID)
+        public async Task<ActionResult<ProductoDatosDTO>> GetUserOwner(int productoID)
         {
 
 
-            var product = await _repository.DuenoProducto(productoID);
+            var product = await _productoBusiness.DatosProducto(productoID);
 
             if (product == null)
             {
                 return NotFound();
             }
-            var productoDto = new ProductoDTO
+            var productoDto = new ProductoDatosDTO
             {
                 nombreProducto = product.nombreProducto,
                 precioBase = product.precioBase,
@@ -62,16 +62,19 @@ namespace Master_API.Controllers
                 estadoProducto = product.estadoProducto,
                 usuario = new UsuarioDTO
                 {
+
+                    usuarioID = product.Usuario.usuarioID,
                     DNI = product.Usuario.DatosUsuario.DNI,
-                    nombre = product.Usuario.DatosUsuario.nombre
-
-
-                                                            
+                    nombre = product.Usuario.DatosUsuario.nombre,
+                    apellido = product.Usuario.DatosUsuario.apellido,
+                    direccion = product.Usuario.DatosUsuario.direccion,
+                    telefono = product.Usuario.DatosUsuario.telefono,
+                    codigoArea = product.Usuario.DatosUsuario.codigoArea
 
                 }
             };
 
-            return Ok(product);
+            return Ok(productoDto);
 
         }
 
@@ -122,6 +125,34 @@ namespace Master_API.Controllers
             return Ok(nuevoProducto);
 
         }
+
+        [HttpPut("Cancelar/{userId}/{productoID}")]
+        public async Task<ActionResult<Producto?>> PutProducto(int userId, int productoID)
+        {
+
+            if (userId != 1)
+            {
+                return Forbid();
+
+            }
+
+            var producto = await _productoBusiness.GetProducto(productoID);
+
+            if (producto.estadoProducto == Producto.EstadoProducto.EnRevision)
+            {
+                producto.estadoSolicitud = Producto.EstadoSolicitud.Cancelado;
+                producto.estadoProducto = Producto.EstadoProducto.NoVendido;
+            }
+
+            await _productoBusiness.CancelarProducto(producto);
+
+            return Ok(producto);
+
+
+
+        }
+
+
 
     }
 }

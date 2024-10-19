@@ -1,5 +1,5 @@
 ﻿using Core.Data;
-using Master_API.DTOs;
+using Core.Shared.DTOs.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

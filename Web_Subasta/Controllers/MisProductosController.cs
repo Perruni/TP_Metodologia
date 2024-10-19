@@ -16,7 +16,7 @@ namespace Master_API.Controllers
             _context = context;
         }
 
-        [HttpGet("/MisProductos/{id}")]
+        /*[HttpGet("/MisProductos/{id}")]
         public async Task<ActionResult<UsuarioDTO>> GetUsuarioProductos(int id)
         {
             var usuario = await _context.Usuarios
@@ -43,6 +43,6 @@ namespace Master_API.Controllers
             };
 
             return usuarioDTO;
-        }
+        }*/
     }
 }

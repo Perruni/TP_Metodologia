@@ -34,7 +34,7 @@ namespace Master_API.Controllers
             var subastaProductosDTO = new SubastaProductosDTO
             {
                 subastaID = subasta.subastaID,
-                listaProductos = subasta.listaProductos.Select(p => new ProductoDTO
+                listaProductos = subasta.listaProductos.Select(p => new ProductoDatosDTO
                 {
                     nombreProducto = p.nombreProducto,
                     precioBase = p.precioBase,
