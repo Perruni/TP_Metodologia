@@ -17,7 +17,6 @@ namespace Core.Busisness.Interfaces
         //public void UpdateProducto(Producto producto);
         //public void HabilitarProducto(int PrudctoID, int habilitacionProducto);
         public Task<Producto> DeleteProducto(int ProductoID);
-        public Task<Producto> DatosProducto(int productoID);
         public Task<Producto> CancelarProducto(Producto producto);
 
 

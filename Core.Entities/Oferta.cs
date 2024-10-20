@@ -20,7 +20,7 @@ namespace Core.Entities
         [Key]
         public int ofertaID { get; set; }
         public float montoOferta { get; set; }
-        public int estadoOferta { get; set; }
+        public EstadoOferta estadoOferta { get; set; }
 
         // Foreign Key a Usuario
         public int? usuarioID { get; set; }
@@ -31,6 +31,13 @@ namespace Core.Entities
         public int? productoID { get; set; }
         [ForeignKey("productoID")]
         public virtual Producto? producto { get; set; }
+
+        public enum EstadoOferta
+        {
+            Pendiente = 1,
+            Ganadora = 2,
+            NoGanadora =3
+        }
 
     }
 }

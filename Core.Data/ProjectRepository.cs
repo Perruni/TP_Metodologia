@@ -101,5 +101,26 @@ namespace Core.Data
         #region SUBASTA
 
         #endregion
+
+        #region DATOS_USUARIO
+
+        public Task<Datos_usuario> DatosUsuario(int userID)
+        {
+            var DatosUsuario = _dbContext.DatosUsuario.Where(u => u.usuarioID == userID)                                
+                                .FirstOrDefaultAsync();
+
+            return DatosUsuario;
+        }
+
+        public async Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario)
+        {
+            _dbContext.Add(datosUsuario);
+            await _dbContext.SaveChangesAsync();
+
+            return datosUsuario;
+
+        }
+
+        #endregion
     }
 }
