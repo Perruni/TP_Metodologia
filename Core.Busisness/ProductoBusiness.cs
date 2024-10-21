@@ -34,12 +34,7 @@ namespace Core.Busisness
         Task<Producto> IProductoBusiness.CancelarProducto(Producto producto)
         {
             return _repository.CancelarProducto(producto);
-        }
-
-        Task<Producto> IProductoBusiness.DatosProducto(int productoID)
-        {
-            return _repository.DatosProducto(productoID);
-        }
+        }     
 
         Task<List<Producto>> IProductoBusiness.GetAll()
         {

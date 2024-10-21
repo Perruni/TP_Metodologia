@@ -39,44 +39,7 @@ namespace Master_API.Controllers
 
             return Ok(product);
 
-        }
-
-        [HttpGet("UserOwner/{productoID}")]
-        public async Task<ActionResult<ProductoDatosDTO>> GetUserOwner(int productoID)
-        {
-
-
-            var product = await _productoBusiness.DatosProducto(productoID);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-            var productoDto = new ProductoDatosDTO
-            {
-                nombreProducto = product.nombreProducto,
-                precioBase = product.precioBase,
-                metodoEntrega = product.metodoEntrega,
-                fechaSolicitud = product.fechaSolicitud,
-                descripcion = product.descripcion,
-                estadoProducto = product.estadoProducto,
-                usuario = new UsuarioDTO
-                {
-
-                    usuarioID = product.Usuario.usuarioID,
-                    DNI = product.Usuario.DatosUsuario.DNI,
-                    nombre = product.Usuario.DatosUsuario.nombre,
-                    apellido = product.Usuario.DatosUsuario.apellido,
-                    direccion = product.Usuario.DatosUsuario.direccion,
-                    telefono = product.Usuario.DatosUsuario.telefono,
-                    codigoArea = product.Usuario.DatosUsuario.codigoArea
-
-                }
-            };
-
-            return Ok(productoDto);
-
-        }
+        }        
 
         [HttpGet("Productos")]
         public async Task<ActionResult<Producto>> GetAll()

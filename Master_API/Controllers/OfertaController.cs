@@ -1,4 +1,6 @@
-﻿using Core.Data;
+﻿using Core.Busisness.Interfaces;
+using Core.Data;
+using Core.Data.Interface;
 using Core.Entities;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
@@ -11,11 +13,13 @@ namespace Master_API.Controllers
     [ApiController]
     public class OfertaController : Controller
     {
-        private readonly TPI_DbContext _context;
+        private readonly IProductoBusiness _productoBusiness;
+        private readonly IProjectRepository _repository;
 
-        public OfertaController(TPI_DbContext context)
+        public OfertaController(IProductoBusiness productoBusiness, IProjectRepository repository)
         {
-            _context = context;
+            _productoBusiness = productoBusiness;
+            _repository = repository;
         }
 
         /*
