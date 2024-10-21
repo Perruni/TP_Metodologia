@@ -1,5 +1,8 @@
+using Core.Busisness.Interfaces;
+using Core.Busisness;
 using Core.Configuration;
 using Core.Data;
+using Core.Data.Interface;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -42,6 +45,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
+builder.Services.AddScoped<IDatosUsuarioBusiness, DatosUsuarioBusiness>();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //Loggin
 builder.Logging.ClearProviders();

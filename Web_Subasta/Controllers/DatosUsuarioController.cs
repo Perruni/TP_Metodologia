@@ -1,4 +1,6 @@
-﻿using Core.Data;
+﻿using Core.Busisness.Interfaces;
+using Core.Data;
+using Core.Data.Interface;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,28 +10,29 @@ namespace Master_API.Controllers
 {
     public class DatosUsuarioController : Controller
     {
-	/*
-		private readonly TPI_DbContext _context;
 
-		public DatosUsuarioController(TPI_DbContext context)
-		{
-			_context = context;
-		}
+        private readonly IDatosUsuarioBusiness _datosBusiness;
 
-		public IActionResult DatosUsuario()
+        public DatosUsuarioController(IDatosUsuarioBusiness datosBusiness)
+        {
+            _datosBusiness = datosBusiness;
+           
+        }
+
+        public IActionResult GetDatosUsuario()
         {
             return View();
         }
 
 		[HttpPost]
-		public IActionResult DatosUsuario(DatosUsuarioVM modelo)
+		public IActionResult AddDatosUsuario(DatosUsuarioVM modelo)
 		{
 			if (ModelState.IsValid)
 			{
 
 				var datosUsuarios = new Datos_usuario
 				{
-					usuarioID = 1,
+					usuarioID = 3,
 					nombre = modelo.Nombre,
 					apellido = modelo.apellido,
 					DNI = modelo.dni,
@@ -39,15 +42,14 @@ namespace Master_API.Controllers
 				};
 
 				
-				_context.DatosUsuario.Add(datosUsuarios);
-				_context.SaveChanges();
+				_datosBusiness.AddDatosUsuario(datosUsuarios);				
 
 				return RedirectToAction("Activas");
 			}
 
 			// Si el modelo no es válido, vuelve a mostrar la vista con los errores // nose como funciona xd
-			return View(modelo);
+			return View("Activas");
 		}
 	}
-	*/
+	
 }
