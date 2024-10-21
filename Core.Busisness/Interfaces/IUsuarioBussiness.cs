@@ -13,7 +13,6 @@ namespace Core.Busisness.Interfaces
         List<Usuario> ObtenerTodosLosUsuarios();
         void RegistrarUsuario(Usuario usuario);
         void EliminarUsuario(int id);
-        bool ValidarUsuarioAdmin(int id);
 
 
     }

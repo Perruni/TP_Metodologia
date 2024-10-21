@@ -27,37 +27,8 @@ namespace Core.Busisness
         Task<Datos_usuario> IDatosUsuarioBusiness.DatosUsuario(int userID)
         {
             return _repository.DatosUsuario(userID);
-        }
-
-
-        
-        /*
-   private readonly IProyectRepository _facturaRepository;
-
-   public FacturaBusiness(IProyectRepository facturaRepository)
-   {
-       _facturaRepository = facturaRepository;
-   }
-
-   public Factura ObtenerFacturaPorId(int id)
-   {
-       return _facturaRepository.GetByIdfactura(id);
-   }
-
-   public List<Factura> ObtenerTodasLasFacturas()
-   {
-       return _facturaRepository.GetAllfacturas(); // Utiliza Result y ToList para convertir a sincrónico
-   }
-
-   public void RegistrarFactura(Factura factura)
-   {
-       _facturaRepository.Addfactura(factura);
-   }
-
-   public void EliminarFactura(int id)
-   {
-       _facturaRepository.Deletefactura(id); 
-   }*/
+        }        
+       
 
     }
 }

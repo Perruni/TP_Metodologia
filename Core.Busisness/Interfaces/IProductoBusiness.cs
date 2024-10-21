@@ -10,7 +10,6 @@ namespace Core.Busisness.Interfaces
     public interface IProductoBusiness
     {
         public Task<List<Producto>> GetAll();
-        public Task<List<Oferta>> GetProductoOfertas(int ProductoID);
         public Task<List<Producto>> GetProductoUsuario(int userID);
         public Task<Producto> GetProducto(int ProductoID);
         public Task<Producto> AddProducto(Producto producto);

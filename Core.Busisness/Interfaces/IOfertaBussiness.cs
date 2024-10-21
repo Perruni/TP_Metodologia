@@ -9,10 +9,15 @@ namespace Core.Busisness.Interfaces
 {
     public interface IOfertaBussiness
     {
-        Oferta ObtenerOfertaPorId(int id);
-        List<Oferta> ObtenerTodasLasOfertas();
-        void RegistrarOferta(Oferta oferta);
-        void EliminarOferta(int id);
+        public Task<Oferta> ObtenerOfertaPorId(int ofertaID);
+        public Task<Oferta> ObtenerOfertaGanadora(int porductoID);
+        public Task<List<Oferta>> ObtenerOfertasPendientes(int productoID);
+        public Task<List<Oferta>> ObtenerOfertasNoGanadoras(int productoID);
+        public Task<List<Oferta>> ObtenerOfertasGanadoras();
+        public Task<List<Oferta>> GetProductoOfertas(int ProductoID);
+        public Task<List<Oferta>> ObtenerTodasLasOfertas();
+        public Task<Oferta> AddOferta(Oferta oferta);
+        public Task<Oferta> EliminarOferta(int id);
 
     }
 }

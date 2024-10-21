@@ -20,14 +20,11 @@ namespace Core.Entities
         [Key]
         public int ofertaID { get; set; }
         public float montoOferta { get; set; }
+        public DateTime fechaOferta { get; set; }
         public EstadoOferta estadoOferta { get; set; }
-
-        // Foreign Key a Usuario
         public int? usuarioID { get; set; }
         [ForeignKey("usuarioID")]
         public virtual Usuario? usuario { get; set; }
-
-        // Foreign Key a Subasta
         public int? productoID { get; set; }
         [ForeignKey("productoID")]
         public virtual Producto? producto { get; set; }
@@ -36,7 +33,7 @@ namespace Core.Entities
         {
             Pendiente = 1,
             Ganadora = 2,
-            NoGanadora =3
+            NoGanadora = 3
         }
 
     }

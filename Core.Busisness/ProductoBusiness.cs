@@ -46,10 +46,7 @@ namespace Core.Busisness
             return _repository.GetProducto(ProductoID);
         }
 
-        Task<List<Oferta>> IProductoBusiness.GetProductoOfertas(int ProductoID)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         Task<List<Producto>> IProductoBusiness.GetProductoUsuario(int userID)
         {

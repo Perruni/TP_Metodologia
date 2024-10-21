@@ -12,6 +12,7 @@ namespace Core.Data.Interface
 
         public Task<List<Producto>> GetAll();
         public Task<List<Oferta>> GetProductoOfertas(int ProductoID);
+        public Task<List<Oferta>> GetOfertasGanadoras(int subastaID);
         public Task<List<Producto>> GetProductoUsuario(int userID);
         public Task<Producto> GetProducto(int ProductoID);
         public Task<Producto> AddProducto(Producto producto);
@@ -22,6 +23,8 @@ namespace Core.Data.Interface
         public Task<Producto> CancelarProducto(Producto producto);
         public Task<Datos_usuario> DatosUsuario(int userID);
         public Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario);
+
+
 
 
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using static Core.Entities.Oferta;
 
 namespace Core.Data
 {
@@ -73,7 +74,10 @@ namespace Core.Data
 
         public Task<List<Producto>> GetProductoUsuario(int userID)
         {
-            throw new NotImplementedException();
+            var productoUsuario = _dbContext.Productos.Where(p => p.usuarioID == userID)
+                                                            .ToListAsync();
+
+            return productoUsuario;
         }
 
         public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto)
@@ -92,6 +96,28 @@ namespace Core.Data
             await _dbContext.SaveChangesAsync();
 
             return producto;
+
+        }
+
+
+        #endregion
+
+        #region OFERTAS
+
+        public Task<List<Oferta?>> GetOfertasGanadoras(int subastaID)
+        {
+            var ofertasGanadoras = _dbContext.Ofertas
+                .Where(o => o.estadoOferta == EstadoOferta.Ganadora &&
+                            o.producto != null &&
+                            o.producto.subastaID == subastaID)
+                .GroupBy(o => o.productoID)
+                .Select(g => g
+                    .OrderByDescending(o => o.montoOferta)
+                    .ThenBy(o => o.fechaOferta)
+                    .FirstOrDefault())
+                .ToListAsync();
+
+            return ofertasGanadoras;
 
         }
 
