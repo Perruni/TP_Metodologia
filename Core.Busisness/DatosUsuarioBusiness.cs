@@ -26,7 +26,7 @@ namespace Core.Busisness
 
         Task<Datos_usuario> IDatosUsuarioBusiness.DatosUsuario(int userID)
         {
-            return _repository.DatosUsuario(userID);
+            return _repository.GetDatosUsuario(userID);
         }        
        
 

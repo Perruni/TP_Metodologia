@@ -39,6 +39,7 @@ namespace Master_API.Controllers
                     nombreProducto = p.nombreProducto,
                     precioBase = p.precioBase,
                     metodoEntrega = p.metodoEntrega,
+                    descripcion = p.descripcion,
                     fechaSolicitud = p.fechaSolicitud,
                     estadoProducto = p.estadoProducto
                 }).ToList(),

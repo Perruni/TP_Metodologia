@@ -211,7 +211,7 @@ namespace Core.Data.Migrations
                         .HasForeignKey("productoID");
 
                     b.HasOne("Core.Entities.Usuario", "Usuario")
-                        .WithOne("DatosUsuario")
+                        .WithOne("GetDatosUsuario")
                         .HasForeignKey("Core.Entities.Datos_usuario", "usuarioID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -263,7 +263,7 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Usuario", b =>
                 {
-                    b.Navigation("DatosUsuario");
+                    b.Navigation("GetDatosUsuario");
 
                     b.Navigation("listaOfertas");
 

@@ -104,6 +104,14 @@ namespace Core.Data
 
         #region OFERTAS
 
+        public async Task<Oferta> AddOferta(Oferta oferta)
+        {
+            _dbContext.Add(oferta);
+            await _dbContext.SaveChangesAsync();
+
+            return oferta;
+        }
+
         public Task<List<Oferta?>> GetOfertasGanadoras(int subastaID)
         {
             var ofertasGanadoras = _dbContext.Ofertas
@@ -126,11 +134,69 @@ namespace Core.Data
 
         #region SUBASTA
 
+        public async Task<Subasta> AddSubasta(Subasta subasta)
+        {
+            _dbContext.Add(subasta);
+            await _dbContext.SaveChangesAsync();
+
+            return subasta;
+        }
+
+        public async Task<Subasta> UpdateSubasta(Subasta subasta)
+        {
+            _dbContext.Update(subasta);
+            await _dbContext.SaveChangesAsync();
+
+            return subasta;
+        }
+
+        public Task<Subasta?> GetSubasta(int subastaID)
+        {
+           var subasta = _dbContext.Subastas.Where(s => s.subastaID == subastaID).FirstOrDefaultAsync();
+
+           return subasta;
+
+        }
+
+        public Task<List<Subasta>> GetSubastasActivas()
+        {
+            var subastasActivas = _dbContext.Subastas.Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Activa)
+                                                     .ToListAsync();
+
+            return subastasActivas;
+
+        }
+
+        public Task<List<Subasta>> GetSubastasProximas()
+        {
+            var subastasProximas = _dbContext.Subastas.Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Proxima)
+                                                    .ToListAsync();
+
+            return subastasProximas;
+        }
+
+        public Task<List<Subasta>> GetSubastasFinalizadas()
+        {
+            var subastasFinalizadas = _dbContext.Subastas.Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || s.estadoSubasta == Subasta.EstadoSubasta.Deshabilitado)
+                                                    .ToListAsync();
+
+            return subastasFinalizadas;
+        }
+
+        public Task<Subasta?> GetSubastaProductos(int subastaID)
+        {
+            var subastaProductos = _dbContext.Subastas.Where(s => s.subastaID == subastaID)
+                                                      .Include(p => p.listaProductos)
+                                                      .FirstOrDefaultAsync();
+            return subastaProductos;
+        }
+
+
         #endregion
 
         #region DATOS_USUARIO
 
-        public Task<Datos_usuario> DatosUsuario(int userID)
+        public Task<Datos_usuario> GetDatosUsuario(int userID)
         {
             var DatosUsuario = _dbContext.DatosUsuario.Where(u => u.usuarioID == userID)                                
                                 .FirstOrDefaultAsync();
@@ -145,7 +211,11 @@ namespace Core.Data
 
             return datosUsuario;
 
-        }
+        }    
+
+        #endregion
+
+        #region USUARIO
 
         #endregion
     }
