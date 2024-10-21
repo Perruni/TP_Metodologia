@@ -1,0 +1,84 @@
+﻿@model Web_Subasta.Models.ViewModels.LoginViewModel
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <section class="vh-100" style="background-color: #C7CACA;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <!-- Ajustamos el ancho -->
+                    <div class="card" style="border-radius: 1rem; width: auto;">
+                        <!-- Ajustamos el ancho de la tarjeta -->
+                        <div class="row g-0">
+                            <div class="col-12 d-flex align-items-center">
+                                <!-- Usamos col-12 para usar todo el espacio disponible -->
+                                <div class="card-body p-4 p-lg-5 text-black">
+
+                                    <!-- Formulario de Login -->
+                                    <form asp-controller="Login" asp-action="Login" method="post">
+
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                            <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                        </div>
+
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Inicia sesión</h5>
+
+                                        <!-- Campo para correo electrónico -->
+                                        <div class="form-outline mb-4">
+                                            <input asp-for="email" class="form-control form-control-lg" id="form2Example17" />
+                                            <label asp-for="email" class="form-label">Email</label>
+                                            <span asp-validation-for="email" class="text-danger"></span>
+                                        </div>
+
+                                        <!-- Campo para contraseña -->
+                                        <div class="form-outline mb-4">
+                                            <input asp-for="contrasenia" type="password" class="form-control form-control-lg" id="form2Example27" />
+                                            <label asp-for="contrasenia" class="form-label">Contraseña</label>
+                                            <span asp-validation-for="contrasenia" class="text-danger"></span>
+                                        </div>
+
+                                        <!-- Botón de iniciar sesión -->
+                                        <div class="pt-1 mb-4">
+                                            <button type="submit" class="btn btn-dark btn-lg btn-block">Iniciar sesión</button>
+                                        </div>
+
+                                        <!-- Enlaces para recuperar contraseña y registrarse -->
+                                       
+                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">
+                                            ¿No tienes cuenta?  
+                                            <a href="/acount/register" style="color: #393f81;">Regístrate</a>
+                                        </p>
+
+                                    </form>
+
+                                    <!-- Mensajes de error de validación -->
+                                    @if (ViewData.ModelState.ErrorCount > 0)
+                                    {
+                                        <div class="alert alert-danger mt-3">
+                                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                            {
+                                                <p>@error.ErrorMessage</p>
+                                            }
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

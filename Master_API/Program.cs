@@ -53,6 +53,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
+builder.Services.AddScoped<IDatosUsuarioBusiness, DatosUsuarioBusiness>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //loggin

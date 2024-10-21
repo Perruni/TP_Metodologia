@@ -20,6 +20,10 @@ namespace Core.Data.Interface
         public Task<Producto> DeleteProducto(int ProductoID);
         public Task<Producto> DatosProducto(int productoID);
         public Task<Producto> CancelarProducto(Producto producto);
+        public Task<Datos_usuario> DatosUsuario(int userID);
+        public Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario);
+
+
 
 
 
