@@ -19,12 +19,12 @@ namespace Core.Busisness
             _repository = Repository;
         }
 
-        Task<Datos_usuario> IDatosUsuarioBusiness.AddDatosUsuario(Core.Entities.Datos_usuario datosUsuario)
+        public Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario)
         {
             return _repository.AddDatosUsuario(datosUsuario);
         }
 
-        Task<Datos_usuario> IDatosUsuarioBusiness.DatosUsuario(int userID)
+        public Task<Datos_usuario> DatosUsuario(int userID)
         {
             return _repository.GetDatosUsuario(userID);
         }        
