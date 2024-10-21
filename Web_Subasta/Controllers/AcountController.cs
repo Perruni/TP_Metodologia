@@ -2,9 +2,14 @@
 
 namespace Web_Subasta.Controllers
 {
-    public class Login : Controller
+    public class AcountController : Controller
     {
         public IActionResult login()
+        {
+            return View();
+        }
+
+        public IActionResult register()
         {
             return View();
         }
