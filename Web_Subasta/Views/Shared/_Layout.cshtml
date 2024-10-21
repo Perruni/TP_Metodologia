@@ -21,15 +21,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Index">MisOfertas</a>
+                            <a class="nav-link" asp-area="" asp-page="">MisOfertas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Privacy">MisProductos</a>
+                            <a class="nav-link" asp-area="" asp-page="">MisProductos</a>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar-buttons ms-auto">
-                    <button class="nav-inicio" id="nav-inicio">Iniciar Sesión</button>
+                    <button class="nav-inicio" id="nav-inicio" asp-action="login">Iniciar Sesión</button>
                     <button class="nav-registro">Registrate</button>
                 </div>
             </div>

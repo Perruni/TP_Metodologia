@@ -4,7 +4,7 @@ namespace Web_Subasta.Models.ViewModels
 {
     public class SubastaVM
     {
-        //El View Model utiliza el objeto subasta para enteder que es uan subasta
+        //El View Model utiliza el objeto subasta para enteder que es una subasta
         public Subasta? _subasta { get; set; }
 
         public List<Producto>? productoLista { get; set; }

@@ -30,6 +30,7 @@ builder.Services.AddScoped<TPI_DbContext>(provider =>
     return new TPI_DbContext(optionsBuilder.Options, config);
 });
 
+
 #endregion
 //Registro de Conexion
 builder.Services.AddDbContext<TPI_DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
