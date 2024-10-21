@@ -1,32 +1,33 @@
 ﻿@model Web_Subasta.Models.ViewModels.SubastaVM
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Productos</title>
+    <link rel="stylesheet" href="~/css/styles.css">
 </head>
 <body>
-    <h2>Mis Productos</h2>
+    <div class="container">
+        <h1>Mis Productos</h1>
+        <div class="productos-container">
 
-    
-    @*foreach (var producto in Model.)
-    {
-        <div>
-            <h3>@producto.Titulo</h3>
-            <p><strong>Inicia:</strong> @producto.FechaInicio.ToString("dd/MM/yyyy HH:mm")</p>
-            <p><strong>Finaliza:</strong> @producto.FechaFin.ToString("dd/MM/yyyy HH:mm")</p>
-            <h4>PRECIO BASE: @producto.PrecioBase.ToString("N")</h4>
-            <p><strong>CANTIDAD DE OFERTAS:</strong> @producto.CantidadOfertas</p>
-            <p>@producto.Descripcion</p>
-
-            <form method="get" asp-action="CargarProducto">
-                <button type="submit">Cargar Producto</button>
-            </form>
-
-            <hr />
+           @*
+          @foreach (var producto in Model)
+            {
+                <div class="card">
+                    <img src="@producto.ImagenUrl" alt="@producto.Nombre" />
+                    <h2>@producto.Nombre</h2>
+                    <p>@producto.Descripcion</p>
+                    <p class="price">Precio Base: $@producto.Precio.ToString("N0")</p>
+                    <p class="status">Estado: @producto.Estado</p>
+                    <button class="ver-btn">Ver</button>
+                </div>
+            }
         </div>
-    }*@
+            *@
+        <button id="nuevaVentaBtn" class="nueva-venta-btn">NUEVA VENTA</button>
+    </div>
 </body>
 </html>

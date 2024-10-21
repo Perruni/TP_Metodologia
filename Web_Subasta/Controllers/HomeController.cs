@@ -75,6 +75,18 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
+
+        public IActionResult MisProductos()
+        {
+            return View();
+        }
+
+        public IActionResult MisOfertas()
+        {
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -90,6 +102,8 @@ namespace Web_Subasta.Controllers
             // Devuelve la vista "CargarProducto"
             return View("CargarProducto");
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> CargarProducto(CrearProductoDTO crearProductoDTO, int subastaID, int usuarioID)
