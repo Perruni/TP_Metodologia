@@ -13,8 +13,6 @@ namespace Core.Busisness.Interfaces
         public Task<List<Producto>> GetProductoUsuario(int userID);
         public Task<Producto> GetProducto(int ProductoID);
         public Task<Producto> AddProducto(Producto producto);
-        //public void UpdateProducto(Producto producto);
-        //public void HabilitarProducto(int PrudctoID, int habilitacionProducto);
         public Task<Producto> DeleteProducto(int ProductoID);
         public Task<Producto> CancelarProducto(Producto producto);
 

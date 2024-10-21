@@ -15,7 +15,6 @@ namespace Core.Busisness.Interfaces
         public Task<List<Subasta>> GetSubastasFinalizadas();
         public Task<Subasta> GetSubastabyID (int id);
         public Task<Subasta> GetSubastaProductos(int id);
-
         public void UpdateSubasta (Subasta subasta, int subastaID);
         public void HabilitarSubasta(int subastaID, int estadoSubasta);
         public void DeleteSubastabyID (Subasta subasta);
