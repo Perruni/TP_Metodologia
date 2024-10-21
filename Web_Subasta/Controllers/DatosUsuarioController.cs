@@ -8,7 +8,7 @@ namespace Master_API.Controllers
 {
     public class DatosUsuarioController : Controller
     {
-	/*
+	
 		private readonly TPI_DbContext _context;
 
 		public DatosUsuarioController(TPI_DbContext context)
@@ -49,5 +49,5 @@ namespace Master_API.Controllers
 			return View(modelo);
 		}
 	}
-	*/
+	
 }
