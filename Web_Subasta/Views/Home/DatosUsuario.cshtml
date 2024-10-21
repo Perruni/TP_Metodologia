@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Web_Subasta.Models.ViewModels.DatosUsuarioVM
+@{
     ViewData["Title"] = "Datos de Usuario";
 }
 <meta charset="utf-8" />
@@ -10,39 +11,39 @@
     <form method="post">
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label asp-for/="Nombre" class="form-label">Nombre</label>
-                <input asp-for/="Nombre" class="form-control" placeholder="Ingrese su nombre" />
-                <span asp-validation-for/="Nombre" class="text-danger"></span>
+                <label asp-for="Nombre"  class="form-label">Nombre</label>
+                <input asp-for="Nombre" class="form-control" placeholder="Ingrese su nombre" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
-                <label asp-for/="Apellido" class="form-label">Apellido</label>
-                <input asp-for/="Apellido" class="form-control" placeholder="Ingrese su apellido" />
-                <span asp-validation-for/="Apellido" class="text-danger"></span>
+                <label asp-for="apellido" class="form-label">Apellido</label>
+                <input asp-for="apellido" class="form-control" placeholder="Ingrese su apellido" />
+                <span asp-validation-for="apellido" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label asp-for/="DNI" class="form-label">DNI</label>
-                <input asp-for/="DNI" class="form-control" placeholder="Ingrese su DNI" />
-                <span asp-validation-for/="DNI" class="text-danger"></span>
+                <label asp-for="dni" class="form-label">DNI</label>
+                <input asp-for="dni" class="form-control" placeholder="Ingrese su DNI" />
+                <span asp-validation-for="dni" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
-                <label asp-for/="CodigoArea" class="form-label">Código de área</label>
-                <input asp-for/="CodigoArea" class="form-control" placeholder="Ingrese su código de área" />
-                <span asp-validation-for/="CodigoArea" class="text-danger"></span>
+                <label asp-for="CodeArea" class="form-label">Código de área</label>
+                <input asp-for="CodeArea" class="form-control" placeholder="Ingrese su código de área" />
+                <span asp-validation-for="CodeArea" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label asp-for/="Direccion" class="form-label">Dirección</label>
-                <input asp-for/="Direccion" class="form-control" placeholder="Ingrese su dirección" />
-                <span asp-validation-for/="Direccion" class="text-danger"></span>
+                <label asp-for="direccion" class="form-label">Dirección</label>
+                <input asp-for="direccion" class="form-control" placeholder="Ingrese su dirección" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
-                <label asp-for/="Telefono" class="form-label">Teléfono</label>
-                <input asp-for/="Telefono" class="form-control" placeholder="Ingrese su teléfono" />
-                <span asp-validation-for/="Telefono" class="text-danger"></span>
+                <label asp-for="Telefono" class="form-label">Teléfono</label>
+                <input asp-for="Telefono" class="form-control" placeholder="Ingrese su teléfono" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
         </div>
 
