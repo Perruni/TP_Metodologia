@@ -1,53 +1,43 @@
 ﻿using Core.Busisness.Interfaces;
-
+using Core.Data.Interface;
 using Core.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Core.Busisness
 {
-    /*public class UsuarioBusiness : IUsuarioBussiness
+    public class UsuarioBusiness : IUsuarioBussiness
     {
-       /*
-        private readonly IRepository _Repository;
 
-        public UsuarioBusiness(IProyectRepository usuarioRepository)
+        private readonly IProjectRepository _repository;
+
+        public UsuarioBusiness(IProjectRepository Repository)
         {
-            _Repository = usuarioRepository;
+            _repository = Repository;
         }
 
-        public Usuario ObtenerUsuarioPorId(int id)
+        public Task<Usuario> AddUsuario(Usuario usuario)
         {
-            return _Repository.ObtenerUsuarioPorId(id);
+            return _repository.AddUsuario(usuario);
         }
 
-        public List<Usuario> ObtenerTodosLosUsuarios()
+        public Task<Usuario> Deleteusuario(int userID)
         {
-            return _Repository.ObtenerTodosLosUsuarios();
+            return _repository.Deleteusuario(userID);
         }
 
-        public void RegistrarUsuario(Usuario usuario)
+        public Task<Usuario> GetUsuario(int userID)
         {
-            _Repository.RegistrarUsuario(usuario);
+            return _repository.GetUsuario(userID);
         }
 
-        public void EliminarUsuario(int id)
+        public Task<Usuario> UpdateUsuario(Usuario usuario)
         {
-            _Repository.EliminarUsuario(id);
+            return _repository.UpdateUsuario(usuario);
         }
-
-        public bool ValidarUsuarioAdmin(int id)
-        {
-            var usuario = _Repository.ObtenerUsuarioPorId(id);
-            if (usuario.roles == 1)
-            {
-                return true;
-            }
-            return false;
-        }
-    }*/
+    }
 }

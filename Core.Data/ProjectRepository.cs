@@ -52,7 +52,7 @@ namespace Core.Data
             return DatosProducto;
         }
 
-        public Task<List<Producto>> GetAll()
+        public Task<List<Producto>> GetProductos()
         {
             return _dbContext.Productos.ToListAsync();
         }
@@ -85,9 +85,12 @@ namespace Core.Data
             throw new NotImplementedException();
         }
 
-        public Task<Producto> UpdateProducto(Producto producto)
+        public async Task<Producto> UpdateProducto(Producto producto)
         {
-            throw new NotImplementedException();
+            _dbContext.Update(producto);
+            await _dbContext.SaveChangesAsync();
+
+            return producto;
         }
 
         public async Task<Producto> CancelarProducto(Producto producto)
@@ -112,6 +115,19 @@ namespace Core.Data
             return oferta;
         }
 
+        public async Task<Oferta> DeleteOferta(int ofertaID)
+        {
+            var oferta = _dbContext.Ofertas.Find(ofertaID);
+            if (oferta != null)
+            {
+                _dbContext.Remove(oferta);
+                await _dbContext.SaveChangesAsync();
+
+                return oferta;
+            }
+            return null;
+        }
+
         public Task<List<Oferta?>> GetOfertasGanadoras(int subastaID)
         {
             var ofertasGanadoras = _dbContext.Ofertas
@@ -129,6 +145,43 @@ namespace Core.Data
 
         }
 
+        public Task<Oferta> GetOfertaPorId(int ofertaID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Oferta> GetOfertaGanadora(int productoID)
+        {
+            var oferGanadora = _dbContext.Ofertas.Where(o => o.productoID == productoID && o.estadoOferta == EstadoOferta.Ganadora)
+                .FirstOrDefaultAsync();
+
+            return oferGanadora;               
+
+        }
+
+        public Task<List<Oferta>> GetOfertasUsuario(int userID)
+        {
+            var oferUsuario = _dbContext.Ofertas.Where(o => o.usuarioID == userID)
+                .ToListAsync();
+
+            return oferUsuario;
+        }        
+
+        public Task<List<Oferta>> GetTodasLasOfertas()
+        {
+            var ofertas = _dbContext.Ofertas.ToListAsync();
+
+            return ofertas;
+        }
+
+        public Task<int> GetCantidadOfertas(int productoID)
+        {
+            var cantidadDeOfertas =  _dbContext.Ofertas
+                                            .Where(o => o.productoID == productoID)
+                                            .CountAsync();
+
+            return cantidadDeOfertas;
+        }
 
         #endregion
 
@@ -211,11 +264,56 @@ namespace Core.Data
 
             return datosUsuario;
 
-        }    
+        }     
 
         #endregion
 
         #region USUARIO
+
+        public async Task<Usuario> AddUsuario(Usuario usuario)
+        {
+            _dbContext.Usuarios.Add(usuario);
+            await _dbContext.SaveChangesAsync();
+
+            return usuario;
+        }
+
+        public Task<Usuario> GetUsuario(int userID)
+        {
+            var usuario = _dbContext.Usuarios.Where(u => u.usuarioID == userID)
+                .FirstOrDefaultAsync();
+
+            return usuario;
+        }
+
+        public async Task<Usuario> UpdateUsuario(Usuario usuario)
+        {
+            _dbContext.Update(usuario);
+            await _dbContext.SaveChangesAsync();
+
+            return usuario;
+        }
+
+        public async Task<Usuario> Deleteusuario(int userID)
+        {
+            var usuario = _dbContext.Usuarios.Find(userID);
+            if (usuario != null)
+            {
+                _dbContext.Remove(usuario);
+                await _dbContext.SaveChangesAsync();
+
+                return usuario;
+            }
+            return null; 
+        }
+
+        public Task<List<Usuario>> GetUsuarios()
+        {
+            var usuarios = _dbContext.Usuarios.ToListAsync();
+
+            return usuarios;
+        }
+
 
         #endregion
     }

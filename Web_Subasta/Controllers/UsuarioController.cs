@@ -15,7 +15,6 @@ namespace Master_API.Controllers
         {
             _context = context;
         }
-
         
     }
 }

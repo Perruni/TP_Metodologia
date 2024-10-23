@@ -11,10 +11,16 @@ namespace Core.Data.Interface
     {
 
         public Task<Oferta> AddOferta(Oferta oferta);
-        public Task<List<Oferta>> GetProductoOfertas(int ProductoID);
+        public Task<Oferta> DeleteOferta(int ofertaID);
+        public Task<Oferta> GetOfertaPorId(int ofertaID);
+        public Task<Oferta> GetOfertaGanadora(int porductoID);       
         public Task<List<Oferta>> GetOfertasGanadoras(int subastaID);
+        public Task<List<Oferta>> GetOfertasUsuario(int usuarioID);
+        public Task<List<Oferta>> GetProductoOfertas(int productoID);
+        public Task<int> GetCantidadOfertas(int productoID);
+        public Task<List<Oferta>> GetTodasLasOfertas();
         public Task<List<Producto>> GetProductoUsuario(int userID);
-        public Task<List<Producto>> GetAll();
+        public Task<List<Producto>> GetProductos();
         public Task<Producto> GetProducto(int ProductoID);
         public Task<Producto> AddProducto(Producto producto);
         public Task<Producto> UpdateProducto(Producto producto);
@@ -31,5 +37,10 @@ namespace Core.Data.Interface
         public Task<List<Subasta>> GetSubastasProximas();
         public Task<List<Subasta>> GetSubastasFinalizadas();
         public Task<Subasta?> GetSubastaProductos(int subastaID);
+        public Task<Usuario> AddUsuario(Usuario usuario);
+        public Task<Usuario> GetUsuario(int userID);
+        public Task<Usuario> UpdateUsuario(Usuario usuario);
+        public Task<Usuario> Deleteusuario(int userID);
+        public Task<List<Usuario>> GetUsuarios();
     }
 }

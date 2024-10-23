@@ -9,10 +9,10 @@ namespace Core.Busisness.Interfaces
 {
     public interface IUsuarioBussiness
     {
-        Usuario ObtenerUsuarioPorId(int id);
-        List<Usuario> ObtenerTodosLosUsuarios();
-        void RegistrarUsuario(Usuario usuario);
-        void EliminarUsuario(int id);
+        public Task<Usuario> AddUsuario(Usuario usuario);
+        public Task<Usuario> GetUsuario(int userID);
+        public Task<Usuario> UpdateUsuario(Usuario usuario);
+        public Task<Usuario> Deleteusuario(int userID);
 
 
     }

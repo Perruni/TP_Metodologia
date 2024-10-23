@@ -1,4 +1,5 @@
 ﻿using Core.Busisness.Interfaces;
+using Core.Data.Interface;
 using Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,38 +9,54 @@ using System.Threading.Tasks;
 
 namespace Core.Busisness
 {
-    /*
+    
     public class OfertaBusiness : IOfertaBussiness
     {
-        private readonly IProyectRepository _ofertaRepository;
+        private readonly IProjectRepository _repository;
 
-        public OfertaBusiness(IProyectRepository ofertaRepository)
+        public OfertaBusiness(IProjectRepository Repository)
         {
-            _ofertaRepository = ofertaRepository;
+            _repository = Repository;
         }
 
-        public Oferta ObtenerOfertaPorId(int id)
+        public Task<Oferta> AddOferta(Oferta oferta)
         {
-          
-            return _ofertaRepository.GetByIdA(id);
+            return _repository.AddOferta(oferta);
         }
 
-        public List<Oferta> ObtenerTodasLasOfertas()
+        public Task<Oferta> DeleteOferta(int ofertaID)
         {
-            
-            return _ofertaRepository.GetAllofertas();
+            return _repository.DeleteOferta(ofertaID);
         }
 
-        public void RegistrarOferta(Oferta oferta)
+        public Task<Oferta> GetOfertaGanadora(int porductoID)
         {
-      
-            _ofertaRepository.Addoferta(oferta);
+            return _repository.GetOfertaGanadora(porductoID);
         }
 
-        public void EliminarOferta(int id)
+        public Task<Oferta> GetOfertaPorId(int ofertaID)
         {
-           
-            _ofertaRepository.Deleteoferta(id); 
+            return _repository.GetOfertaPorId(ofertaID);
         }
-    }*/
+
+        public Task<List<Oferta>> GetOfertasGanadoras(int subastaID)
+        {
+            return _repository.GetOfertasGanadoras(subastaID);
+        }
+
+        public Task<List<Oferta>> GetOfertasUsuario(int usuarioID)
+        {
+            return _repository.GetOfertasUsuario(usuarioID);
+        }
+
+        public Task<List<Oferta>> GetProductoOfertas(int productoID)
+        {
+            return _repository.GetProductoOfertas(productoID);
+        }
+
+        public Task<List<Oferta>> GetTodasLasOfertas()
+        {
+            return _repository.GetTodasLasOfertas();
+        }
+    }
 }
