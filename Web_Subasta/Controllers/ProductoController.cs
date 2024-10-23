@@ -10,6 +10,7 @@ using System.Text;
 using Core.Shared.DTOs.Subastas;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
+using System.Net.Http.Headers;
 
 namespace Master_API.Controllers
 {
@@ -18,79 +19,37 @@ namespace Master_API.Controllers
     public class ProductoController : ControllerBase
     {
 
-        private readonly IHttpClientFactory _httpClientFactory;
+        static HttpClient client = new HttpClient();
+
         
-
-        private readonly TPI_DbContext _context;
-
-        public ProductoController(TPI_DbContext context, IHttpClientFactory httpClientFactory)
+        static async Task InitializeHttpClientAsync()
         {
-            _context = context;
-            _httpClientFactory = httpClientFactory;
+            client.BaseAddress = new Uri("UriStrings"); 
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         
         [HttpGet("{ProductoID}")]
-        public async Task<ActionResult<Producto>> GetProductID(int ProductoID)        {
-
-
-            var product = await _context.Productos.FindAsync(ProductoID);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(product);
-
-        }
-
-        [HttpGet("Productos")]
-        public async Task<ActionResult<ProductoDatosDTO>> GetAllProduct()
+        public async Task<IActionResult> GetProducto(int ProductoID)
         {
+            Producto producto = null;
 
+            await InitializeHttpClientAsync();
+            HttpResponseMessage response = await client.GetAsync($"api/producto/{ProductoID}");
 
-            var product = await _context.Productos.FirstOrDefaultAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                producto = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
 
-            if (product == null)
+            if (producto == null)
             {
                 return NotFound();
             }
-
-            return Ok(product);
-
+            return Ok(producto);
         }
-
-
-        /*[HttpGet("/MisOfertas/{id}")]
-        public async Task<ActionResult<UsuarioDTO>> GetUsuarioOfertas(int id)
-        {
-            var usuario = await _context.Usuarios
-                .Include(u => u.listaOfertas)
-                .FirstOrDefaultAsync(u => u.usuarioID == id);
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            // Mapeo manual del Usuario a UsuarioDTO
-            var usuarioDTO = new UsuarioDTO
-            {
-                usuarioID = usuario.usuarioID,
-                listaProductos = usuario.listaProductos.Select(p => new ProductoDTO
-                {
-                    nombreProducto = p.nombreProducto,
-                    precioBase = p.precioBase,
-                    metodoEntrega = p.metodoEntrega,
-                    fechaSolicitud = p.fechaSolicitud,
-                    estadoProducto = p.estadoProducto
-                }).ToList(),
-
-            };
-
-            return usuarioDTO;
-        }*/
-      
     }
 }
