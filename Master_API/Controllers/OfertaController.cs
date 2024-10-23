@@ -13,44 +13,28 @@ namespace Master_API.Controllers
     [ApiController]
     public class OfertaController : Controller
     {
-        private readonly IProductoBusiness _productoBusiness;
+        private readonly IOfertaBussiness _ofertaBusiness;
         private readonly IProjectRepository _repository;
 
-        public OfertaController(IProductoBusiness productoBusiness, IProjectRepository repository)
+        public OfertaController(IOfertaBussiness ofertaBussiness, IProjectRepository repository)
         {
-            _productoBusiness = productoBusiness;
+            _ofertaBusiness = ofertaBussiness;
             _repository = repository;
         }
 
-        /*
-        [HttpGet("/MisOfertas/{id}")]
-        public async Task<ActionResult<Oferta>> GetUsuarioOfertas(int id)
+        
+        [HttpGet("/MisOfertas/{userID}")]
+        public async Task<ActionResult<Oferta>> GetUsuarioOfertas(int userID)
         {
-            var oferta = await _context.Ofertas.Where(o=>o.usuarioID == id);
+            var oferta = await _ofertaBusiness.GetOfertasUsuario(userID);
                 
 
-            if (usuario == null)
+            if (oferta == null)
             {
                 return NotFound();
-            }
+            }           
 
-            // Mapeo manual del Usuario a UsuarioDTO
-            var usuarioDTO = new UsuarioDTO
-            {
-                usuarioID = usuario.usuarioID,
-                listaProductos = usuario.listaProductos.Select(p => new ProductoDTO
-                {
-                    ProductoID = p.productoID,
-                    NombreProducto = p.nombreProducto,
-                    PrecioBase = p.precioBase,
-                    MetodoEntrega = p.metodoEntrega,
-                    FechaSolicitud = p.fechaSolicitud,
-                    EstadoProducto = p.estadoProducto
-                }).ToList(),
-
-            };
-
-            return usuarioDTO;
-        }*/
+            return Ok(oferta);
+        }
     }
 }
