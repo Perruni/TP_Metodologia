@@ -49,6 +49,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
 builder.Services.AddScoped<IDatosUsuarioBusiness, DatosUsuarioBusiness>();
+builder.Services.AddScoped<IUsuarioBussiness, UsuarioBusiness>();
+builder.Services.AddScoped<IOfertaBussiness, OfertaBusiness>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //Loggin

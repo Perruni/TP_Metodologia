@@ -17,12 +17,11 @@ namespace Master_API.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly IProductoBusiness _productoBusiness;
-        private readonly IProjectRepository _repository;
 
-        public ProductoController(IProductoBusiness productoBusiness,IProjectRepository repository)
+        public ProductoController(IProductoBusiness productoBusiness)
         {
             _productoBusiness = productoBusiness;
-            _repository = repository;
+            
         }
 
         
@@ -46,7 +45,7 @@ namespace Master_API.Controllers
         {
 
 
-            var product = await _productoBusiness.GetAll();
+            var product = await _productoBusiness.GetProductos();
 
             if (product == null)
             {
@@ -83,9 +82,9 @@ namespace Master_API.Controllers
             };
 
             // Agregar el nuevo producto al contexto
-            await _productoBusiness.AddProducto(nuevoProducto);            
+            await _productoBusiness.AddProducto(nuevoProducto);
 
-            return Ok(nuevoProducto);
+            return CreatedAtAction(nameof(GetProductID), new { ProductoID = nuevoProducto.productoID }, nuevoProducto);
 
         }
 
@@ -111,9 +110,8 @@ namespace Master_API.Controllers
 
             return Ok(producto);
 
-
-
         }
+
 
 
 

@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Core.Shared\Core.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BackgroundService\" />
+  </ItemGroup>
+
 </Project>

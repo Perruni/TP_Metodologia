@@ -19,38 +19,49 @@ namespace Core.Busisness
             _repository = Repository;
         }
 
-        Task<Producto> IProductoBusiness.AddProducto(Core.Entities.Producto producto)
+        public Task<Producto> AddProducto(Producto producto)
         {
-            var newProducto = _repository.AddProducto(producto);
-            return newProducto; 
+            return _repository.AddProducto(producto);
         }
 
-        Task<Producto> IProductoBusiness.DeleteProducto(int ProductoID)
-        {
-            var deleteProducto = _repository.DeleteProducto(ProductoID);
-            return deleteProducto;
-        }
-
-        Task<Producto> IProductoBusiness.CancelarProducto(Producto producto)
+        public Task<Producto> CancelarProducto(Producto producto)
         {
             return _repository.CancelarProducto(producto);
-        }     
+        }
 
-        Task<List<Producto>> IProductoBusiness.GetAll()
+        public Task<Producto> DatosProducto(int productoID)
         {
-            return _repository.GetAll();
-        }    
-        
-        Task<Producto> IProductoBusiness.GetProducto(int ProductoID)
+            return _repository.DatosProducto(productoID);
+        }
+
+        public Task<Producto> DeleteProducto(int ProductoID)
+        {
+            return _repository.DeleteProducto(ProductoID);
+        }
+
+        public Task<Producto> GetProducto(int ProductoID)
         {
             return _repository.GetProducto(ProductoID);
         }
 
-        
+        public Task<List<Producto>> GetProductos()
+        {
+            return _repository.GetProductos();
+        }
 
-        Task<List<Producto>> IProductoBusiness.GetProductoUsuario(int userID)
+        public Task<List<Producto>> GetProductoUsuario(int userID)
+        {
+            return _repository.GetProductoUsuario(userID);
+        }
+
+        public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<Producto> UpdateProducto(Producto producto)
+        {
+            return _repository.UpdateProducto(producto);
         }
     }
 }
