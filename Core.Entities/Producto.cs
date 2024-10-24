@@ -23,7 +23,7 @@ namespace Core.Entities
         public string metodoEntrega { get; set; }
         public DateTime fechaSolicitud { get; set; }
         public EstadoSolicitud estadoSolicitud { get; set; }
-        public string? ImagenUrl { get; set; }
+        public string ImagenUrl { get; set; }
 
         public int? usuarioID { get; set; }
         [ForeignKey("usuarioID")]
