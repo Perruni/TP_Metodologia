@@ -114,7 +114,35 @@ namespace Master_API.Controllers
 
         }
 
-        
+        [HttpPut("{userID}/{offerID}")]
+        public async Task<ActionResult<OfertaDTO>> PutOfertas(OfertaDTO request, int userID, int offerID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var ofertaExistente = await _ofertaBusiness.GetOfertaId(offerID);
+
+            if (ofertaExistente == null)
+            {
+                return NotFound(); 
+            }
+
+            if (ofertaExistente.usuarioID != userID)
+            {
+                return Forbid();
+            }
+
+            ofertaExistente.montoOferta = request.montoOferta;
+            ofertaExistente.fechaOferta = DateTime.Now; 
+
+            await _ofertaBusiness.UpdateOferta(ofertaExistente);
+
+            return Ok(ofertaExistente);
+        }
+
+
 
         [HttpDelete("{userID}/{offerID}")]
         public async Task<ActionResult<Oferta?>> DeleteOferta(int userID, int offerID)

@@ -26,7 +26,7 @@ namespace Core.Busisness
 
         public Task<Oferta> UpdateOferta(Oferta oferta)
         {
-            throw new NotImplementedException();
+            return _repository.UpdateOferta(oferta);
         }
 
         public Task<Oferta> DeleteOferta(int ofertaID)
