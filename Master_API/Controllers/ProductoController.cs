@@ -1,4 +1,5 @@
-﻿using Core.Busisness.Interfaces;
+﻿using BlobImagesTest.Services;
+using Core.Busisness.Interfaces;
 using Core.Data;
 using Core.Data.Interface;
 using Core.Entities;
@@ -6,6 +7,7 @@ using Core.Shared;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Subastas;
 using Core.Shared.DTOs.Usuario;
+using Core.Shared.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +19,12 @@ namespace Master_API.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly IProductoBusiness _productoBusiness;
+        private readonly IAzureBlobStorageService _azureBlobStorageService;
 
-        public ProductoController(IProductoBusiness productoBusiness)
+        public ProductoController(IProductoBusiness productoBusiness, IAzureBlobStorageService azureBlobStorageService)
         {
-            _productoBusiness = productoBusiness;            
+            _productoBusiness = productoBusiness;
+            _azureBlobStorageService = azureBlobStorageService;
         }
 
         
@@ -80,6 +84,12 @@ namespace Master_API.Controllers
                 return BadRequest(ModelState);
             }
 
+            string imagenUrl = null;
+            if (request.imagenUrl != null)
+            {
+                imagenUrl = await _azureBlobStorageService.UploadAsync(request.imagenUrl, Container.contenedorimagenes);
+            }
+
 
             // Crear una nueva instancia de Producto
             var nuevoProducto = new Producto
@@ -93,6 +103,7 @@ namespace Master_API.Controllers
                 descripcion = request.descripcion,
                 estadoProducto = Producto.EstadoProducto.EnRevision,
                 estadoSolicitud = Producto.EstadoSolicitud.Pendiente,
+                ImagenUrl = imagenUrl
             };
 
             // Agregar el nuevo producto al contexto
