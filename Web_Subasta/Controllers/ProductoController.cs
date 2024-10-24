@@ -43,6 +43,7 @@ namespace Web_Subasta.Controllers
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 producto = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
             }
 
             if (producto == null)
@@ -50,6 +51,44 @@ namespace Web_Subasta.Controllers
                 return NotFound();
             }
             return Ok(producto);
+        }
+
+
+
+        [HttpPut("{userId}/{productoId}")]
+        public async Task<IActionResult> UpdateProducto(int userId, int productoId, [FromBody] ProductoDatosDTO productDto)
+        {
+            
+            if (productDto == null)
+            {
+                return BadRequest("Los datos del producto son inválidos");
+            }
+
+            
+            var producto = new Producto
+            {
+                ProductoID = productoId, 
+                nombreProducto = productDto.nombreProducto,
+                precioBase = productDto.precioBase,
+                metodoEntrega = productDto.metodoEntrega,
+                fechaSolicitud = productDto.fechaSolicitud,
+                descripcion = productDto.descripcion,
+                estadoProducto = productDto.estadoProducto
+                
+            };
+
+            
+            HttpResponseMessage response = await client.PutAsJsonAsync($"api/productos/Cancelar/{userId}/{productoId}", producto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var updatedProduct = await response.Content.ReadFromJsonAsync<ProductoDatosDTO>();
+                return Ok(updatedProduct);
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+            }
         }
     }
 }
