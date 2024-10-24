@@ -25,7 +25,7 @@ namespace Master_API.Controllers
         }
 
         
-        [HttpGet("{ProductoID}")]
+        [HttpGet("{productID}")]
         public async Task<ActionResult<Producto>> GetProductID(int ProductoID)
         {
 
@@ -54,9 +54,24 @@ namespace Master_API.Controllers
 
             return Ok(product);
 
-        }    
+        }
 
-        
+        [HttpGet("Usuario/{userID}")]
+        public async Task<ActionResult<Producto>> GetProductoUsuario(int userID)
+        {
+
+
+            var product = await _productoBusiness.GetProductoUsuario(userID);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+
+        }
+
         [HttpPost("{userId}/{subastaId}")]
         public async Task<ActionResult<Producto?>> PostProducto(CrearProductoDTO request, int userId, int subastaId)
         {
@@ -84,11 +99,11 @@ namespace Master_API.Controllers
             // Agregar el nuevo producto al contexto
             await _productoBusiness.AddProducto(nuevoProducto);
 
-            return CreatedAtAction(nameof(GetProductID), new { ProductoID = nuevoProducto.productoID }, nuevoProducto);
+            return CreatedAtAction(nameof(GetProductID), new { productID = nuevoProducto.productoID }, nuevoProducto);
 
         }
 
-        [HttpPut("Cancelar/{userId}/{productoID}")]
+        [HttpPut("Cancelar/{userId}/{productID}")]
         public async Task<ActionResult<Producto?>> PutProducto(int userId, int productoID)
         {
 

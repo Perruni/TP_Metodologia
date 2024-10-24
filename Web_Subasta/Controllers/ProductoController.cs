@@ -12,9 +12,9 @@ using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using System.Net.Http.Headers;
 
-namespace Master_API.Controllers
+namespace Web_Subasta.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/producto/[controller]")]
     [ApiController]
     public class ProductoController : ControllerBase
     {
