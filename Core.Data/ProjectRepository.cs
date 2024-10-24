@@ -115,6 +115,15 @@ namespace Core.Data
             return oferta;
         }
 
+        public async Task<Oferta> UpdateOferta(Oferta oferta)
+        {
+            _dbContext.Update(oferta);
+            await _dbContext.SaveChangesAsync();
+
+            return oferta;
+        }
+
+
         public async Task<Oferta> DeleteOferta(int ofertaID)
         {
             var oferta = _dbContext.Ofertas.Find(ofertaID);
@@ -145,9 +154,11 @@ namespace Core.Data
 
         }
 
-        public Task<Oferta> GetOfertaPorId(int ofertaID)
+        public Task<Oferta> GetOfertaId(int ofertaID)
         {
-            throw new NotImplementedException();
+            var oferta = _dbContext.Ofertas.Where(o => o.ofertaID == ofertaID).FirstOrDefaultAsync();
+
+            return oferta;
         }
 
         public Task<Oferta> GetOfertaGanadora(int productoID)

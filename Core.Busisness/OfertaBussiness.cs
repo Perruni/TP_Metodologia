@@ -24,9 +24,19 @@ namespace Core.Busisness
             return _repository.AddOferta(oferta);
         }
 
+        public Task<Oferta> UpdateOferta(Oferta oferta)
+        {
+            return _repository.UpdateOferta(oferta);
+        }
+
         public Task<Oferta> DeleteOferta(int ofertaID)
         {
             return _repository.DeleteOferta(ofertaID);
+        }
+
+        public Task<int> GetCantidadOfertas(int productoID)
+        {
+            return _repository.GetCantidadOfertas(productoID);
         }
 
         public Task<Oferta> GetOfertaGanadora(int porductoID)
@@ -34,9 +44,9 @@ namespace Core.Busisness
             return _repository.GetOfertaGanadora(porductoID);
         }
 
-        public Task<Oferta> GetOfertaPorId(int ofertaID)
+        public Task<Oferta> GetOfertaId(int ofertaID)
         {
-            return _repository.GetOfertaPorId(ofertaID);
+            return _repository.GetOfertaId(ofertaID);
         }
 
         public Task<List<Oferta>> GetOfertasGanadoras(int subastaID)
@@ -58,5 +68,6 @@ namespace Core.Busisness
         {
             return _repository.GetTodasLasOfertas();
         }
+
     }
 }

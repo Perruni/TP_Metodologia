@@ -1,4 +1,6 @@
-﻿using Core.Data;
+﻿using Core.Busisness.Interfaces;
+using Core.Data;
+using Core.Entities;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Subastas;
 using Microsoft.AspNetCore.Http;
@@ -12,41 +14,80 @@ namespace Master_API.Controllers
     public class SubastaController : ControllerBase
     {
 
-        private readonly TPI_DbContext _context;
+        private readonly ISubastaBusiness _subastaBusiness;
 
-        public SubastaController(TPI_DbContext context)
+        public SubastaController(ISubastaBusiness subastaBusiness)
         {
-            _context = context;
+            _subastaBusiness = subastaBusiness;
+
         }
 
-        [HttpGet("/SubastaActiva/{id}")]
-        public async Task<ActionResult<SubastaProductosDTO>> GetSubastaActivaProductos(int id)
+        [HttpGet("/Activa")]
+        public async Task<ActionResult<Subasta>> GetSubastaActiva()
         {
-            var subasta = await _context.Subastas
-                .Include(s => s.listaProductos)
-                .FirstOrDefaultAsync(s => s.subastaID == id);
+            var subasta = await _subastaBusiness.GetSubastasActivas();
 
             if (subasta == null)
             {
                 return NotFound();
             }
 
-            var subastaProductosDTO = new SubastaProductosDTO
-            {
-                subastaID = subasta.subastaID,
-                listaProductos = subasta.listaProductos.Select(p => new ProductoDatosDTO
-                {
-                    nombreProducto = p.nombreProducto,
-                    precioBase = p.precioBase,
-                    metodoEntrega = p.metodoEntrega,
-                    descripcion = p.descripcion,
-                    fechaSolicitud = p.fechaSolicitud,
-                    estadoProducto = p.estadoProducto
-                }).ToList(),
-
-            };
-
-            return subastaProductosDTO;
+            return Ok(subasta);
         }
+
+        [HttpGet("/Proximas")]
+        public async Task<ActionResult<Subasta>> GetSubastaProxima()
+        {
+            var subasta = await _subastaBusiness.GetSubastasProximas();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+        }
+
+        [HttpGet("/Finalizadas")]
+        public async Task<ActionResult<Subasta>> GetSubastaFinalizada()
+        {
+            var subasta = await _subastaBusiness.GetSubastasFinalizadas();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+        }
+
+        [HttpGet("{subastaID}")]
+        public async Task<ActionResult<Subasta>> GetSubastaID(int subastaID)
+        {
+            var subasta = await _subastaBusiness.GetSubasta(subastaID);
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+        }
+
+        [HttpGet("Productos/{subastaID}")]
+        public async Task<ActionResult<Subasta>> GetSubastaProductos(int subastaID) 
+        {
+
+            var subasta = await _subastaBusiness.GetSubastaProductos(subastaID);
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+
+        }
+
     }
 }

@@ -87,7 +87,7 @@ namespace Web_Subasta.Controllers
         }
 
 
-        [HttpPut("{userId}/{productoId}")]
+        [HttpPost("{userId}/{productoId}")]
         public async Task<IActionResult> UpdateProducto(int userId, int productoId, [FromBody] ProductoDatosDTO productDto)
         {
             
@@ -99,7 +99,7 @@ namespace Web_Subasta.Controllers
             
             var producto = new Producto
             {
-                ProductoID = productoId, 
+                productoID = productoId, 
                 nombreProducto = productDto.nombreProducto,
                 precioBase = productDto.precioBase,
                 metodoEntrega = productDto.metodoEntrega,

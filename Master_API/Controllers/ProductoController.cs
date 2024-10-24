@@ -20,16 +20,15 @@ namespace Master_API.Controllers
 
         public ProductoController(IProductoBusiness productoBusiness)
         {
-            _productoBusiness = productoBusiness;
-            
+            _productoBusiness = productoBusiness;            
         }
 
         
         [HttpGet("{productID}")]
-        public async Task<ActionResult<Producto>> GetProductID(int ProductoID)
+        public async Task<ActionResult<Producto>> GetProductID(int productID)
         {
 
-            var product = await _productoBusiness.GetProducto(ProductoID);
+            var product = await _productoBusiness.GetProducto(productID);
 
             if (product == null)
             {
@@ -73,7 +72,7 @@ namespace Master_API.Controllers
         }
 
         [HttpPost("{userId}/{subastaId}")]
-        public async Task<ActionResult<Producto?>> PostProducto(CrearProductoDTO request, int userId, int subastaId)
+        public async Task<ActionResult<Producto?>> PostProducto(ProductoDTO request, int userId, int subastaId)
         {
             // Validación del modelo
             if (!ModelState.IsValid)
@@ -103,17 +102,17 @@ namespace Master_API.Controllers
 
         }
 
-        [HttpPut("Cancelar/{userId}/{productID}")]
+        [HttpPut("Cancelar/{userId}/{productoID}")]
         public async Task<ActionResult<Producto?>> PutProducto(int userId, int productoID)
         {
 
-            if (userId != 1)
+            var producto = await _productoBusiness.GetProducto(productoID);
+
+            if (producto.usuarioID != userId)
             {
                 return Forbid();
 
-            }
-
-            var producto = await _productoBusiness.GetProducto(productoID);
+            }            
 
             if (producto.estadoProducto == Producto.EstadoProducto.EnRevision)
             {

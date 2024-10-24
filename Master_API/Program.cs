@@ -56,6 +56,7 @@ builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
 builder.Services.AddScoped<IDatosUsuarioBusiness, DatosUsuarioBusiness>();
 builder.Services.AddScoped<IUsuarioBussiness, UsuarioBusiness>();
 builder.Services.AddScoped<IOfertaBussiness, OfertaBusiness>();
+builder.Services.AddScoped<ISubastaBusiness, Subastasbusiness>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //loggin
