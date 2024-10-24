@@ -18,6 +18,8 @@ namespace Core.Entities
     [Table("Productos")]
     public class Producto
     {
+        public int ProductoID;
+
         [Key]
         public int productoID { get; set; }
         public string nombreProducto { get; set; }

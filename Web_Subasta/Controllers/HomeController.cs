@@ -45,6 +45,10 @@ namespace Web_Subasta.Controllers
         {
             return View();
         }
+        public IActionResult ProductoSolitario()
+        {
+            return View();
+        }
         public IActionResult SubastasActivas()
         {
             return View();
