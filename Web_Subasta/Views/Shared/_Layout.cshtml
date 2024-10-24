@@ -13,7 +13,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
             <img src="~/img/logo.png" alt="Icono MEW" class="icono-mew">
             <div class="container">
-                <a class="nav-link" asp-area="" asp-page="/Index">Subastas</a>
+                <a class="nav-link" asp-controller="Home" asp-action="Activas">Subastas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,16 +21,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="">MisOfertas</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="MisOfertas">MisOfertas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="">MisProductos</a>
+                            <a class="nav-link" asp-controller="Home"  asp-action="MisProductos">MisProductos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Vender">Vender</a>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar-buttons ms-auto">
-                    <button class="nav-inicio" id="nav-inicio" asp-action="login">Iniciar Sesión</button>
-                    <button class="nav-registro">Registrate</button>
+                    <button class="nav-inicio" id="nav-inicio" asp-controller="Home" asp-action="">Iniciar Sesión</button>
+                    <button class="nav-registro" asp-controller="Home" asp-action="">Registrate</button>
                 </div>
             </div>
         </nav>
@@ -42,9 +45,9 @@
             <div class="sidebar">
 
                 <div class="sidebar-title">Subastas</div>
-                <a href="/subastas/activas" class="sidebar-button">Activas</a>
-                <a href="/subastas/proximas" class="sidebar-button">Próximas</a>
-                <a href="/subastas/finalizadas" class="sidebar-button">Finalizadas</a>
+                <a class="sidebar-button" asp-controller="Home" asp-action="Activas">Activas</a>
+                <a class="sidebar-button" asp-controller="Home" asp-action="Proximas">Próximas</a>
+                <a class="sidebar-button" asp-controller="Home" asp-action="Finalizadas">Finalizadas</a>
 
             </div>
         }
@@ -56,7 +59,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Copyright &copy; 2024 - M.E.W Auctions - <a asp-area="" asp-page="/Privacy">Terminos y Condiciones</a>
+            Copyright &copy; 2024 - M.E.W Auctions - <a asp-controller="Home" asp-action="Privacy">Terminos y Condiciones</a>
             <a asp-area="" asp-page="/Privacy">Sobre Nosotros</a>
         </div>
     </footer>
