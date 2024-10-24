@@ -15,7 +15,7 @@ namespace Core.Data
     public class ProjectRepository : IProjectRepository
     {
         private readonly TPI_DbContext _dbContext;
-        public ProjectRepository(TPI_DbContext dbContext) // Solo necesita el contexto ahora
+        public ProjectRepository(TPI_DbContext dbContext)
         {
             _dbContext = dbContext;
         }

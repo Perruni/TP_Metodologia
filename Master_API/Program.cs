@@ -9,6 +9,8 @@ using Microsoft.Extensions.Options;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Text.Json.Serialization;
 using BlobImagesTest.Services;
+using Master_API.Services.Interfaces;
+using Master_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +61,8 @@ builder.Services.AddScoped<IDatosUsuarioBusiness, DatosUsuarioBusiness>();
 builder.Services.AddScoped<IUsuarioBussiness, UsuarioBusiness>();
 builder.Services.AddScoped<IOfertaBussiness, OfertaBusiness>();
 builder.Services.AddScoped<ISubastaBusiness, Subastasbusiness>();
+builder.Services.AddScoped<ISubastaService, SubastaService>();
+builder.Services.AddHostedService<SubastaOpenCloseService>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //loggin

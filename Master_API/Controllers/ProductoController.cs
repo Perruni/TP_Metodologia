@@ -76,7 +76,7 @@ namespace Master_API.Controllers
         }
 
         [HttpPost("{userId}/{subastaId}")]
-        public async Task<ActionResult<Producto?>> PostProducto(ProductoDTO request, int userId, int subastaId)
+        public async Task<ActionResult<Producto?>> PostProducto([FromForm] ProductoDTO request, int userId, int subastaId)
         {
             // Validación del modelo
             if (!ModelState.IsValid)
