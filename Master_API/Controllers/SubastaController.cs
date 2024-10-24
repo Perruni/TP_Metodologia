@@ -34,5 +34,60 @@ namespace Master_API.Controllers
 
             return Ok(subasta);
         }
+
+        [HttpGet("/Proximas")]
+        public async Task<ActionResult<Subasta>> GetSubastaProxima()
+        {
+            var subasta = await _subastaBusiness.GetSubastasProximas();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+        }
+
+        [HttpGet("/Finalizadas")]
+        public async Task<ActionResult<Subasta>> GetSubastaFinalizada()
+        {
+            var subasta = await _subastaBusiness.GetSubastasFinalizadas();
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+        }
+
+        [HttpGet("{subastaID}")]
+        public async Task<ActionResult<Subasta>> GetSubastaID(int subastaID)
+        {
+            var subasta = await _subastaBusiness.GetSubasta(subastaID);
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+        }
+
+        [HttpGet("Productos/{subastaID}")]
+        public async Task<ActionResult<Subasta>> GetSubastaProductos(int subastaID) 
+        {
+
+            var subasta = await _subastaBusiness.GetSubastaProductos(subastaID);
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+
+        }
+
     }
 }

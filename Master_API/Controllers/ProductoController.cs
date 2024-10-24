@@ -102,7 +102,7 @@ namespace Master_API.Controllers
 
         }
 
-        [HttpPut("Cancelar/{userId}/{productID}")]
+        [HttpPut("Cancelar/{userId}/{productoID}")]
         public async Task<ActionResult<Producto?>> PutProducto(int userId, int productoID)
         {
 
