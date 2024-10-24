@@ -3,7 +3,8 @@
     ViewData["Title"] = "Datos de Usuario";
 }
 <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <div class="container mt-5">
     <h2>Datos de usuario</h2>
     <p>NECESITAREMOS UNOS DATOS ADICIONALES PARA LA CUENTA</p>
@@ -11,9 +12,9 @@
     <form asp-action="AddDatosUsuario" asp-controller="DatosUsuario" method="post">
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label asp-for="Nombre"  class="form-label">Nombre</label>
-                <input asp-for="Nombre" class="form-control" placeholder="Ingrese su nombre" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label asp-for="nombre" class="form-label">Nombre</label>
+                <input asp-for="nombre" class="form-control" placeholder="Ingrese su nombre" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
                 <label asp-for="apellido" class="form-label">Apellido</label>
@@ -28,12 +29,11 @@
                 <span asp-validation-for="dni" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
-                <label asp-for="CodeArea" class="form-label">Código de área</label>
-                <input asp-for="CodeArea" class="form-control" placeholder="Ingrese su código de área" />
-                <span asp-validation-for="CodeArea" class="text-danger"></span>
+                <label asp-for="codigoArea" class="form-label">Código de área</label>
+                <input asp-for="codigoArea" class="form-control" placeholder="Ingrese su código de área" />
+                <span asp-validation-for="codigoArea" class="text-danger"></span>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label asp-for="direccion" class="form-label">Dirección</label>
@@ -41,13 +41,13 @@
                 <span asp-validation-for="direccion" class="text-danger"></span>
             </div>
             <div class="col-md-6 mb-3">
-                <label asp-for="Telefono" class="form-label">Teléfono</label>
-                <input asp-for="Telefono" class="form-control" placeholder="Ingrese su teléfono" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
+                <label asp-for="telefono" class="form-label">Teléfono</label>
+                <input asp-for="telefono" class="form-control" placeholder="Ingrese su teléfono" />
+                <span asp-validation-for="telefono" class="text-danger"></span>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-danger">ENVIAR</button>
+        <button type="submit" class="btn btn-danger">Guardar datos</button>
     </form>
 </div>
 

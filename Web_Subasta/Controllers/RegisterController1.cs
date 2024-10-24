@@ -3,6 +3,8 @@ using Web_Subasta.Models.ViewModels;
 using Core.Data; // Asegúrate de que esta línea esté correcta para tu espacio de nombres
 using Core.Entities; // Importa tu entidad Usuario
 using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Web_Subasta.Controllers
 {
@@ -32,19 +34,24 @@ namespace Web_Subasta.Controllers
                 {
                     email = model.Email,
                     contrasenia = model.Contrasenia // Almacena la contraseña sin hashing (no recomendado)
-                    // Otros campos a agregar si es necesario
                 };
 
                 // Guarda el nuevo usuario en la base de datos
                 _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
 
-                // Redirigir a una acción después del registro, como un mensaje de éxito o iniciar sesión
-                return RedirectToAction("Activas", "Home"); // Redirige a la página de inicio de sesión
+                // Ahora el usuarioID se ha asignado automáticamente
+                var nuevoUsuarioID = usuario.usuarioID; // Obtén el usuarioID asignado
+
+                
+                    // Redirigir a la acción para completar los datos del usuario
+                    return RedirectToAction("DatosUsuario", "Home", new { userId = nuevoUsuarioID});
+                  
             }
 
             // Si llegamos aquí, algo falló; vuelve a mostrar el formulario
-            return View("Index", model);
+            return View("activas", "home");
         }
+
     }
 }

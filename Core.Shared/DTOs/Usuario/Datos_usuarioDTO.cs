@@ -8,6 +8,6 @@
         public string direccion { get; set; }
         public string telefono { get; set; }
         public int codigoArea { get; set; }
-
+        public int usuarioID { get; set; }
     }
 }

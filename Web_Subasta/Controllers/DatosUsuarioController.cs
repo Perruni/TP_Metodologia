@@ -2,8 +2,12 @@
 using Core.Data;
 using Core.Data.Interface;
 using Core.Entities;
+using Core.Shared.DTOs.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 using Web_Subasta.Models.ViewModels;
 
 namespace Master_API.Controllers
@@ -12,44 +16,64 @@ namespace Master_API.Controllers
     {
 
         private readonly IDatosUsuarioBusiness _datosBusiness;
+        private readonly HttpClient _httpClient;
 
-        public DatosUsuarioController(IDatosUsuarioBusiness datosBusiness)
+        public DatosUsuarioController(IDatosUsuarioBusiness datosBusiness, HttpClient httpClient)
         {
             _datosBusiness = datosBusiness;
-           
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri("https://localhost:7073/");
         }
 
-        public IActionResult GetDatosUsuario()
+        [HttpGet]
+        public IActionResult AddDatosUsuario(int userId)
         {
-            return View();
+            var model = new DatosUsuarioVM
+            {
+                usuarioID = userId 
+            };
+
+            return View(model);
         }
 
-		[HttpPost]
-		public IActionResult AddDatosUsuario(DatosUsuarioVM modelo)
-		{
-			if (ModelState.IsValid)
-			{
 
-				var datosUsuarios = new Datos_usuario
-				{
-					usuarioID = 3,
-					nombre = modelo.Nombre,
-					apellido = modelo.apellido,
-					DNI = modelo.dni,
-					codigoArea = modelo.CodeArea,
-					direccion = modelo.direccion,
-					telefono = modelo.Telefono
-				};
+        [HttpPost]
+        public async Task<IActionResult> AddDatosUsuario(int userId, DatosUsuarioVM modelo)
+        {
+        
+                var datosUsuarios = new Datos_usuarioDTO
+                {
+                    DNI = modelo.dni,
+                    nombre = modelo.nombre,
+                    apellido = modelo.apellido,
+                    direccion = modelo.direccion,
+                    telefono = modelo.telefono,
+                    codigoArea = modelo.codigoArea,
+                    usuarioID = userId,
+                };
 
-				
-				_datosBusiness.AddDatosUsuario(datosUsuarios);				
+                // Construir la URL para llamar a la API
+                var apiUrl = $"api/DatosUsuario/{userId}";
+                var jsonContent = JsonConvert.SerializeObject(datosUsuarios);
+                var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-				return RedirectToAction("Activas");
-			}
+                // Hacer la solicitud POST a la API
+                var response = await _httpClient.PostAsync(apiUrl, httpContent);
 
-			// Si el modelo no es válido, vuelve a mostrar la vista con los errores // nose como funciona xd
-			return View("Activas");
-		}
-	}
-	
+                if (response.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("Activas", "Home");
+                }
+
+    
+                ModelState.AddModelError("", "Error al guardar los datos adicionales.");
+            
+
+       
+            return View(modelo);
+        }
+
+    }
+
 }
