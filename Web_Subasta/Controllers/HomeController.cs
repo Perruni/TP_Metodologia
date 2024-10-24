@@ -79,6 +79,16 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
+        public IActionResult login()
+        {
+            return View();
+        }
+
+        public IActionResult register()
+        {
+            return View();
+        }
+
 
         public IActionResult MisProductos()
         {
