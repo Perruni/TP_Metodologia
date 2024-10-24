@@ -11,8 +11,9 @@ namespace Core.Data.Interface
     {
 
         public Task<Oferta> AddOferta(Oferta oferta);
+        public Task<Oferta> UpdateOferta(Oferta oferta);
         public Task<Oferta> DeleteOferta(int ofertaID);
-        public Task<Oferta> GetOfertaPorId(int ofertaID);
+        public Task<Oferta> GetOfertaId(int ofertaID);
         public Task<Oferta> GetOfertaGanadora(int porductoID);       
         public Task<List<Oferta>> GetOfertasGanadoras(int subastaID);
         public Task<List<Oferta>> GetOfertasUsuario(int usuarioID);

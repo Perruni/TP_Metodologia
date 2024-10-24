@@ -34,14 +34,14 @@ namespace Core.Busisness
             return _repository.DatosProducto(productoID);
         }
 
-        public Task<Producto> DeleteProducto(int ProductoID)
+        public Task<Producto> DeleteProducto(int productoID)
         {
-            return _repository.DeleteProducto(ProductoID);
+            return _repository.DeleteProducto(productoID);
         }
 
-        public Task<Producto> GetProducto(int ProductoID)
+        public Task<Producto> GetProducto(int productoID)
         {
-            return _repository.GetProducto(ProductoID);
+            return _repository.GetProducto(productoID);
         }
 
         public Task<List<Producto>> GetProductos()
@@ -54,7 +54,7 @@ namespace Core.Busisness
             return _repository.GetProductoUsuario(userID);
         }
 
-        public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto)
+        public Task<Producto> HabilitarProducto(int productoID, int habilitacionProducto)
         {
             throw new NotImplementedException();
         }

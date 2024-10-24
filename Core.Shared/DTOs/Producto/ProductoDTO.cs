@@ -7,7 +7,7 @@ using static Core.Entities.Producto;
 
 namespace Core.Shared.DTOs.Producto
 {
-    public class CrearProductoDTO
+    public class ProductoDTO
     {
         public string nombreProducto { get; set; }
         public double precioBase { get; set; }

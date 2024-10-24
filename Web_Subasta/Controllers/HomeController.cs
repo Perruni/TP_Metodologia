@@ -106,7 +106,7 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CargarProducto(CrearProductoDTO crearProductoDTO, int subastaID, int usuarioID)
+        public async Task<IActionResult> CargarProducto(ProductoDTO crearProductoDTO, int subastaID, int usuarioID)
         {
             if (!ModelState.IsValid)
             {

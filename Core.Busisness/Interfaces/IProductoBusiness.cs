@@ -9,11 +9,11 @@ namespace Core.Busisness.Interfaces
 {
     public interface IProductoBusiness
     {
-        public Task<Producto> GetProducto(int ProductoID);
+        public Task<Producto> GetProducto(int productoID);
         public Task<Producto> AddProducto(Producto producto);
         public Task<Producto> UpdateProducto(Producto producto);
-        public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto);
-        public Task<Producto> DeleteProducto(int ProductoID);
+        public Task<Producto> HabilitarProducto(int productoID, int habilitacionProducto);
+        public Task<Producto> DeleteProducto(int productoID);
         public Task<Producto> DatosProducto(int productoID);
         public Task<Producto> CancelarProducto(Producto producto);
         public Task<List<Producto>> GetProductoUsuario(int userID);
