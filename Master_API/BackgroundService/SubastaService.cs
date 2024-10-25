@@ -67,8 +67,7 @@ namespace Master_API.Services
                     }
                 }
             }
-                await _dbContext.SaveChangesAsync();
-            
+                await _dbContext.SaveChangesAsync();            
         }
 
         public async Task OpenSubastaAsync(Subasta subasta)

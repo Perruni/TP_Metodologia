@@ -33,17 +33,17 @@ namespace Master_API.Controllers
             _ofertaBusiness = ofertaBussiness;
         }
 
-        
+
         [HttpGet("Usuario/{userID}")]
         public async Task<ActionResult<Oferta>> GetUsuarioOfertas(int userID)
         {
             var oferta = await _ofertaBusiness.GetOfertasUsuario(userID);
-                
+
 
             if (oferta == null)
             {
                 return NotFound();
-            }           
+            }
 
             return Ok(oferta);
         }
@@ -76,10 +76,10 @@ namespace Master_API.Controllers
             return Ok(oferta);
         }
 
-        [HttpGet("Ofertas")]
-        public async Task<ActionResult<Oferta>> GetListaOfertas()
+        [HttpGet("Resultados/{subastaID}")]
+        public async Task<ActionResult<Oferta>> GetListaOfertasGanadoras(int subastaID)
         {
-            var oferta = await _ofertaBusiness.GetTodasLasOfertas();
+            var oferta = await _ofertaBusiness.GetOfertasGanadoras(subastaID);
 
 
             if (oferta == null)
