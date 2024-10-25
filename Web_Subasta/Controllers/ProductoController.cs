@@ -53,41 +53,46 @@ namespace Web_Subasta.Controllers
             return Ok(producto);
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> PostProducto(int userId, int subastaId)
+        public async Task<IActionResult> PostProducto([FromBody] ProductoDTO productoDto)
         {
-            
+            if (productoDto == null)
+            {
+                return BadRequest("Los datos del producto son inválidos");
+            }
+
             await InitializeHttpClientAsync();
 
             
             var data = new
             {
-                UserId = userId,
-                SubastaID = subastaId
+                NombreProducto = productoDto.nombreProducto,
+                PrecioBase = productoDto.precioBase,
+                MetodoEntrega = productoDto.metodoEntrega,
+                Descripcion = productoDto.descripcion
             };
 
-            
+          
             var jsonData = JsonSerializer.Serialize(data);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             
-            HttpResponseMessage response = await client.PostAsync("UriStrings api/Producto", content); 
+            HttpResponseMessage response = await client.PostAsync("api/Producto", content);
 
             if (response.IsSuccessStatusCode)
             {
-               
+                
                 return Ok("Datos enviados correctamente.");
             }
             else
             {
-                
+               
                 return StatusCode((int)response.StatusCode, "Error al enviar los datos.");
             }
         }
 
 
-        [HttpPost("{userId}/{productoId}")]
+        [HttpPut("{userId}/{productoId}")]
         public async Task<IActionResult> UpdateProducto(int userId, int productoId, [FromBody] ProductoDatosDTO productDto)
         {
             
