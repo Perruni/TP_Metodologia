@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Data.Migrations
 {
     [DbContext(typeof(TPI_DbContext))]
-    [Migration("20241017160530_Initial Migration")]
+    [Migration("20241025180942_Initial Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,26 +24,6 @@ namespace Core.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("Core.Entities.Certificado", b =>
-                {
-                    b.Property<int>("certificadoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("certificadoId"));
-
-                    b.Property<DateTime>("fechaEmision")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("metodoPago")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("certificadoId");
-
-                    b.ToTable("Certificado");
-                });
 
             modelBuilder.Entity("Core.Entities.Datos_usuario", b =>
                 {
@@ -65,15 +45,10 @@ namespace Core.Data.Migrations
                     b.Property<string>("nombre")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("productoID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("telefono")
-                        .HasColumnType("int");
+                    b.Property<string>("telefono")
+                        .HasColumnType("longtext");
 
                     b.HasKey("usuarioID");
-
-                    b.HasIndex("productoID");
 
                     b.ToTable("Datos_usuario");
                 });
@@ -88,6 +63,9 @@ namespace Core.Data.Migrations
 
                     b.Property<int>("estadoOferta")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("fechaOferta")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<float>("montoOferta")
                         .HasColumnType("float");
@@ -114,6 +92,10 @@ namespace Core.Data.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("productoID"));
+
+                    b.Property<string>("ImagenUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("descripcion")
                         .IsRequired()
@@ -206,12 +188,8 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Datos_usuario", b =>
                 {
-                    b.HasOne("Core.Entities.Producto", null)
-                        .WithMany("datosUsuario")
-                        .HasForeignKey("productoID");
-
                     b.HasOne("Core.Entities.Usuario", "Usuario")
-                        .WithOne("GetDatosUsuario")
+                        .WithOne("DatosUsuario")
                         .HasForeignKey("Core.Entities.Datos_usuario", "usuarioID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -251,8 +229,6 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Producto", b =>
                 {
-                    b.Navigation("datosUsuario");
-
                     b.Navigation("listaOfertas");
                 });
 
@@ -263,7 +239,7 @@ namespace Core.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Usuario", b =>
                 {
-                    b.Navigation("GetDatosUsuario");
+                    b.Navigation("DatosUsuario");
 
                     b.Navigation("listaOfertas");
 

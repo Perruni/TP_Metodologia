@@ -16,22 +16,6 @@ namespace Core.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Certificado",
-                columns: table => new
-                {
-                    certificadoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    metodoPago = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    fechaEmision = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Certificado", x => x.certificadoId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Subastas",
                 columns: table => new
                 {
@@ -68,6 +52,34 @@ namespace Core.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Datos_usuario",
+                columns: table => new
+                {
+                    usuarioID = table.Column<int>(type: "int", nullable: false),
+                    DNI = table.Column<int>(type: "int", nullable: false),
+                    nombre = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    apellido = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    direccion = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    telefono = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    codigoArea = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Datos_usuario", x => x.usuarioID);
+                    table.ForeignKey(
+                        name: "FK_Datos_usuario_Usuarios_usuarioID",
+                        column: x => x.usuarioID,
+                        principalTable: "Usuarios",
+                        principalColumn: "usuarioID",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -83,6 +95,8 @@ namespace Core.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     fechaSolicitud = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     estadoSolicitud = table.Column<int>(type: "int", nullable: false),
+                    ImagenUrl = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     usuarioID = table.Column<int>(type: "int", nullable: true),
                     subastaID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -103,45 +117,13 @@ namespace Core.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Datos_usuario",
-                columns: table => new
-                {
-                    usuarioID = table.Column<int>(type: "int", nullable: false),
-                    DNI = table.Column<int>(type: "int", nullable: false),
-                    nombre = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    apellido = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    direccion = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    telefono = table.Column<int>(type: "int", nullable: false),
-                    codigoArea = table.Column<int>(type: "int", nullable: false),
-                    productoID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Datos_usuario", x => x.usuarioID);
-                    table.ForeignKey(
-                        name: "FK_Datos_usuario_Productos_productoID",
-                        column: x => x.productoID,
-                        principalTable: "Productos",
-                        principalColumn: "productoID");
-                    table.ForeignKey(
-                        name: "FK_Datos_usuario_Usuarios_usuarioID",
-                        column: x => x.usuarioID,
-                        principalTable: "Usuarios",
-                        principalColumn: "usuarioID",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Ofertas",
                 columns: table => new
                 {
                     ofertaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     montoOferta = table.Column<float>(type: "float", nullable: false),
+                    fechaOferta = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     estadoOferta = table.Column<int>(type: "int", nullable: false),
                     usuarioID = table.Column<int>(type: "int", nullable: true),
                     productoID = table.Column<int>(type: "int", nullable: true)
@@ -161,11 +143,6 @@ namespace Core.Data.Migrations
                         principalColumn: "usuarioID");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Datos_usuario_productoID",
-                table: "Datos_usuario",
-                column: "productoID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ofertas_productoID",
@@ -191,9 +168,6 @@ namespace Core.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Certificado");
-
             migrationBuilder.DropTable(
                 name: "Datos_usuario");
 
