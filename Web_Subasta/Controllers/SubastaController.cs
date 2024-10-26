@@ -6,6 +6,7 @@ using Core.Shared.DTOs.Subastas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
@@ -75,26 +76,49 @@ namespace Master_API.Controllers
 
 
 
+        [HttpGet("Activa")]
+        public async Task<IActionResult> Activa()
+        {
+            var response = await client.GetAsync("/Activa");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var subasta = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return Ok(subasta);
+            }
+            return NotFound();
+        }
+
+        [HttpGet("Proximas")]
+        public async Task<IActionResult> Proximas()
+        {
+            var response = await client.GetAsync("/Proximas");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var subasta = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return Ok(subasta);
+            }
+            return NotFound();
+        }
+
+        [HttpGet("Finalizadas")]
+        public async Task<IActionResult> Finalizadas()
+        {
+            var response = await client.GetAsync("/Finalizadas");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var subasta = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return Ok(subasta);
+            }
+            return NotFound();
+        }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        //Estoy hay que sacar creo
 
 
         private readonly TPI_DbContext _context;
