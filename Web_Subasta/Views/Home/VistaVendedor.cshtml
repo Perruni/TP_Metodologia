@@ -3,7 +3,7 @@
 *@
 
 <style>
- 
+    /* Contenedor principal de la subasta */
     .subasta-container {
         max-width: 800px;
         margin: 40px auto;
@@ -14,7 +14,7 @@
         font-family: Arial, sans-serif;
     }
 
-    
+    /* Encabezado */
     .subasta-header h2 {
         font-size: 24px;
         font-weight: bold;
@@ -22,12 +22,13 @@
         margin-bottom: 20px;
     }
 
+    /* Contenido principal */
     .subasta-content {
         display: flex;
         gap: 20px;
     }
 
-
+    /* Imagen del producto */
     .subasta-imagen img {
         width: 100%;
         height: auto;
@@ -35,6 +36,7 @@
         border-radius: 8px;
     }
 
+    /* Detalles de la subasta */
     .subasta-detalles {
         flex: 1;
         background-color: #ffffff;
@@ -63,6 +65,7 @@
             color: #666;
         }
 
+    /* Acciones de la subasta */
     .subasta-acciones {
         display: flex;
         gap: 10px;
@@ -87,7 +90,7 @@
             cursor: pointer;
         }
 
-        .subasta-acciones .btn-ofertar {
+        .subasta-acciones .btn-remover {
             background-color: #e74c3c;
             color: white;
             font-weight: bold;
@@ -119,10 +122,9 @@
             <p class="cantidad-ofertas">CANTIDAD DE OFERTAS: 10</p>
             <p class="descripcion">Una casa pequeña de estilo moderno, con fachada de color blanco y detalles en madera. Tiene grandes ventanales que permiten la entrada de luz natural. En el interior, cuenta con una sala de estar acogedora, una cocina compacta y funcional, dos habitaciones, y un baño. El patio trasero es amplio.</p>
 
-            <!--Boton y  -->
+            <!--Boton remover  -->
             <div class="subasta-acciones">
-                <input type="number" class="form-control" placeholder="Monto a ofertar" />
-                <button class="btn-ofertar">OFERTAR</button>
+                <button class="btn-remover">REMOVER</button>
             </div>
         </div>
     </div>
