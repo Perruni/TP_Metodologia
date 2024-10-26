@@ -64,7 +64,7 @@ namespace GestorSubastas
 
             var resultado = await _subastaBusiness.AddSubasta(nuevaSubasta);
 
-
+            this.Close();
 
         }
     }

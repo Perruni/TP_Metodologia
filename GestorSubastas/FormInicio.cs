@@ -47,7 +47,7 @@ namespace GestorSubastas
                 }
 
             }
-            else if (seleccion == 1) 
+            else if (seleccion == 1)
             {
                 var subastas = await _projectRepository.GetSubastasProximas();
                 if (subastas != null && subastas.Any())
@@ -61,7 +61,7 @@ namespace GestorSubastas
 
 
             }
-            else if (seleccion == 2) 
+            else if (seleccion == 2)
             {
                 var subastas = await _projectRepository.GetSubastasFinalizadas();
                 if (subastas != null && subastas.Any())
@@ -97,5 +97,10 @@ namespace GestorSubastas
 
         }
 
+        private void BotonEditar_Click(object sender, EventArgs e)
+        {
+            var formEditarSubasta = new FormEditarSubasta(_subastaBusiness);
+            formEditarSubasta.ShowDialog();
+        }
     }
 }
