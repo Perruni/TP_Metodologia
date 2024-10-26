@@ -51,32 +51,30 @@ namespace Master_API.Controllers
         }
 
 
-        [HttpGet("Subasta/Productos{subastaID}")]
-        public async Task<IActionResult> GetProductoSubasta(int SubastaID)
+        [HttpGet("Subasta/Productos/{subastaID}")]
+        public async Task<IActionResult> GetProductoSubasta(int subastaID)
         {
-            Subasta subasta = null;
+            SubastaProductosDTO subastaProductosDTO = null;
 
             await InitializeHttpClientAsync();
-            HttpResponseMessage response = await client.GetAsync($"api/Subasta/Productos/{SubastaID}");
+            HttpResponseMessage response = await client.GetAsync($"api/Subasta/Productos/{subastaID}");
 
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                subasta = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+                subastaProductosDTO = JsonSerializer.Deserialize<SubastaProductosDTO>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
 
-            if (subasta == null)
+            if (subastaProductosDTO == null || subastaProductosDTO.listaProductos == null)
             {
-                return NotFound();
+                return NotFound("La subasta o la lista de productos no se encontraron.");
             }
-            return Ok(subasta);
+
+            return Ok(subastaProductosDTO);
+
         }
 
-
-
-
-        [HttpGet("Activa")]
+            [HttpGet("Activa")]
         public async Task<IActionResult> Activa()
         {
             var response = await client.GetAsync("/Activa");
