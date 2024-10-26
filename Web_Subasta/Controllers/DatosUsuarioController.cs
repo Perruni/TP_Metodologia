@@ -22,7 +22,7 @@ namespace Master_API.Controllers
         {
             _datosBusiness = datosBusiness;
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://localhost:7073/");
+            _httpClient.BaseAddress = new Uri("UrisString");
         }
 
         [HttpGet]

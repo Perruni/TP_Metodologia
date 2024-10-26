@@ -1,10 +1,13 @@
 ﻿using Core.Data;
+using Core.Entities;
 using Core.Shared;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Subastas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Master_API.Controllers
 {
@@ -12,6 +15,87 @@ namespace Master_API.Controllers
     [ApiController]
     public class SubastaController : ControllerBase
     {
+
+        static HttpClient client = new HttpClient();
+
+
+        static async Task InitializeHttpClientAsync()
+        {
+            client.BaseAddress = new Uri("UriStrings");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        [HttpGet("Subasta/{subastaID}")]
+        public async Task<IActionResult> GetSubasta(int SubastaID)
+        {
+            Subasta subasta = null;
+
+            await InitializeHttpClientAsync();
+            HttpResponseMessage response = await client.GetAsync($"api/Subasta/{SubastaID}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                subasta = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            }
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+            return Ok(subasta);
+        }
+
+
+        [HttpGet("Subasta/Productos{subastaID}")]
+        public async Task<IActionResult> GetProductoSubasta(int SubastaID)
+        {
+            Subasta subasta = null;
+
+            await InitializeHttpClientAsync();
+            HttpResponseMessage response = await client.GetAsync($"api/Subasta/Productos/{SubastaID}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                subasta = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            }
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+            return Ok(subasta);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private readonly TPI_DbContext _context;
 
@@ -48,5 +132,8 @@ namespace Master_API.Controllers
 
             return subastaProductosDTO;
         }
+
+
+
     }
 }
