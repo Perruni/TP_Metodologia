@@ -16,19 +16,8 @@ namespace Core.Shared.DTOs.Subastas
         public DateTime fechaFinalizado { get; set; }
         public EstadoSubasta estadoSubasta { get; set; }
         public MetodosdePago metodosdePago { get; set; }
-
     }
-
-    public class SubastaResponse
-    {
-
-        [JsonProperty("$id")]
-        public string Id { get; set; }
-
-        [JsonProperty("$values")]
-        public List<SubastaDTO> Values { get; set; }
-
-    }
+    
 
 
     

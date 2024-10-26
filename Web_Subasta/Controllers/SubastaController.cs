@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Web_Subasta.Models.ViewModels;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Collections.Generic;
+using Core.Shared.APITest;
 
 namespace Master_API.Controllers
 {
@@ -44,7 +46,10 @@ namespace Master_API.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                subasta = JsonConvert.DeserializeObject<Subasta>(jsonResponse);
+                var subastaResponse = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
 
             }
 
@@ -56,30 +61,55 @@ namespace Master_API.Controllers
         }
 
 
-        [HttpGet("Subasta/Productos/{subastaID}")]
-        public async Task<IActionResult> GetProductoSubasta(int SubastaID)
+        [HttpGet("Activa")]
+        public async Task<IActionResult> Activas()
         {
-            SubastaProductosDTO subastaProductosDTO = null;
-
-            HttpResponseMessage response = await client.GetAsync($"api/Subasta/Productos/{SubastaID}");
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                subasta = JsonConvert.DeserializeObject<Subasta>(jsonResponse);
+                // Realiza la solicitud a la API
+                HttpResponseMessage response = await client.GetAsync("Subasta/Activa");
+                response.EnsureSuccessStatusCode(); // Lanza una excepción si el código de estado no es exitoso
 
+                // Lee el contenido de la respuesta
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Deserializa el JSON a un objeto de tipo SubastaResponse
+                var subastaResponse = JsonSerializer.Deserialize<SubastaResponse>(jsonResponse, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                // Verifica si la deserialización fue exitosa y si hay valores
+                if (subastaResponse != null && subastaResponse.Values != null)
+                {
+                    // Crea un modelo de vista con la lista de subastas deserializadas
+                    var viewModel = new SubastaViewModel
+                    {
+                        subastaListaAPI = subastaResponse.Values // Asigna la lista de subastas deserializadas
+                    };
+
+                    // Devuelve la vista con el modelo de vista
+                    return View("~/Views/Home/Activas.cshtml", viewModel);
+                }
+                else
+                {
+                    // Si la respuesta o los valores son nulos, devuelve un error 404
+                    return NotFound("La respuesta de la API no contiene valores.");
+                }
             }
-
-            if (subastaProductosDTO == null || subastaProductosDTO.listaProductos == null)
+            catch (HttpRequestException e)
             {
-                return NotFound("La subasta o la lista de productos no se encontraron.");
+                // Manejo de excepción para errores de solicitud HTTP
+                return StatusCode(500, $"Error al llamar a la API: {e.Message}");
             }
-
-            return Ok(subastaProductosDTO);
-
+            catch (Exception ex)
+            {
+                // Manejo de excepción general para cualquier otro error
+                return StatusCode(500, $"Error al procesar la solicitud: {ex.Message}");
+            }
         }
 
-        [HttpGet("Activa")]
+        /*[HttpGet("Activa")]
         public async Task<IActionResult> Activas()
         {
 
@@ -90,21 +120,21 @@ namespace Master_API.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                var subastaResponse = JsonConvert.DeserializeObject<SubastaResponse>(jsonResponse);
+                var subastaResponse = JsonConvert.DeserializeObject<List<SubastaResponse>> (jsonResponse);
 
                 // Verifica si la deserialización fue exitosa y si hay valores
                 if (subastaResponse != null && subastaResponse.Values != null)
                 {
                     var viewModel = new SubastaViewModel
                     {
-                        subastaListaDTO = subastaResponse.Values // Asigna la lista de subastas deserializadas
+                        subastaListaDTO = subastaResponse.values // Asigna la lista de subastas deserializadas
                     };
                     return View("~/Views/Home/Activas.cshtml", viewModel);
                 }
 
             }
             return NotFound();
-        }
+        }*/
 
         /*
         [HttpGet("Proximas")]

@@ -93,7 +93,7 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPut("{userId}/{productoId}")]
-        public async Task<IActionResult> UpdateProducto(int userId, int productoId, [FromBody] ProductoDatosDTO productDto)
+        public async Task<IActionResult> UpdateProducto(int userId, int productoId)
         {
             
                         
