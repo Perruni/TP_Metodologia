@@ -1,0 +1,25 @@
+﻿using static Core.Entities.Producto;
+using System.ComponentModel.DataAnnotations;
+
+namespace Web_Subasta.Models.ViewModels
+{
+    public class ProductoViewModel
+    {
+        public int ProductoID { get; set; }
+        public string NombreProducto { get; set; }
+
+        public EstadoProducto EstadoProducto { get; set; }
+        public string Descripcion { get; set; }
+
+        public double PrecioBase { get; set; }
+        public string MetodoEntrega { get; set; }
+
+        public DateTime FechaSolicitud { get; set; }
+
+        public EstadoSolicitud EstadoSolicitud { get; set; }
+
+        public string ImagenUrl { get; set; }
+
+
+    }
+}

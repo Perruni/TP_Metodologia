@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+    .subasta-container {
+        margin: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .subasta-header h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .subasta-content {
+        display: flex;
+        gap: 20px;
+    }
+
+    .subasta-imagen img {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .subasta-info {
+        text-align: left;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .subasta-detalles {
+        background-color: #f3f3f3;
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+        .subasta-detalles p {
+            margin: 10px 0;
+        }
+
+    .subasta-descripcion {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .subasta-acciones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+        .subasta-acciones .btn {
+            width: 100%;
+        }
+</style>
+
+<div class="subasta-container">
+    <div class="subasta-header">
+        <h2>Subasta</h2>
+    </div>
+
+    <div class="subasta-content d-flex">
+        <!-- Imagen -->
+        <div class="subasta-imagen">
+            <img src="https://via.placeholder.com/300" alt="Producto de Ejemplo" />
+        </div>
+
+        <!-- Detalles de la subasta para conectarlo a la api -->
+        <div class="subasta-detalles">
+            <div class="subasta-info">
+                <p><strong>Fecha de Inicio:</strong> 01/11/2024 10:00</p>
+                <p><strong>Fecha de Fin:</strong> 07/11/2024 18:00</p>
+                <p><strong>Precio Base:</strong> $1000.00</p>
+                <p><strong>Cantidad de Ofertas:</strong> 5</p>
+                <p class="subasta-descripcion"><strong>Descripción:</strong> Este es un ejemplo de descripción para el producto en subasta.</p>
+            </div>
+
+            <div class="subasta-acciones">
+                <!--Aca se ingresar la oferta -->
+                <input type="number" class="form-control" placeholder="Ingrese su oferta" />
+
+                <!-- Botón para ofertar -->
+                <button class="btn btn-danger">Ofertar</button>
+            </div>
+        </div>
+    </div>
+</div>
