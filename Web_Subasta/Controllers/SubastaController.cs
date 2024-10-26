@@ -59,7 +59,7 @@ namespace Master_API.Controllers
         [HttpGet("Subasta/Productos/{subastaID}")]
         public async Task<IActionResult> GetProductoSubasta(int SubastaID)
         {
-            Subasta subasta = null;
+            SubastaProductosDTO subastaProductosDTO = null;
 
             HttpResponseMessage response = await client.GetAsync($"api/Subasta/Productos/{SubastaID}");
 
@@ -70,15 +70,14 @@ namespace Master_API.Controllers
 
             }
 
-            if (subasta == null)
+            if (subastaProductosDTO == null || subastaProductosDTO.listaProductos == null)
             {
-                return NotFound();
+                return NotFound("La subasta o la lista de productos no se encontraron.");
             }
-            return Ok(subasta);
+
+            return Ok(subastaProductosDTO);
+
         }
-
-
-
 
         [HttpGet("Activa")]
         public async Task<IActionResult> Activas()

@@ -142,7 +142,7 @@ namespace Master_API.Controllers
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
 
-            HttpResponseMessage response = await client.PostAsync("api/Oferta", content);
+            HttpResponseMessage response = await client.PostAsJsonAsync("api/Oferta", content);
 
             if (response.IsSuccessStatusCode)
             {
