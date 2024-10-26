@@ -134,7 +134,7 @@ namespace Web_Subasta.Controllers
             var client = _httpClientFactory.CreateClient();
 
             // Crear el objeto SubastaIdDTO
-            var subastaIdDTO = new SubastaIdDTO
+            var subastaIdDTO = new SubastaDTO
             {
                 subastaID = subastaID
             };

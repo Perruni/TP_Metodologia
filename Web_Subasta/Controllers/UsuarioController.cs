@@ -7,7 +7,7 @@ namespace Master_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : Controller
     {
         private readonly TPI_DbContext _context;
 

@@ -22,7 +22,7 @@ namespace Master_API.Controllers
 
         }
 
-        [HttpGet("/Activa")]
+        [HttpGet("Activa")]
         public async Task<ActionResult<Subasta>> GetSubastaActiva()
         {
             var subasta = await _subastaBusiness.GetSubastasActivas();
@@ -32,10 +32,21 @@ namespace Master_API.Controllers
                 return NotFound();
             }
 
-            return Ok(subasta);
+            var subastaDTOs = subasta.Select(s => new SubastaDTO
+            {
+                subastaID = s.subastaID,
+                titulo = s.titulo,
+                fechaInicio = s.fechaInicio,
+                fechaFinalizado = s.fechaFinalizado,
+                estadoSubasta = s.estadoSubasta,
+                metodosdePago = s.metodosdePago
+            }).ToList();
+
+            return Ok(subastaDTOs);
+
         }
 
-        [HttpGet("/Proximas")]
+        [HttpGet("Proximas")]
         public async Task<ActionResult<Subasta>> GetSubastaProxima()
         {
             var subasta = await _subastaBusiness.GetSubastasProximas();
@@ -48,7 +59,7 @@ namespace Master_API.Controllers
             return Ok(subasta);
         }
 
-        [HttpGet("/Finalizadas")]
+        [HttpGet("Finalizadas")]
         public async Task<ActionResult<Subasta>> GetSubastaFinalizada()
         {
             var subasta = await _subastaBusiness.GetSubastasFinalizadas();
