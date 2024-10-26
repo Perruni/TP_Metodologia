@@ -26,7 +26,8 @@ namespace GestorSubastas
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var formCrearSubasta = new FormCrearSubasta(_subastaBusiness);
+            formCrearSubasta.ShowDialog();
         }
 
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
