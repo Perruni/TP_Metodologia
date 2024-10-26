@@ -104,6 +104,11 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
+        public IActionResult VistaVendedor()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
