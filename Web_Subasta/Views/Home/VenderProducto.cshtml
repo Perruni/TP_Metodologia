@@ -19,11 +19,10 @@
             </div>
         </div>
 
-        
         <div class="col-md-6">
             <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label asp-for/="Title" class="form-label">Titulo de la publicación</label>
+                    <label asp-for/="Title" class="form-label">Título de la publicación</label>
                     <input asp-for/="Title" class="form-control" />
                     <span asp-validation-for/="Title" class="text-danger"></span>
                 </div>
@@ -38,8 +37,8 @@
                     <span asp-validation-for/="AuctionType" class="text-danger"></span>
                 </div>
 
-                 <div class="mb-3">
-                    <label asp-for/="BasePrice" class="form-label">Precio base</label>
+                <div class="mb-3">
+                    <label asp-for/"BasePrice" class="form-label">Precio base</label>
                     <input asp-for/="BasePrice" class="form-control" type="text" id="BasePrice" />
                     <span asp-validation-for/="BasePrice" class="text-danger"></span>
                 </div>
@@ -65,3 +64,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    
+    document.getElementById('productImageInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const imgPreview = document.getElementById('imgPreview');
+
+        // Verifica si se ha seleccionado un archivo
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result; // Cambia la fuente de la imagen a la del archivo seleccionado
+            }
+            reader.readAsDataURL(file); // Lee el archivo como una URL de datos
+        } else {
+            imgPreview.src = '~/images/house-placeholder.jpg'; // Si no hay archivo, muestra la imagen por defecto
+        }
+    });
+</script>

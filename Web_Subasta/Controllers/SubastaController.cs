@@ -74,7 +74,7 @@ namespace Master_API.Controllers
 
         }
 
-            [HttpGet("Activa")]
+        [HttpGet("Activa")]
         public async Task<IActionResult> Activa()
         {
             var response = await client.GetAsync("/Activa");
