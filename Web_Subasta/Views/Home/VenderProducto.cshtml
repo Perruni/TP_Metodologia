@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Web_Subasta.Models.ViewModels.ProductoViewModel
+
+@{
     ViewData["Title"] = "Formulario de Producto";
 }
 
@@ -12,51 +14,60 @@
                 <!-- Imagen de vista previa -->
                 <img id="imgPreview" src="~/images/house-placeholder.jpg" class="card-img-top" alt="Vista previa de la propiedad" style="max-height: 300px;" />
                 <div class="card-body">
-                    <label asp-for/="ProductImage" class="form-label">Subir fotos del producto o propiedad</label>
-                    <input asp-for/="ProductImage" type="file" class="form-control" id="productImageInput" accept="image/*" />
-                    <span asp-validation-for/="ProductImage" class="text-danger"></span>
+                    <label asp-for="ImagenUrl" class="form-label">Subir fotos del producto o propiedad</label>
+                    <input asp-for="ImagenUrl" type="file" class="form-control" id="productImageInput" accept="image/*" />
+                    <span asp-validation-for="ImagenUrl" class="text-danger"></span>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
-            <form method="post" enctype="multipart/form-data">
+            <form asp-action="UpdateProducto" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label asp-for/="Title" class="form-label">Título de la publicación</label>
-                    <input asp-for/="Title" class="form-control" />
-                    <span asp-validation-for/="Title" class="text-danger"></span>
+                    <label asp-for="NombreProducto" class="form-label">Título de la publicación</label>
+                    <input asp-for="NombreProducto" class="form-control" />
+                    <span asp-validation-for="NombreProducto" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for/="AuctionType" class="form-label">Seleccionar subasta</label>
-                    <select asp-for/="AuctionType" class="form-select">
-                        <option value="">Elegir...</option>
-                        <option value="Subasta1">Subasta 1</option>
-                        <option value="Subasta2">Subasta 2</option>
-                    </select>
-                    <span asp-validation-for/="AuctionType" class="text-danger"></span>
+                    <label asp-for="titulo" class="form-label">Seleccionar Subasta</label>
+                    @if (Model.subastaLista == null)
+                    {
+                        <p>Error: la lista de subastas no ha sido inicializada.</p>
+                    }
+                    else
+                    {
+                        <select asp-for="titulo" class="form-select">
+                            <option value="">Elegir...</option>
+                            @foreach (var subasta in Model.subastaLista)
+                            {
+                                <option value="@subasta.titulo">@subasta.titulo</option>
+                            }
+                        </select>
+                    }
+                    <span asp-validation-for="titulo" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for/"BasePrice" class="form-label">Precio base</label>
-                    <input asp-for/="BasePrice" class="form-control" type="text" id="BasePrice" />
-                    <span asp-validation-for/="BasePrice" class="text-danger"></span>
+                    <label asp-for="PrecioBase" class="form-label">Precio base</label>
+                    <input asp-for="PrecioBase" class="form-control" type="text" />
+                    <span asp-validation-for="PrecioBase" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for/="Description" class="form-label">Descripción</label>
-                    <textarea asp-for/="Description" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for/="Description" class="text-danger"></span>
+                    <label asp-for="Descripcion" class="form-label">Descripción</label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for/="DeliveryMethod" class="form-label">Método de Entrega</label>
-                    <select asp-for/="DeliveryMethod" class="form-select">
+                    <label asp-for="MetodoEntrega" class="form-label">Método de Entrega</label>
+                    <select asp-for="MetodoEntrega" class="form-select">
                         <option value="">Elegir...</option>
                         <option value="Envio">Envío a domicilio</option>
                         <option value="Acuerdo">Acuerdo con el vendedor</option>
                     </select>
-                    <span asp-validation-for/="DeliveryMethod" class="text-danger"></span>
+                    <span asp-validation-for="MetodoEntrega" class="text-danger"></span>
                 </div>
 
                 <button type="submit" class="btn btn-danger">Solicitar</button>
@@ -66,20 +77,18 @@
 </div>
 
 <script>
-    
     document.getElementById('productImageInput').addEventListener('change', function (event) {
         const file = event.target.files[0];
         const imgPreview = document.getElementById('imgPreview');
 
-        // Verifica si se ha seleccionado un archivo
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                imgPreview.src = e.target.result; // Cambia la fuente de la imagen a la del archivo seleccionado
+                imgPreview.src = e.target.result;
             }
-            reader.readAsDataURL(file); // Lee el archivo como una URL de datos
+            reader.readAsDataURL(file);
         } else {
-            imgPreview.src = '~/images/house-placeholder.jpg'; // Si no hay archivo, muestra la imagen por defecto
+            imgPreview.src = '~/images/house-placeholder.jpg';
         }
     });
 </script>

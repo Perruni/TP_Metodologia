@@ -29,7 +29,7 @@ namespace Web_Subasta.Controllers
         {
             _context = context;
 
-            client.BaseAddress = new Uri("https://localhost:7073/api/");
+            client.BaseAddress = new Uri("https://localhost:7053/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }

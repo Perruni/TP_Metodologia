@@ -11,37 +11,22 @@ using Web_Subasta.Models.ViewModels;
 
 namespace Web_Subasta.Controllers
 {
-    [Route("/[controller]")]
+    [Route("[controller]")]
 
     public class UsuarioController : Controller
     {
 
         static HttpClient client = new HttpClient();
+        
+        private readonly TPI_DbContext _context;
 
-
-        static async Task InitializeHttpClientAsync()
+        public UsuarioController(TPI_DbContext context)
         {
-            client.BaseAddress = new Uri("UriStrings");
+            _context = context;
+
+            client.BaseAddress = new Uri("https://localhost:7073/");
             client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View("Acount/register");
-        }
-
-        [HttpPost]
-        public IActionResult Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Lógica para registrar al usuario
-                return RedirectToAction("Index", "Home"); // Redirecciona a la página principal o a donde desees
-            }
-            return View(model); // Si hay errores, vuelve a mostrar el formulario
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
 
@@ -50,7 +35,7 @@ namespace Web_Subasta.Controllers
         {
             Usuario usuario = null;
 
-            await InitializeHttpClientAsync();
+           // await InitializeHttpClientAsync();
             HttpResponseMessage response = await client.GetAsync($"api/Usuario/{UsuarioID}");
 
             if (response.IsSuccessStatusCode)
@@ -69,41 +54,35 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostUsuario([FromBody] UsuarioDTO usuarioDto)
+        public async Task<IActionResult> PostUsuario(RegisterViewModel model)
         {
-            if (usuarioDto == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Los datos de la oferta son inválidos");
+                return View("Register", model);
             }
-
-            await InitializeHttpClientAsync();
-
 
             var data = new
             {
-                Email = usuarioDto.email,
-                Contrasenia = usuarioDto.contrasenia,
+                email = model.Email,
+                contrasenia = model.Contrasenia,
             };
 
-
             var jsonData = JsonSerializer.Serialize(data);
+
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/Usuario", content);
+            var response = await client.PostAsJsonAsync("api/Usuario", content);
 
             if (response.IsSuccessStatusCode)
             {
-
                 return Ok("Datos enviados correctamente.");
             }
             else
             {
-
-                return StatusCode((int)response.StatusCode, "Error al enviar los datos.");
+                ModelState.AddModelError(string.Empty, "Error al enviar los datos.");
+                return View("Register", model);
             }
         }
-
 
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUsuario(int userId, [FromBody] UsuarioDTO usuarioDto)
@@ -121,7 +100,7 @@ namespace Web_Subasta.Controllers
             };
 
             
-            await InitializeHttpClientAsync();
+           // await InitializeHttpClientAsync();
 
            
             var jsonData = JsonSerializer.Serialize(usuario);
@@ -148,7 +127,7 @@ namespace Web_Subasta.Controllers
         public async Task<IActionResult> DeleteUsuario(int userId)
         {
            
-            await InitializeHttpClientAsync();
+           // await InitializeHttpClientAsync();
 
             
             HttpResponseMessage response = await client.DeleteAsync($"api/Usuarios/{userId}");

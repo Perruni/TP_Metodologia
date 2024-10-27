@@ -26,7 +26,7 @@ namespace GestorSubastas.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;database=tpi_metodologiadb;user=root;password=12345678;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;database=prueba153;user=root;password=12345678;")]
         public string Connection {
             get {
                 return ((string)(this["Connection"]));
