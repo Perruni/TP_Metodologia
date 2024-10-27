@@ -94,7 +94,8 @@ namespace GestorSubastas
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            var formSolicitudDeProducto = new FormSolicitudDeProductos(_productoBusiness);
+            formSolicitudDeProducto.ShowDialog();
         }
 
         private void BotonEditar_Click(object sender, EventArgs e)

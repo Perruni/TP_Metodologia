@@ -58,7 +58,8 @@ namespace GestorSubastas
                 titulo = titulo,
                 fechaInicio = fechaInicio,
                 fechaFinalizado = fechaFin,
-                metodosdePago = metodopago
+                metodosdePago = metodopago,
+                estadoSubasta = Subasta.EstadoSubasta.Proxima
 
             };
 
