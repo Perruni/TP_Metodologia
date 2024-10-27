@@ -8,49 +8,33 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Web_Subasta.Models.ViewModels;
+using Web_Subasta.Services;
 
 namespace Web_Subasta.Controllers
 {
-    [Route("/[controller]")]
+    [Route("[controller]")]
 
     public class UsuarioController : Controller
     {
+        private readonly IServiceAPI _serviceAPI;
 
-        static HttpClient client = new HttpClient();
+        
+        private readonly TPI_DbContext _context;
 
-
-        static async Task InitializeHttpClientAsync()
+        public UsuarioController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
-            client.BaseAddress = new Uri("UriStrings");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-        }
+            _context = context;
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View("Acount/register");
-        }
-
-        [HttpPost]
-        public IActionResult Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Lógica para registrar al usuario
-                return RedirectToAction("Index", "Home"); // Redirecciona a la página principal o a donde desees
-            }
-            return View(model); // Si hay errores, vuelve a mostrar el formulario
+            _serviceAPI = serviceAPI;
         }
 
 
-        [HttpGet("Usuario/{UsuarioID}")]
+        /*[HttpGet("Usuario/{UsuarioID}")]
         public async Task<IActionResult> GetUsuario(int UsuarioID)
         {
             Usuario usuario = null;
 
-            await InitializeHttpClientAsync();
+           // await InitializeHttpClientAsync();
             HttpResponseMessage response = await client.GetAsync($"api/Usuario/{UsuarioID}");
 
             if (response.IsSuccessStatusCode)
@@ -65,47 +49,37 @@ namespace Web_Subasta.Controllers
                 return NotFound();
             }
             return Ok(usuario);
-        }
+        }*/
 
 
         [HttpPost]
-        public async Task<IActionResult> PostUsuario([FromBody] UsuarioDTO usuarioDto)
+        public async Task<IActionResult> PostUsuario(RegisterViewModel model)
         {
-            if (usuarioDto == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Los datos de la oferta son inválidos");
+                return View("Register", model);
             }
 
-            await InitializeHttpClientAsync();
-
-
-            var data = new
+            var data = new Usuario
             {
-                Email = usuarioDto.email,
-                Contrasenia = usuarioDto.contrasenia,
+                email = model.Email,
+                contrasenia = model.Contrasenia,
             };
 
+            var respuesta = await _serviceAPI.AddUsuario(data);
 
-            var jsonData = JsonSerializer.Serialize(data);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/Usuario", content);
-
-            if (response.IsSuccessStatusCode)
+            if (respuesta != null)
             {
-
-                return Ok("Datos enviados correctamente.");
+                return View("DatosUsuario");
             }
             else
             {
-
-                return StatusCode((int)response.StatusCode, "Error al enviar los datos.");
+                ModelState.AddModelError(string.Empty, "Error al enviar los datos.");
+                return View("Register", model);
             }
         }
 
-
-        [HttpPut("{userId}")]
+        /*[HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUsuario(int userId, [FromBody] UsuarioDTO usuarioDto)
         {
             if (usuarioDto == null)
@@ -121,7 +95,7 @@ namespace Web_Subasta.Controllers
             };
 
             
-            await InitializeHttpClientAsync();
+           // await InitializeHttpClientAsync();
 
            
             var jsonData = JsonSerializer.Serialize(usuario);
@@ -148,7 +122,7 @@ namespace Web_Subasta.Controllers
         public async Task<IActionResult> DeleteUsuario(int userId)
         {
            
-            await InitializeHttpClientAsync();
+           // await InitializeHttpClientAsync();
 
             
             HttpResponseMessage response = await client.DeleteAsync($"api/Usuarios/{userId}");
@@ -163,7 +137,7 @@ namespace Web_Subasta.Controllers
                
                 return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
             }
-        }
+        }*/
 
     }
 }

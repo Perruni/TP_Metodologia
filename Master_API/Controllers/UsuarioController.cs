@@ -41,8 +41,8 @@ namespace Master_API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);           }
-
+                return BadRequest(ModelState);           
+            }
 
             var nuevoUsuario = new Usuario
             {

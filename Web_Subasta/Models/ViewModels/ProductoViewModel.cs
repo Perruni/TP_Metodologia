@@ -1,5 +1,6 @@
 ﻿using static Core.Entities.Producto;
 using System.ComponentModel.DataAnnotations;
+using Core.Entities;
 
 namespace Web_Subasta.Models.ViewModels
 {
@@ -20,6 +21,8 @@ namespace Web_Subasta.Models.ViewModels
 
         public string ImagenUrl { get; set; }
 
+        public List<Subasta>? subastaLista { get; set; }
 
+        public string titulo { get; set; }
     }
 }
