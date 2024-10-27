@@ -22,7 +22,7 @@ namespace Master_API.Controllers
 
         }
 
-        [HttpGet("Activa")]
+        [HttpGet("Activas")]
         public async Task<ActionResult<Subasta>> GetSubastaActiva()
         {
             var subasta = await _subastaBusiness.GetSubastasActivas();

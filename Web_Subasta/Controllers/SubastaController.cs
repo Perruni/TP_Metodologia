@@ -15,7 +15,6 @@ using System.Collections.Generic;
 
 namespace Web_Subasta.Controllers
 {
-    [Route("/[controller]")]
 
     public class SubastaController : Controller
     {
@@ -80,7 +79,7 @@ namespace Web_Subasta.Controllers
                     {
                         subastaLista = subasta
                     };
-                    return View("~/Views/Home/Activas.cshtml", viewModel);
+                    return View("Activas", viewModel);
                 }
 
             }
