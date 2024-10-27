@@ -20,7 +20,6 @@ namespace Web_Subasta.Services
 
         Task<Producto> GetProducto(int productoID);
         Task<Producto> AddProducto(Producto producto, int userID, int subastaID);
-        Task<Producto> DatosProducto(int productoID);
         Task<Producto> CancelarProducto(int userID, int productoID);
         Task<List<Producto>> GetProductoUsuario(int userID);
 
