@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Web_Subasta.Models.ViewModels;
 
 namespace Web_Subasta.Controllers
 {
@@ -25,6 +26,24 @@ namespace Web_Subasta.Controllers
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
         }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View("Acount/register");
+        }
+
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Lógica para registrar al usuario
+                return RedirectToAction("Index", "Home"); // Redirecciona a la página principal o a donde desees
+            }
+            return View(model); // Si hay errores, vuelve a mostrar el formulario
+        }
+
 
         [HttpGet("Usuario/{UsuarioID}")]
         public async Task<IActionResult> GetUsuario(int UsuarioID)

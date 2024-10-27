@@ -25,14 +25,19 @@ namespace Web_Subasta.Controllers
             _logger = logger;
         }
 
-
-        public IActionResult Index()
+		
+		public IActionResult Index()
         {
             return View("Index");
         }
 
-        
-        public IActionResult Activas()
+		public IActionResult Nosotros()
+		{
+			return View();
+		}
+
+
+		public IActionResult Activas()
         {
             return View();
         }
@@ -82,12 +87,12 @@ namespace Web_Subasta.Controllers
 
         public IActionResult login()
         {
-            return View();
+            return View("login");
         }
 
         public IActionResult register()
         {
-            return View();
+            return View("register");
         }
 
 
