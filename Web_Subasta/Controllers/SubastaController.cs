@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using Web_Subasta.Models.ViewModels;
 using System.Text.Json;
 using System.Collections.Generic;
+using Web_Subasta.Services;
 
 namespace Web_Subasta.Controllers
 {
@@ -21,7 +22,7 @@ namespace Web_Subasta.Controllers
 
         static HttpClient client = new HttpClient();
         private readonly TPI_DbContext _context;
-
+        private readonly IServiceAPI _service;
 
         static SubastaController()
         {
@@ -31,9 +32,10 @@ namespace Web_Subasta.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public SubastaController(TPI_DbContext context)
+        public SubastaController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
             _context = context;
+            _service = serviceAPI;
 
             
         }
@@ -41,19 +43,10 @@ namespace Web_Subasta.Controllers
         [HttpGet("{subastaID}")]
         public async Task<IActionResult> GetSubasta(int SubastaID)
         {
-            Subasta subasta = null;
+            Subasta? subasta = null;
 
-            HttpResponseMessage response = await client.GetAsync($"api/Subasta/{SubastaID}");
+            subasta = await _service.GetSubasta(SubastaID);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                var subastaResponse = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
-
-            }
 
             if (subasta == null)
             {
@@ -69,25 +62,19 @@ namespace Web_Subasta.Controllers
 
             List<Subasta> subasta = null;
 
-            var response = await client.GetAsync("Subasta/Activa");
-            if (response.IsSuccessStatusCode)
+            subasta = await _service.GetSubastasActivas();
+           
+
+            if (subasta != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                subasta = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
+                var viewModel = new SubastaViewModel
                 {
-                    PropertyNameCaseInsensitive = true
-                });
-
-                if (subasta != null && subasta != null)
-                {
-                    var viewModel = new SubastaViewModel
-                    {
-                        subastaLista = subasta
-                    };
-                    return View("Activas", viewModel);
-                }
-
+                    subastaLista = subasta
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);
             }
+
+            
             return NotFound();
         }
 
@@ -97,21 +84,19 @@ namespace Web_Subasta.Controllers
         {
             List<Subasta> subasta = null;
 
-            var response = await client.GetAsync("Subasta/Proximas");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                 subasta = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            subasta = await _service.GetSubastasProximas();
 
-                if (subasta != null && subasta != null)
+
+            if (subasta != null)
+            {
+                var viewModel = new SubastaViewModel
                 {
-                    var viewModel = new SubastaViewModel
-                    {
-                        subastaLista = subasta
-                    };
-                    return View("~/Views/Home/Proximas.cshtml", viewModel);
-                }
+                    subastaLista = subasta
+                };
+                return View("~/Views/Home/Proximas.cshtml", viewModel);
             }
+
+
             return NotFound();
         }
 
@@ -120,54 +105,22 @@ namespace Web_Subasta.Controllers
         {
             List<Subasta> subasta = null;
 
-            var response = await client.GetAsync("Subasta/Finalizadas");
-            if (response.IsSuccessStatusCode)
+            subasta = await _service.GetSubastasFinalizadas();
+
+
+            if (subasta != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                subasta = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                if (subasta != null && subasta != null)
+                var viewModel = new SubastaViewModel
                 {
-                    var viewModel = new SubastaViewModel
-                    {
-                        subastaLista = subasta
-                    };
-                    return View("~/Views/Home/Finalizadas.cshtml", viewModel);
-                }
+                    subastaLista = subasta
+                };
+                return View("~/Views/Home/Finalizadas.cshtml", viewModel);
             }
             return NotFound();
         }
         
 
-        [HttpGet("/SubastaActiva/{id}")]
-        public async Task<ActionResult<SubastaProductosDTO>> GetSubastaActivaProductos(int id)
-        {
-            var subasta = await _context.Subastas
-                .Include(s => s.listaProductos)
-                .FirstOrDefaultAsync(s => s.subastaID == id);
-
-            if (subasta == null)
-            {
-                return NotFound();
-            }
-
-            var subastaProductosDTO = new SubastaProductosDTO
-            {
-                subastaID = subasta.subastaID,
-                listaProductos = subasta.listaProductos.Select(p => new ProductoDatosDTO
-                {
-                    nombreProducto = p.nombreProducto,
-                    precioBase = p.precioBase,
-                    metodoEntrega = p.metodoEntrega,
-                    fechaSolicitud = p.fechaSolicitud,
-                    estadoProducto = p.estadoProducto
-                }).ToList(),
-
-            };
-
-            return subastaProductosDTO;
-        }
-
-
+        
 
     }
 }
