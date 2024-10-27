@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Web_Subasta.Models.ViewModels;
+using Web_Subasta.Services;
 
 namespace Web_Subasta.Controllers
 {
@@ -15,18 +16,20 @@ namespace Web_Subasta.Controllers
 
     public class UsuarioController : Controller
     {
+        private readonly IServiceAPI _serviceAPI;
 
         static HttpClient client = new HttpClient();
         
         private readonly TPI_DbContext _context;
 
-        public UsuarioController(TPI_DbContext context)
+        public UsuarioController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
             _context = context;
 
             client.BaseAddress = new Uri("https://localhost:7073/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _serviceAPI = serviceAPI;
         }
 
 
@@ -61,19 +64,15 @@ namespace Web_Subasta.Controllers
                 return View("Register", model);
             }
 
-            var data = new
+            var data = new Usuario
             {
                 email = model.Email,
                 contrasenia = model.Contrasenia,
             };
 
-            var jsonData = JsonSerializer.Serialize(data);
+            var respuesta = await _serviceAPI.AddUsuario(data);
 
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsJsonAsync("api/Usuario", content);
-
-            if (response.IsSuccessStatusCode)
+            if (respuesta != null)
             {
                 return Ok("Datos enviados correctamente.");
             }
