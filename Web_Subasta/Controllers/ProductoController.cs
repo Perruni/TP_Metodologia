@@ -77,7 +77,7 @@ namespace Web_Subasta.Controllers
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             
-            HttpResponseMessage response = await client.PostAsync("api/Producto", content);
+            HttpResponseMessage response = await client.PostAsJsonAsync("api/Producto", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -93,29 +93,11 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPut("{userId}/{productoId}")]
-        public async Task<IActionResult> UpdateProducto(int userId, int productoId, [FromBody] ProductoDatosDTO productDto)
+        public async Task<IActionResult> UpdateProducto(int userId, int productoId)
         {
             
-            if (productDto == null)
-            {
-                return BadRequest("Los datos del producto son inválidos");
-            }
-
-            
-            var producto = new Producto
-            {
-                productoID = productoId, 
-                nombreProducto = productDto.nombreProducto,
-                precioBase = productDto.precioBase,
-                metodoEntrega = productDto.metodoEntrega,
-                fechaSolicitud = productDto.fechaSolicitud,
-                descripcion = productDto.descripcion,
-                estadoProducto = productDto.estadoProducto
-                
-            };
-
-            
-            HttpResponseMessage response = await client.PutAsJsonAsync($"api/productos/Cancelar/{userId}/{productoId}", producto);
+                        
+            HttpResponseMessage response = await client.PutAsync($"api/productos/Cancelar/{userId}/{productoId}", null);
 
             if (response.IsSuccessStatusCode)
             {

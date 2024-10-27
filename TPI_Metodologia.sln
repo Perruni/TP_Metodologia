@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web_Subasta", "Web_Subasta\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Shared", "Core.Shared\Core.Shared.csproj", "{A087D9C1-6ACE-4D85-A1B8-DB8163F4854F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestorSubastas", "GestorSubastas\GestorSubastas.csproj", "{DE20D4EA-8100-4436-82AC-4041E4FC3639}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestorSubastas", "GestorSubastas\GestorSubastas.csproj", "{DE20D4EA-8100-4436-82AC-4041E4FC3639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
