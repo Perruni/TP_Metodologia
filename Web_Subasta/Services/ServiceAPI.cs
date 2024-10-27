@@ -185,7 +185,7 @@ namespace Web_Subasta.Services
                 }
                 else
                 {
-                    Console.WriteLine($"Error al añadir el usuario: {response.ReasonPhrase}");
+                    Console.WriteLine($"Error al cancerlar el prducto: {response.ReasonPhrase}");
                 }
             }
             catch (HttpRequestException ex)

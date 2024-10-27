@@ -68,6 +68,11 @@ namespace GestorSubastas
             this.Close();
 
         }
+
+        private void FormCrearSubasta_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
     
