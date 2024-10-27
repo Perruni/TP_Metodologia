@@ -10,6 +10,7 @@ using Core.Shared.DTOs.Subastas;
 
 namespace Web_Subasta.Controllers
 {
+
     public class HomeController : Controller
     {
 

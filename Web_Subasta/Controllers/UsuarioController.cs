@@ -9,12 +9,10 @@ using System.Text;
 using System.Text.Json;
 using Web_Subasta.Models.ViewModels;
 
-namespace Master_API.Controllers
+namespace Web_Subasta.Controllers
 {
+    [Route("/[controller]")]
 
-
-    [Route("api/[controller]")]
-    [ApiController]
     public class UsuarioController : Controller
     {
 

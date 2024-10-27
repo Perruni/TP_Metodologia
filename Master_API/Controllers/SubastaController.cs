@@ -30,19 +30,9 @@ namespace Master_API.Controllers
             if (subasta == null)
             {
                 return NotFound();
-            }
+            }            
 
-            var subastaDTOs = subasta.Select(s => new SubastaDTO
-            {
-                subastaID = s.subastaID,
-                titulo = s.titulo,
-                fechaInicio = s.fechaInicio,
-                fechaFinalizado = s.fechaFinalizado,
-                estadoSubasta = s.estadoSubasta,
-                metodosdePago = s.metodosdePago
-            }).ToList();
-
-            return Ok(subastaDTOs);
+            return Ok(subasta);
 
         }
 

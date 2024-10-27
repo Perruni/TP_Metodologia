@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Text;
 using Web_Subasta.Models.ViewModels;
 
-namespace Master_API.Controllers
+namespace Web_Subasta.Controllers
 {
     public class DatosUsuarioController : Controller
     {

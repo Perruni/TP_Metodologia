@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Core.Shared.APITest;
 using Core.Shared.DTOs.Subastas;
 using static Core.Entities.Subasta;
 
@@ -11,12 +10,9 @@ namespace Web_Subasta.Models.ViewModels
         public Subasta? subasta { get; set; }
 
         public List<Subasta>? subastaLista { get; set; }
-        public List<SubastaAPI>? subastaListaAPI { get; set; } = new List<SubastaAPI>();
-
+        public List<SubastaDTO>? subastaListaDTO { get; set; } = new List<SubastaDTO>();
         public List<Producto>? productoLista { get; set; }
-
         public Producto? _producto { get; set; }
-
         public string ImagenUrl { get; set; }
         public string NombreProducto { get; set; }
         public decimal PrecioBase { get; set; }
