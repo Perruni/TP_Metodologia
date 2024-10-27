@@ -7,6 +7,7 @@ using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using BlobImagesTest.Services;
+using Web_Subasta.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,9 +44,8 @@ builder.Services.AddDbContext<TPI_DbContext>(options => options.UseMySql(connect
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
+builder.Services.AddScoped<IServiceAPI, ServiceAPI>();
 
 builder.Services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
