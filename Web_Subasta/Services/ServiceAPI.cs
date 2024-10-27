@@ -46,11 +46,9 @@ namespace Web_Subasta.Services
             Usuario result = null;
 
             try
-            {
-                var jsonContent = JsonSerializer.Serialize(usuario);
-                var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
+            {             
 
-                var response = await _client.PostAsync($"Usuario", content);
+                var response = await _client.PostAsJsonAsync($"Usuario", usuario);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -63,7 +61,7 @@ namespace Web_Subasta.Services
                 }
                 else
                 {
-                    Console.WriteLine($"Error al añadir el producto: {response.ReasonPhrase}");
+                    Console.WriteLine($"Error al añadir el usuario: {response.ReasonPhrase}");
                 }
             }
             catch (HttpRequestException ex)

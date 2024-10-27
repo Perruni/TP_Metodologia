@@ -44,7 +44,6 @@ namespace Master_API.Controllers
                 return BadRequest(ModelState);           
             }
 
-
             var nuevoUsuario = new Usuario
             {
                 email = request.email,

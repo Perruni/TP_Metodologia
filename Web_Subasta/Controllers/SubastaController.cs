@@ -23,14 +23,19 @@ namespace Web_Subasta.Controllers
         private readonly TPI_DbContext _context;
 
 
+        static SubastaController()
+        {
+            // Configuración del HttpClient en el constructor estático
+            client.BaseAddress = new Uri("https://localhost:7053/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
         public SubastaController(TPI_DbContext context)
         {
             _context = context;
 
-            client.BaseAddress = new Uri("https://localhost:7053/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
         }
 
         [HttpGet("{subastaID}")]

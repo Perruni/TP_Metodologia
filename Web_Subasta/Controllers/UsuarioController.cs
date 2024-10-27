@@ -18,7 +18,6 @@ namespace Web_Subasta.Controllers
     {
         private readonly IServiceAPI _serviceAPI;
 
-        static HttpClient client = new HttpClient();
         
         private readonly TPI_DbContext _context;
 
@@ -26,14 +25,11 @@ namespace Web_Subasta.Controllers
         {
             _context = context;
 
-            client.BaseAddress = new Uri("https://localhost:7073/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _serviceAPI = serviceAPI;
         }
 
 
-        [HttpGet("Usuario/{UsuarioID}")]
+        /*[HttpGet("Usuario/{UsuarioID}")]
         public async Task<IActionResult> GetUsuario(int UsuarioID)
         {
             Usuario usuario = null;
@@ -53,7 +49,7 @@ namespace Web_Subasta.Controllers
                 return NotFound();
             }
             return Ok(usuario);
-        }
+        }*/
 
 
         [HttpPost]
@@ -74,7 +70,7 @@ namespace Web_Subasta.Controllers
 
             if (respuesta != null)
             {
-                return Ok("Datos enviados correctamente.");
+                return View("DatosUsuario");
             }
             else
             {
@@ -83,7 +79,7 @@ namespace Web_Subasta.Controllers
             }
         }
 
-        [HttpPut("{userId}")]
+        /*[HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUsuario(int userId, [FromBody] UsuarioDTO usuarioDto)
         {
             if (usuarioDto == null)
@@ -141,7 +137,7 @@ namespace Web_Subasta.Controllers
                
                 return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
             }
-        }
+        }*/
 
     }
 }
