@@ -12,10 +12,11 @@ using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using System.Net.Http.Headers;
 using Core.Shared.DTOs.Oferta;
-namespace Master_API.Controllers
+
+namespace Web_Subasta.Controllers
 {
-    [Route("/oferta/[controller]")]
-    [ApiController]
+    [Route("/[controller]")]
+    
     public class OfertaController : Controller
     {
         static HttpClient client = new HttpClient();

@@ -7,16 +7,16 @@
    
     <div class="container mt-5">
         <div class="row">
-        @foreach (var subasta in Model.subastaListaAPI)
+        @foreach (var subasta in Model.subastaLista)
         {
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">Subasta: @subasta.Titulo</h5>
-                        <p class="card-text">Fecha de inicio: @subasta.FechaInicio.ToShortDateString()</p>
-                        <p class="card-text">Fecha de fin: @subasta.FechaFinalizado.ToShortDateString()</p>
-                        <p class="card-text">Estado: @subasta.EstadoSubasta.ToString()</p>
-                        <p class="card-text">Método de Pago: @subasta.MetodosdePago.ToString()</p>
+                        <h5 class="card-title">Subasta: @subasta.titulo</h5>
+                        <p class="card-text">Fecha de inicio: @subasta.fechaInicio.ToShortDateString()</p>
+                        <p class="card-text">Fecha de fin: @subasta.fechaFinalizado.ToShortDateString()</p>
+                        <p class="card-text">Estado: @subasta.estadoSubasta.ToString()</p>
+                        <p class="card-text">Método de Pago: @subasta.metodosdePago.ToString()</p>
                         <a href="#" class="btn btn-primary">Participar en la subasta</a>
                     </div>
                 </div>

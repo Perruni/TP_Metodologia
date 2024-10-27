@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 
 namespace Web_Subasta.Controllers
 {
+    [Route("/[controller]")]
+
     public class RegisterController : Controller
     {
         private readonly TPI_DbContext _context;

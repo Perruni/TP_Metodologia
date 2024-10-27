@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Core.Entities.Subasta;
 using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Core.Shared.DTOs.Subastas
 {
@@ -17,9 +18,14 @@ namespace Core.Shared.DTOs.Subastas
         public EstadoSubasta estadoSubasta { get; set; }
         public MetodosdePago metodosdePago { get; set; }
     }
-    
 
 
-    
+    public class SubastaResponseDTO
+    {
+        public string Id { get; set; }
+
+        public List<SubastaDTO> Values { get; set; }
+    }
+
 
 }

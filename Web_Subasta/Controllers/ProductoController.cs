@@ -14,8 +14,7 @@ using System.Net.Http.Headers;
 
 namespace Web_Subasta.Controllers
 {
-    [Route("/producto/[controller]")]
-    [ApiController]
+    [Route("/[controller]")]    
     public class ProductoController : ControllerBase
     {
 

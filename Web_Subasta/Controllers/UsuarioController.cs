@@ -8,10 +8,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace Master_API.Controllers
+namespace Web_Subasta.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("/[controller]")]
+
     public class UsuarioController : Controller
     {
 
