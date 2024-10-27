@@ -26,19 +26,109 @@ namespace Web_Subasta.Services
 
         }
 
-        public async Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario)
+        public async Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario, int userID)
         {
-            throw new NotImplementedException();
+            Datos_usuario result = null;
+
+            try
+            {
+
+                var response = await _client.PostAsJsonAsync($"DatosUsuario/{userID}", datosUsuario);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer la respuesta y deserializar el producto devuelto
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Datos_usuario>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"Error al añadir la oferta: {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<Oferta> AddOferta(Oferta oferta,int userID, int productoID)
         {
-            throw new NotImplementedException();
+            Oferta result = null;
+
+            try
+            {
+
+                var response = await _client.PostAsJsonAsync($"Producto/{userID}/{productoID}", oferta);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer la respuesta y deserializar el producto devuelto
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"Error al añadir la oferta: {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<Producto> AddProducto(Producto producto, int userID, int subastaID)
         {
-            throw new NotImplementedException();
+            Producto result = null;
+
+            try
+            {
+
+                var response = await _client.PostAsJsonAsync($"Producto/{userID}/{subastaID}", producto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer la respuesta y deserializar el producto devuelto
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"Error al añadir el producto: {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<Usuario> AddUsuario(Usuario usuario)
@@ -78,7 +168,36 @@ namespace Web_Subasta.Services
 
         public async Task<Producto> CancelarProducto(int userID, int productoID)
         {
-            throw new NotImplementedException();
+            Producto result = null;
+            /*try
+            {
+
+                var response = await _client.PutAsync($"Producto/{userID}/{productoID}", null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer la respuesta y deserializar el producto devuelto
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"Error al añadir el usuario: {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }*/
+
+            return result;
         }
 
         public async Task<Producto> DatosProducto(int productoID)

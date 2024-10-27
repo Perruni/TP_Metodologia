@@ -16,7 +16,7 @@ namespace Web_Subasta.Services
         Task<Usuario> Deleteusuario(int userID);
 
         Task<Datos_usuario> DatosUsuario(int userID);
-        Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario);
+        Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario, int userID);
 
         Task<Producto> GetProducto(int productoID);
         Task<Producto> AddProducto(Producto producto, int userID, int subastaID);
