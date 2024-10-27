@@ -147,6 +147,7 @@
             Controls.Add(textBoxTitulo);
             Name = "FormCrearSubasta";
             Text = "FormCrearSubasta";
+            Load += FormCrearSubasta_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -169,7 +169,7 @@ namespace Web_Subasta.Services
         public async Task<Producto> CancelarProducto(int userID, int productoID)
         {
             Producto result = null;
-            /*try
+            try
             {
 
                 var response = await _client.PutAsync($"Producto/{userID}/{productoID}", null);
@@ -178,14 +178,14 @@ namespace Web_Subasta.Services
                 {
                     // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
                 }
                 else
                 {
-                    Console.WriteLine($"Error al añadir el usuario: {response.ReasonPhrase}");
+                    Console.WriteLine($"Error al cancerlar el prducto: {response.ReasonPhrase}");
                 }
             }
             catch (HttpRequestException ex)
@@ -195,7 +195,7 @@ namespace Web_Subasta.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
-            }*/
+            }
 
             return result;
         }
