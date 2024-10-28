@@ -53,9 +53,9 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostProducto( ProductoViewModel productoDto, int userId, int subastaId)
+        public async Task<IActionResult> PostProducto(ProductoViewModel productoVM, int userId, int subastaId)
         {
-            if (productoDto == null)
+            if (productoVM == null)
             {
                 return BadRequest("Los datos del producto son inválidos");
             }
@@ -63,11 +63,11 @@ namespace Web_Subasta.Controllers
 
             var data = new ProductoDTO
             {
-                nombreProducto = productoDto.NombreProducto,
-                precioBase = productoDto.PrecioBase,
-                descripcion = productoDto.Descripcion,
-                metodoEntrega =productoDto.MetodoEntrega,
-                imagenUrl = productoDto.imagenUrl,
+                nombreProducto = productoVM.NombreProducto,
+                precioBase = productoVM.PrecioBase,
+                descripcion = productoVM.Descripcion,
+                metodoEntrega = productoVM.MetodoEntrega,
+                imagenUrl = productoVM.ImagenUrl,
                
             };
 
@@ -76,7 +76,7 @@ namespace Web_Subasta.Controllers
 
             if (respuesta != null)
             {
-                return View("~/Views/Home/Activas.cshtml");
+                return View("~/Views/Home/MisProductos.cshtml");
             }
             return NotFound();
         }

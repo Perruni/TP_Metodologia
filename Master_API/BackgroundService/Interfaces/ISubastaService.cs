@@ -9,7 +9,7 @@ namespace Master_API.Services.Interfaces
         Task CloseSubastaAsync(Subasta subasta);
         Task OpenSubastaAsync(Subasta subasta);
 
-        
+
 
 
 
