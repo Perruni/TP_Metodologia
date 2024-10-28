@@ -12,6 +12,8 @@ using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using System.Net.Http.Headers;
 using Core.Shared.DTOs.Oferta;
+using Web_Subasta.Services;
+using Web_Subasta.Models.ViewModels;
 
 namespace Web_Subasta.Controllers
 {
@@ -19,142 +21,120 @@ namespace Web_Subasta.Controllers
     
     public class OfertaController : Controller
     {
-        static HttpClient client = new HttpClient();
+        private readonly IServiceAPI _serviceAPI;
+        private readonly TPI_DbContext _context;
 
-
-        static async Task InitializeHttpClientAsync()
+        public OfertaController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
-            client.BaseAddress = new Uri("UriStrings");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
+            _context = context;
+
+            _serviceAPI = serviceAPI;
         }
+
 
 
         [HttpGet("usuario/{userID}")]
         public async Task<IActionResult> GetUsuarioOf(int userID)
         {
-            Usuario usuario = null;
+            List<Oferta>? oferta = null;
 
-            await InitializeHttpClientAsync();
-            HttpResponseMessage response = await client.GetAsync($"api/Oferta/Usuario/{userID}");
+            oferta = await _serviceAPI.GetOfertasUsuario(userID);           
 
-            if (response.IsSuccessStatusCode)
+
+            if (oferta != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                usuario = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+                var viewModel = new OfertaViewModel
+                {
+                    ofertasUsuario = oferta
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);//Poner la vista correspondiente
             }
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-            return Ok(usuario);
+            return NotFound();
         }
 
-        [HttpGet("oferta/ID/{offerID}")]
+        //Esto iria para certificado pero nose en que vista se realizara dejar esto por las dudas
+        [HttpGet("{offerID}")]
         public async Task<IActionResult> GetOfertante(int offerID)
         {
             Oferta oferta = null;
 
-            await InitializeHttpClientAsync();
-            HttpResponseMessage response = await client.GetAsync($"api/Oferta/ID/{offerID}");
+            oferta = await _serviceAPI.GetOfertaId(offerID);
 
-            if (response.IsSuccessStatusCode)
+
+            if (oferta != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                oferta = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+                var viewModel = new OfertaViewModel
+                {
+                    _oferta = oferta
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);//Poner la vista correspondiente
             }
-
-            if (oferta == null)
-            {
-                return NotFound();
-            }
-            return Ok(oferta);
+            return NotFound();
         }
 
 
         [HttpGet("Resultados/{subastaID}")]
         public async Task<IActionResult> GetOfertasGanadoras(int subastaID)
         {
-            Oferta oferta = null;
+            List<Oferta>? oferta = null;
 
-            await InitializeHttpClientAsync();
-            HttpResponseMessage response = await client.GetAsync($"api/Oferta/Resultado/{subastaID}");
+            oferta = await _serviceAPI.GetOfertasGanadoras(subastaID);
 
-            if (response.IsSuccessStatusCode)
+
+            if (oferta != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                oferta = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+                var viewModel = new OfertaViewModel
+                {
+                    ofertasUsuario = oferta
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);//Poner la vista correspondiente
             }
-
-            if (oferta == null)
-            {
-                return NotFound();
-            }
-            return Ok(oferta);
+            return NotFound();
         }
 
         [HttpGet("oferta/{productoID}")]
         public async Task<IActionResult> GetOfertaProducto(int productoID)
         {
-            Oferta oferta = null;
+            int cantidadOfertas = 0;
 
-            await InitializeHttpClientAsync(); 
+            cantidadOfertas = await _serviceAPI.GetCantidadOfertas(productoID);
 
-            HttpResponseMessage response = await client.GetAsync($"api/Oferta/{productoID}");
 
-            if (response.IsSuccessStatusCode)
+            if (cantidadOfertas != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                oferta = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+                var viewModel = new OfertaViewModel
+                {
+                    cantidadOfertas = cantidadOfertas
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);//Poner la vista correspondiente
             }
-
-            if (oferta == null)
-            {
-                return NotFound();
-            }
-            return Ok(oferta);
+            return NotFound();
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> PostOferta([FromBody] OfertaDTO ofertaDto)
+        public async Task<IActionResult> PostOferta([FromBody] OfertaDTO ofertaDto, int userID, int productoID)
         {
             if (ofertaDto == null)
             {
                 return BadRequest("Los datos de la oferta son inválidos");
-            }
-
-            await InitializeHttpClientAsync();
+            }           
 
 
-            var data = new
-            {
-                MontoOferta = ofertaDto.montoOferta
+            var data = new OfertaDTO
+            {                
+               montoOferta = ofertaDto.montoOferta
             };
 
+            //Falta pasar id de usuario y porducto al hacer oferta
+            var respuesta = await _serviceAPI.AddOferta(data,userID,productoID);
 
-            var jsonData = JsonSerializer.Serialize(data);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/Oferta", content);
-
-            if (response.IsSuccessStatusCode)
+            if (respuesta != null)
             {
 
-                return Ok("Datos enviados correctamente.");
+                return Ok("Datos enviados correctamente.");// Poner ruta correspondiente
             }
-            else
-            {
-
-                return StatusCode((int)response.StatusCode, "Error al enviar los datos.");
-            }
+            return NotFound();
         }
 
 

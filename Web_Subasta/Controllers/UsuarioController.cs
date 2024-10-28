@@ -16,9 +16,8 @@ namespace Web_Subasta.Controllers
 
     public class UsuarioController : Controller
     {
-        private readonly IServiceAPI _serviceAPI;
 
-        
+        private readonly IServiceAPI _serviceAPI;        
         private readonly TPI_DbContext _context;
 
         public UsuarioController(TPI_DbContext context, IServiceAPI serviceAPI)

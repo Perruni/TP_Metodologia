@@ -3,6 +3,10 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.Json;
 using System.Collections.Generic;
+using Core.Shared.DTOs.Producto;
+using Core.Shared.DTOs.Oferta;
+using Core.Shared.DTOs.Usuario;
+using Core.Shared.DTOs.Subastas;
 
 
 namespace Web_Subasta.Services
@@ -26,9 +30,9 @@ namespace Web_Subasta.Services
 
         }
 
-        public async Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario, int userID)
+        public async Task<Datos_usuarioDTO> AddDatosUsuario(Datos_usuarioDTO datosUsuario, int userID)
         {
-            Datos_usuario? result = null;
+            Datos_usuarioDTO? result = null;
 
             try
             {
@@ -39,7 +43,7 @@ namespace Web_Subasta.Services
                 {
                     // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize<Datos_usuario>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<Datos_usuarioDTO>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -61,9 +65,9 @@ namespace Web_Subasta.Services
             return result;
         }
 
-        public async Task<Oferta> AddOferta(Oferta oferta,int userID, int productoID)
+        public async Task<OfertaDTO> AddOferta(OfertaDTO oferta,int userID, int productoID)
         {
-            Oferta? result = null;
+            OfertaDTO? result = null;
 
             try
             {
@@ -74,7 +78,7 @@ namespace Web_Subasta.Services
                 {
                     // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<OfertaDTO>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -96,9 +100,9 @@ namespace Web_Subasta.Services
             return result;
         }
 
-        public async Task<Producto> AddProducto(Producto producto, int userID, int subastaID)
+        public async Task<ProductoDTO> AddProducto(ProductoDTO producto, int userID, int subastaID)
         {
-            Producto? result = null;
+            ProductoDTO? result = null;
 
             try
             {
@@ -109,7 +113,7 @@ namespace Web_Subasta.Services
                 {
                     // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<ProductoDTO>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });

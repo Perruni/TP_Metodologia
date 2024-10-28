@@ -16,7 +16,7 @@ using Web_Subasta.Services;
 
 namespace Web_Subasta.Controllers
 {
-
+    [Route("/[controller]")]
     public class SubastaController : Controller
     {
 

@@ -1,4 +1,9 @@
 ﻿using Core.Entities;
+using Core.Shared.DTOs;
+using Core.Shared.DTOs.Producto;
+using Core.Shared.DTOs.Oferta;
+using Core.Shared.DTOs.Usuario;
+using Core.Shared.DTOs.Subastas;
 
 namespace Web_Subasta.Services
 {
@@ -16,14 +21,14 @@ namespace Web_Subasta.Services
         Task<Usuario> Deleteusuario(int userID);
 
         Task<Datos_usuario> DatosUsuario(int userID);
-        Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario, int userID);
+        Task<Datos_usuario> AddDatosUsuario(Datos_usuarioDTO datosUsuario, int userID);
 
         Task<Producto> GetProducto(int productoID);
-        Task<Producto> AddProducto(Producto producto, int userID, int subastaID);
+        Task<Producto> AddProducto(ProductoDTO producto, int userID, int subastaID);
         Task<Producto> CancelarProducto(int userID, int productoID);
         Task<List<Producto>> GetProductoUsuario(int userID);
 
-        public Task<Oferta> AddOferta(Oferta oferta,int userID, int productoID);
+        public Task<OfertaDTO> AddOferta(OfertaDTO oferta,int userID, int productoID);
         public Task<Oferta> UpdateOferta(Oferta oferta, int userID, int ofertaID);
         public Task<Oferta> DeleteOferta(int userID, int ofertaID);
         public Task<Oferta> GetOfertaId(int ofertaID);
