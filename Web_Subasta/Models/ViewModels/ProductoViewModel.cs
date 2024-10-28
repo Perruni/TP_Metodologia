@@ -19,12 +19,15 @@ namespace Web_Subasta.Models.ViewModels
 
         public EstadoSolicitud EstadoSolicitud { get; set; }
 
-        public string ImagenUrl { get; set; }
+        public IFormFile ImagenUrl { get; set; }
 
         public List<Producto>? productoUsuario { get; set; }
 
         public List<Subasta>? subastaLista { get; set; }
 
         public string titulo { get; set; }
+
+        public string ImagenUrlProduc { get; set; }
+
     }
 }
