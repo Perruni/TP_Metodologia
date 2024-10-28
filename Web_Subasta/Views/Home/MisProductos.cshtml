@@ -1,5 +1,4 @@
 ﻿@model Web_Subasta.Models.ViewModels.ProductoViewModel
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,20 +12,19 @@
         <h1>Mis Productos</h1>
         <div class="productos-container">
 
-           
-          @foreach (var producto in GetUsuarioOf)
+            @foreach (var producto in Model.productoUsuario)
             {
                 <div class="card">
-                    <img src="@producto.ImagenUrl" alt="@producto.Nombre" />
-                    <h2>@producto.Nombre</h2>
-                    <p>@producto.Descripcion</p>
-                    <p class="price">Precio Base: $@producto.Precio.ToString("N0")</p>
-                    <p class="status">Estado: @producto.Estado</p>
+                    <img src="@producto.ImagenUrl" alt="@producto.nombreProducto" />
+                    <h2> @producto.nombreProducto</h2>
+                    <p>@producto.descripcion</p>
+                    <p class="price">Precio Base: $@producto.precioBase.ToString("N0")</p>
+                    <p class="status">Estado: @producto.estadoProducto</p>
                     <button class="ver-btn">Ver</button>
                 </div>
             }
         </div>
-            
+
         <button id="nuevaVentaBtn" class="nueva-venta-btn">NUEVA VENTA</button>
     </div>
 </body>

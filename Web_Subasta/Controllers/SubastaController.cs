@@ -42,7 +42,7 @@ namespace Web_Subasta.Controllers
             {
                 var viewModel = new SubastaViewModel
                 {
-                    subasta = subasta
+                    _subasta = subasta
                 };
                 return View("~/Views/Home/Activas.cshtml", viewModel);
             }
