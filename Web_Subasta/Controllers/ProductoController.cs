@@ -76,7 +76,7 @@ namespace Web_Subasta.Controllers
 
             if (respuesta != null)
             {
-                return View("~/Views/Home/Activas.cshtml");
+                return View("~/Views/Home/MisProductos.cshtml");
             }
             return NotFound();
         }
