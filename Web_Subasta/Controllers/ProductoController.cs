@@ -59,10 +59,10 @@ namespace Web_Subasta.Controllers
             {
                 return BadRequest("Los datos del producto son inválidos");
             }
+            subastaId = 1;
+            userId = 1;
 
-
-            var data = new ProductoDTO
-            {
+            var data = new ProductoDTO{
                 nombreProducto = productoVM.NombreProducto,
                 precioBase = productoVM.PrecioBase,
                 descripcion = productoVM.Descripcion,
