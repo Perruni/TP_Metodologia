@@ -53,7 +53,7 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostProducto([FromBody] ProductoDTO productoDto, int userId, int subastaId)
+        public async Task<IActionResult> PostProducto( ProductoViewModel productoDto, int userId, int subastaId)
         {
             if (productoDto == null)
             {
@@ -63,10 +63,10 @@ namespace Web_Subasta.Controllers
 
             var data = new ProductoDTO
             {
-                nombreProducto = productoDto.nombreProducto,
-                precioBase = productoDto.precioBase,
-                descripcion = productoDto.descripcion,
-                metodoEntrega =productoDto.metodoEntrega,
+                nombreProducto = productoDto.NombreProducto,
+                precioBase = productoDto.PrecioBase,
+                descripcion = productoDto.Descripcion,
+                metodoEntrega =productoDto.MetodoEntrega,
                 imagenUrl = productoDto.imagenUrl,
                
             };
