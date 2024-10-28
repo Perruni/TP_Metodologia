@@ -31,23 +31,21 @@ namespace Web_Subasta.Controllers
         [HttpGet("Usuario/{userID}")]
         public async Task<IActionResult> GetUsuario(int userID)
         {
-           
-            if (userID != null)
+            if (userID <= 0)
             {
-                ModelState.AddModelError(string.Empty, "El ID de usuario No existe.");
+                ModelState.AddModelError(string.Empty, "El ID de usuario no es válido.");
                 return BadRequest(ModelState);
             }
-            
+
             var usuario = await _serviceAPI.GetUsuario(userID);
 
-           
             if (usuario == null)
             {
-                ModelState.AddModelError(string.Empty, "Error al enviar los datos.");
-                return View("login");
+                ModelState.AddModelError(string.Empty, "Error al obtener los datos del usuario.");
+                return View("Login");
             }
-    
-            return View("Activas"); 
+
+            return View("Activas", usuario);
         }
 
 
@@ -69,11 +67,11 @@ namespace Web_Subasta.Controllers
 
             if (respuesta != null)
             {
-                return View("DatosUsuario");
+                return RedirectToAction("DatosUsuario");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Error al enviar los datos.");
+                ModelState.AddModelError(string.Empty, "Error al registrar el usuario.");
                 return View("Register", model);
             }
         }
@@ -81,13 +79,11 @@ namespace Web_Subasta.Controllers
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUsuario(int userId, [FromBody] UsuarioDTO usuarioDto)
         {
-            
-            if (usuarioDto == null)
+            if (usuarioDto == null || userId <= 0)
             {
-                return BadRequest("Los datos del usuario son inválidos.");
+                return BadRequest("Datos inválidos.");
             }
 
-            
             var usuario = new Usuario
             {
                 usuarioID = userId,
@@ -95,43 +91,40 @@ namespace Web_Subasta.Controllers
                 contrasenia = usuarioDto.contrasenia
             };
 
-          
             var resultado = await _serviceAPI.UpdateUsuario(usuario, userId);
 
-            
             if (resultado == null)
             {
-                return NotFound("El usuario no se pudo encontrar o actualizar.");
+                return NotFound("No se pudo actualizar el usuario.");
             }
 
-            
             return NoContent();
         }
-
 
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUsuario(int userId)
         {
-            
+            if (userId != null)
+            {
+                return BadRequest("ID de usuario inválido.");
+            }
+
             var usuario = await _serviceAPI.GetUsuario(userId);
 
-           
             if (usuario == null)
             {
                 return NotFound("El usuario no fue encontrado.");
             }
 
-            
             var resultado = await _serviceAPI.Deleteusuario(userId);
 
-            
-            if (resultado == null) 
+            if (resultado != null)
             {
                 return NoContent();
             }
             else
             {
-                return BadRequest("Error al eliminar el usuario."); 
+                return BadRequest("Error al eliminar el usuario.");
             }
         }
     }
