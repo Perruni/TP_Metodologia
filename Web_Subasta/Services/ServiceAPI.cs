@@ -28,7 +28,7 @@ namespace Web_Subasta.Services
 
         public async Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario, int userID)
         {
-            Datos_usuario result = null;
+            Datos_usuario? result = null;
 
             try
             {
@@ -63,7 +63,7 @@ namespace Web_Subasta.Services
 
         public async Task<Oferta> AddOferta(Oferta oferta,int userID, int productoID)
         {
-            Oferta result = null;
+            Oferta? result = null;
 
             try
             {
@@ -98,7 +98,7 @@ namespace Web_Subasta.Services
 
         public async Task<Producto> AddProducto(Producto producto, int userID, int subastaID)
         {
-            Producto result = null;
+            Producto? result = null;
 
             try
             {
@@ -133,7 +133,7 @@ namespace Web_Subasta.Services
 
         public async Task<Usuario> AddUsuario(Usuario usuario)
         {
-            Usuario result = null;
+            Usuario? result = null;
 
             try
             {             
@@ -168,7 +168,7 @@ namespace Web_Subasta.Services
 
         public async Task<Producto> CancelarProducto(int userID, int productoID)
         {
-            Producto result = null;
+            Producto? result = null;
             try
             {
 
@@ -198,63 +198,117 @@ namespace Web_Subasta.Services
             }
 
             return result;
-        }
-
-        public async Task<Producto> DatosProducto(int productoID)
-        {
-            throw new NotImplementedException();
-        }
+        }        
 
         public async Task<Datos_usuario> DatosUsuario(int userID)
         {
-            throw new NotImplementedException();
+            Datos_usuario? datos = null;
+
+            try
+            {
+                var response = await _client.GetAsync($"DatosUsuario/{userID}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var subastaResponse = JsonSerializer.Deserialize<Datos_usuario>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return datos;
         }
 
         public async Task<Oferta> DeleteOferta(int userID, int ofertaID)
         {
-            throw new NotImplementedException();
+            Oferta? result = null;
+
+            try
+            {
+
+                var response = await _client.DeleteAsync($"Oferta/{userID}/{ofertaID}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer la respuesta y deserializar el producto devuelto
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"Error al añadir el usuario: {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }  
 
         public async Task<Usuario> Deleteusuario(int userID)
         {
-            throw new NotImplementedException();
+            Usuario? result = null;
+            try
+            {
+
+                var response = await _client.DeleteAsync($"Usuario/{userID}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Leer la respuesta y deserializar el producto devuelto
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+                else
+                {
+                    Console.WriteLine($"Error al eliminar el usuario: {response.ReasonPhrase}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<int> GetCantidadOfertas(int productoID)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Oferta> GetOfertaId(int ofertaID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Oferta>> GetOfertasGanadoras(int subastaID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Oferta>> GetOfertasUsuario(int usuarioID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Producto> GetProducto(int productoID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Producto>> GetProductoUsuario(int userID)
-        {
-            List<Producto> productos = null;
+            int result = 0;
             try
             {
-                var response = await _client.GetAsync($"Producto/Usuario/{userID}");
+                var response = await _client.GetAsync($"Oferta/{productoID}");
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    productos = JsonSerializer.Deserialize<List<Producto>>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<int>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -271,12 +325,157 @@ namespace Web_Subasta.Services
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-            return productos;
+            return result;
+        }
+
+        public async Task<Oferta> GetOfertaId(int ofertaID)
+        {
+            Oferta? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Oferta/ID/{ofertaID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
+        }
+
+        public async Task<List<Oferta>> GetOfertasGanadoras(int subastaID)
+        {
+            List<Oferta>? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Oferta/Resultados/{subastaID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<List<Oferta>>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
+        }
+
+        public async Task<List<Oferta>> GetOfertasUsuario(int userID)
+        {
+            List<Oferta>? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Oferta/Usuario/{userID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<List<Oferta>>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
+        }
+
+        public async Task<Producto> GetProducto(int productoID)
+        {
+            Producto? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Producto/{productoID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
+        }
+
+        public async Task<List<Producto>> GetProductoUsuario(int userID)
+        {
+            List<Producto>? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Producto/Usuario/{userID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<List<Producto>>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<Subasta?> GetSubasta(int subastaID)
         {
-            Subasta subasta = null;
+            Subasta? result = null;
 
             try
             {
@@ -285,11 +484,38 @@ namespace Web_Subasta.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var subastaResponse = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
 
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
+        }
+
+        public async Task<Subasta?> GetSubastaProductos(int subastaID)
+        {
+            Subasta? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Subasta/Productos/{subastaID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Subasta>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
                 }
             }
             catch (HttpRequestException ex)
@@ -303,18 +529,12 @@ namespace Web_Subasta.Services
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-
-            return subasta;
-        }
-
-        public async Task<Subasta?> GetSubastaProductos(int subastaID)
-        {
-            throw new NotImplementedException();
+            return result;
         }
 
         public async Task<List<Subasta>> GetSubastasActivas()
         {
-            List<Subasta> subasta = null;
+            List<Subasta>? result = null;
 
             try
             {
@@ -322,7 +542,7 @@ namespace Web_Subasta.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    subasta = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -339,13 +559,13 @@ namespace Web_Subasta.Services
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-            return subasta;
+            return result;
 
         }
 
         public async Task<List<Subasta>> GetSubastasFinalizadas()
         {
-            List<Subasta> subasta = null;
+            List<Subasta>? result = null;
 
             try
             {
@@ -353,7 +573,7 @@ namespace Web_Subasta.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    subasta = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -370,12 +590,12 @@ namespace Web_Subasta.Services
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-            return subasta;
+            return result;
         }
 
         public async Task<List<Subasta>> GetSubastasProximas()
         {
-            List<Subasta> subasta = null;
+            List<Subasta>? result = null;
 
             try
             {
@@ -383,7 +603,7 @@ namespace Web_Subasta.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    subasta = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
+                    result = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -400,22 +620,94 @@ namespace Web_Subasta.Services
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-            return subasta;
+            return result;
         }
 
         public async Task<Usuario> GetUsuario(int userID)
         {
-            throw new NotImplementedException();
+            Usuario? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Usuario/{userID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<Oferta> UpdateOferta(Oferta oferta,int userID, int ofertaID)
         {
-            throw new NotImplementedException();
+            Oferta? result = null;
+            try
+            {
+                var response = await _client.PutAsJsonAsync($"Oferta/{userID}/{ofertaID}",oferta);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
 
         public async Task<Usuario> UpdateUsuario(Usuario usuario, int userID)
         {
-            throw new NotImplementedException();
+            Usuario? result = null;
+            try
+            {
+                var response = await _client.PutAsJsonAsync($"Usuario/{userID}", usuario);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
         }
     }
 }
