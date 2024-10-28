@@ -120,6 +120,11 @@ namespace GestorSubastas
 
         private void button2_Click(object sender, EventArgs e)
         {
+            _producto.estadoSolicitud = Producto.EstadoSolicitud.Rechazado;
+            
+
+
+            var resultado = _productoBusiness.UpdateProducto(_producto);
 
             MessageBox.Show("Producto rechazado.");
             this.Close();

@@ -23,7 +23,9 @@ namespace Master_API.Services
 
         public async Task<List<Subasta>> GetSubastasToOpenAsync(DateTime currentTime)
         {
-            return await _dbContext.Subastas.Where(s => s.fechaInicio <= currentTime && s.estadoSubasta == Subasta.EstadoSubasta.Proxima)
+            return await _dbContext.Subastas.Where(s => s.fechaInicio <= currentTime && 
+                                            (s.estadoSubasta == Subasta.EstadoSubasta.Proxima ||
+                                             s.estadoSubasta == Subasta.EstadoSubasta.Activa))
                                             .ToListAsync();
         }
 
@@ -72,12 +74,37 @@ namespace Master_API.Services
 
         public async Task OpenSubastaAsync(Subasta subasta)
         {
+            if (subasta.estadoSubasta == Subasta.EstadoSubasta.Activa)
+            {
+                var productosAsociados = await _dbContext.Productos
+                    .Where(p => p.subastaID == subasta.subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
+                    .ToListAsync();
 
-            subasta.estadoSubasta = Subasta.EstadoSubasta.Activa;
-            _dbContext.Subastas.Update(subasta);
+                foreach (var producto in productosAsociados)
+                {
+                    producto.estadoProducto = Producto.EstadoProducto.EnSubasta;
+                    _dbContext.Productos.Update(producto);
+                }
+            }
+            else
+            {
+                subasta.estadoSubasta = Subasta.EstadoSubasta.Activa;
+                _dbContext.Subastas.Update(subasta);
+
+                
+                var productosAsociados = await _dbContext.Productos
+                    .Where(p => p.subastaID == subasta.subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
+                    .ToListAsync();
+
+                foreach (var producto in productosAsociados)
+                {
+                    producto.estadoProducto = Producto.EstadoProducto.EnSubasta;
+                    _dbContext.Productos.Update(producto);
+                }
+            }
+
             await _dbContext.SaveChangesAsync();
         }
-
     }
 }
 
