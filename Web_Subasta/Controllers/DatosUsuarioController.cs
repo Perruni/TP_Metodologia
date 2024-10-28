@@ -9,69 +9,80 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using Web_Subasta.Models.ViewModels;
+using Web_Subasta.Services;
 
 namespace Web_Subasta.Controllers
 {
     public class DatosUsuarioController : Controller
     {
 
-        private readonly IDatosUsuarioBusiness _datosBusiness;
-        private readonly HttpClient _httpClient;
+        private readonly TPI_DbContext _context;
+        private readonly IServiceAPI _service;
 
-        public DatosUsuarioController(IDatosUsuarioBusiness datosBusiness, HttpClient httpClient)
+        public DatosUsuarioController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
-            _datosBusiness = datosBusiness;
-            _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("UrisString");
+            _context = context;
+            _service = serviceAPI;
+
         }
 
         [HttpGet]
-        public IActionResult AddDatosUsuario(int userId)
+        public async Task<IActionResult> GetDatosUsuario(int userId)
         {
-            var model = new DatosUsuarioVM
-            {
-                usuarioID = userId 
-            };
+            Datos_usuario datosUsuario = null;          
 
-            return View(model);
+            datosUsuario = await _service.GetDatosUsuario(userId);
+
+
+            if (datosUsuario != null)
+            {
+                var viewModel = new DatosUsuarioVM
+                {
+                    _datosUsuario = datosUsuario
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);
+            }
+
+            return NotFound();
+
+
         }
 
 
         [HttpPost]
         public async Task<IActionResult> AddDatosUsuario(int userId, DatosUsuarioVM modelo)
         {
-        
-                var datosUsuarios = new Datos_usuarioDTO
-                {
-                    DNI = modelo.dni,
-                    nombre = modelo.nombre,
-                    apellido = modelo.apellido,
-                    direccion = modelo.direccion,
-                    telefono = modelo.telefono,
-                    codigoArea = modelo.codigoArea,
-                    usuarioID = userId,
-                };
 
-                // Construir la URL para llamar a la API
-                var apiUrl = $"api/DatosUsuario/{userId}";
-                var jsonContent = JsonConvert.SerializeObject(datosUsuarios);
-                var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            if (!ModelState.IsValid)
+            {
+                return View("~/Views/Home/DatosUsuario.cshtml", modelo);
+            }
 
-                // Hacer la solicitud POST a la API
-                var response = await _httpClient.PostAsync(apiUrl, httpContent);
+            var data = new Datos_usuarioDTO
+            {
+                DNI = modelo.dni,
+                nombre = modelo.nombre,
+                apellido  = modelo.apellido,
+                direccion = modelo.direccion,
+                telefono = modelo.telefono,
+                codigoArea = modelo.codigoArea,
 
-                if (response.IsSuccessStatusCode)
-                {
+            };
 
-                    return RedirectToAction("Activas", "Home");
-                }
+            var respuesta = await _service.AddDatosUsuario(data, userId);
 
-    
-                ModelState.AddModelError("", "Error al guardar los datos adicionales.");
-            
+            if (respuesta != null)
+            {
+                return View("DatosUsuario");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Error al enviar los datos.");
+                return View("~/Views/Home/DatosUsuario.cshtml", modelo);
+            }
 
-       
-            return View(modelo);
+
+
         }
 
     }

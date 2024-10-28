@@ -20,23 +20,13 @@ namespace Web_Subasta.Controllers
     public class SubastaController : Controller
     {
 
-        static HttpClient client = new HttpClient();
         private readonly TPI_DbContext _context;
-        private readonly IServiceAPI _service;
-
-        static SubastaController()
-        {
-            // Configuración del HttpClient en el constructor estático
-            client.BaseAddress = new Uri("https://localhost:7053/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
+        private readonly IServiceAPI _service;       
 
         public SubastaController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
             _context = context;
             _service = serviceAPI;
-
             
         }
 
@@ -48,11 +38,16 @@ namespace Web_Subasta.Controllers
             subasta = await _service.GetSubasta(SubastaID);
 
 
-            if (subasta == null)
+            if (subasta != null)
             {
-                return NotFound();
+                var viewModel = new SubastaViewModel
+                {
+                    _subasta = subasta
+                };
+                return View("~/Views/Home/Activas.cshtml", viewModel);
             }
-            return Ok(subasta);
+
+            return NotFound();
         }
 
 

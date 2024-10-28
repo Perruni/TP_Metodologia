@@ -15,6 +15,6 @@ namespace Web_Subasta.Models.ViewModels
         public int codigoArea { get; set; }
         public int usuarioID { get; set; }
 
-        public Datos_usuario? datosUsuario { get; set; }
+        public Datos_usuario? _datosUsuario { get; set; }
     }
 }

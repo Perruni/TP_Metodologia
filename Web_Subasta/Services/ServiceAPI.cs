@@ -204,7 +204,7 @@ namespace Web_Subasta.Services
             return result;
         }        
 
-        public async Task<Datos_usuario> DatosUsuario(int userID)
+        public async Task<Datos_usuario> GetDatosUsuario(int userID)
         {
             Datos_usuario? datos = null;
 
