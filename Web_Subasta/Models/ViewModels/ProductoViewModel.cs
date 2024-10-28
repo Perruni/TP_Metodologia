@@ -21,6 +21,8 @@ namespace Web_Subasta.Models.ViewModels
 
         public string ImagenUrl { get; set; }
 
+        public List<Producto>? productoUsuario { get; set; }
+
         public List<Subasta>? subastaLista { get; set; }
 
         public string titulo { get; set; }

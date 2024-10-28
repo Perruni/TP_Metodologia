@@ -78,14 +78,16 @@ namespace Web_Subasta.Controllers
             }
         }
 
-        /*[HttpPut("{userId}")]
+        [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUsuario(int userId, [FromBody] UsuarioDTO usuarioDto)
         {
+            
             if (usuarioDto == null)
             {
-                return BadRequest("Los datos del usuario son inválidos");
+                return BadRequest("Los datos del usuario son inválidos.");
             }
 
+            
             var usuario = new Usuario
             {
                 usuarioID = userId,
@@ -93,50 +95,45 @@ namespace Web_Subasta.Controllers
                 contrasenia = usuarioDto.contrasenia
             };
 
-            
-           // await InitializeHttpClientAsync();
-
-           
-            var jsonData = JsonSerializer.Serialize(usuario);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+          
+            var resultado = await _serviceAPI.UpdateUsuario(usuario, userId);
 
             
-            HttpResponseMessage response = await client.PutAsync($"api/Usuarios/{userId}", content);
+            if (resultado == null)
+            {
+                return NotFound("El usuario no se pudo encontrar o actualizar.");
+            }
 
-            if (response.IsSuccessStatusCode)
-            {
-                
-                var updatedUsuario = await response.Content.ReadFromJsonAsync<UsuarioDTO>();
-                return Ok(updatedUsuario);
-            }
-            else
-            {
-                
-                return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
-            }
+            
+            return NoContent();
         }
 
 
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUsuario(int userId)
         {
+            
+            var usuario = await _serviceAPI.GetUsuario(userId);
+
            
-           // await InitializeHttpClientAsync();
+            if (usuario == null)
+            {
+                return NotFound("El usuario no fue encontrado.");
+            }
 
             
-            HttpResponseMessage response = await client.DeleteAsync($"api/Usuarios/{userId}");
+            var resultado = await _serviceAPI.Deleteusuario(userId);
 
-            if (response.IsSuccessStatusCode)
+            
+            if (resultado == null) 
             {
-                
-                return Ok("Usuario eliminado correctamente.");
+                return NoContent();
             }
             else
             {
-               
-                return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+                return BadRequest("Error al eliminar el usuario."); 
             }
-        }*/
-
+        }
     }
+
 }

@@ -11,102 +11,111 @@ using Core.Shared.DTOs.Subastas;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using System.Net.Http.Headers;
+using Web_Subasta.Services;
+using Web_Subasta.Models.ViewModels;
+using Core.Shared.DTOs.Oferta;
 
 namespace Web_Subasta.Controllers
 {
     [Route("/[controller]")]    
-    public class ProductoController : ControllerBase
+    public class ProductoController : Controller
     {
 
-        static HttpClient client = new HttpClient();
+        private readonly TPI_DbContext _context;
+        private readonly IServiceAPI _service;
 
-        
-        static async Task InitializeHttpClientAsync()
+        public ProductoController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
-            client.BaseAddress = new Uri("UriStrings"); 
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
+            _context = context;
+            _service = serviceAPI;
+
         }
 
-        
-        [HttpGet("{ProductoID}")]
-        public async Task<IActionResult> GetProducto(int ProductoID)
+        [HttpGet("{productoID}")]
+        public async Task<IActionResult> GetProducto(int productoID)
         {
-            Producto producto = null;
-
-            await InitializeHttpClientAsync();
-            HttpResponseMessage response = await client.GetAsync($"api/producto/{ProductoID}");
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                producto = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                var producto = await _service.GetProducto(productoID);
 
+                if (producto == null)
+                {
+                    return NotFound(new { message = "Producto no encontrado" });
+                }
+
+                return Ok(producto); 
             }
-
-            if (producto == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, new { message = "Ocurrió un error en el servidor", error = ex.Message });
             }
-            return Ok(producto);
         }
+
 
         [HttpPost]
-        public async Task<IActionResult> PostProducto([FromBody] ProductoDTO productoDto)
+        public async Task<IActionResult> PostProducto([FromBody] ProductoDTO productoDto, int userId, int subastaId)
         {
             if (productoDto == null)
             {
                 return BadRequest("Los datos del producto son inválidos");
             }
 
-            await InitializeHttpClientAsync();
 
-            
-            var data = new
+            var data = new ProductoDTO
             {
-                NombreProducto = productoDto.nombreProducto,
-                PrecioBase = productoDto.precioBase,
-                MetodoEntrega = productoDto.metodoEntrega,
-                Descripcion = productoDto.descripcion
+                nombreProducto = productoDto.nombreProducto,
+                precioBase = productoDto.precioBase,
+                descripcion = productoDto.descripcion,
+                metodoEntrega =productoDto.metodoEntrega,
+                imagenUrl = productoDto.imagenUrl,
+               
             };
 
           
-            var jsonData = JsonSerializer.Serialize(data);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var respuesta = await _service.AddProducto(data, userId, subastaId);
 
-            
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/Producto", content);
-
-            if (response.IsSuccessStatusCode)
+            if (respuesta != null)
             {
-                
-                return Ok("Datos enviados correctamente.");
+                return View("~/Views/Home/Activas.cshtml");
             }
-            else
-            {
-               
-                return StatusCode((int)response.StatusCode, "Error al enviar los datos.");
-            }
+            return NotFound();
         }
 
 
-        [HttpPut("{userId}/{productoId}")]
-        public async Task<IActionResult> UpdateProducto(int userId, int productoId)
+        [HttpPut("{userId}/{productoID}")]
+        public async Task<IActionResult> UpdateProducto(int userId, int productoID)
         {
+           
             
-                        
-            HttpResponseMessage response = await client.PutAsync($"api/productos/Cancelar/{userId}/{productoId}", null);
+            var resultado = await _service.CancelarProducto(userId, productoID);
 
-            if (response.IsSuccessStatusCode)
+            if (resultado == null)
             {
-                var updatedProduct = await response.Content.ReadFromJsonAsync<ProductoDatosDTO>();
-                return Ok(updatedProduct);
+                return NotFound("El producto no se pudo encontrar o actualizar.");
             }
-            else
+
+            return View("~/Views/Home/MisProductos.cshtml");
+        }
+
+
+        [HttpGet("Usuario/{userID}")]
+        public async Task<IActionResult> GetProductoUsuario(int userID)
+        {
+            List<Producto>? producto = null;
+
+            producto = await _service.GetProductoUsuario(userID);
+
+
+            if (producto != null)
             {
-                return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+                var viewModel = new ProductoViewModel
+                {
+                    productoUsuario = producto
+                };
+                return View("~/Views/Home/MisProductos.cshtml", viewModel);
             }
+            return NotFound();
         }
     }
+
 }

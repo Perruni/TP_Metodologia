@@ -1,4 +1,4 @@
-﻿@model Web_Subasta.Models.ViewModels.SubastaViewModel
+﻿@model Web_Subasta.Models.ViewModels.ProductoViewModel
 
 <!DOCTYPE html>
 <html lang="es">
@@ -13,8 +13,8 @@
         <h1>Mis Productos</h1>
         <div class="productos-container">
 
-           @*
-          @foreach (var producto in Model)
+           
+          @foreach (var producto in GetUsuarioOf)
             {
                 <div class="card">
                     <img src="@producto.ImagenUrl" alt="@producto.Nombre" />
@@ -26,7 +26,7 @@
                 </div>
             }
         </div>
-            *@
+            
         <button id="nuevaVentaBtn" class="nueva-venta-btn">NUEVA VENTA</button>
     </div>
 </body>

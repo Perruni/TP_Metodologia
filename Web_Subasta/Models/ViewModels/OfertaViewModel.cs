@@ -14,5 +14,6 @@ namespace Web_Subasta.Models.ViewModels
 
         public int cantidadOfertas { get; set; }
 
+
     }
 }

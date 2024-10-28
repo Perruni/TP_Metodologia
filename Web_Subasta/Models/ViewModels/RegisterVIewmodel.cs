@@ -12,6 +12,6 @@ namespace Web_Subasta.Models.ViewModels
         [StringLength(100, ErrorMessage = "La contraseña debe tener al menos {2} caracteres.", MinimumLength = 6)]
         public string Contrasenia { get; set; }
 
-        
+
     }
 }

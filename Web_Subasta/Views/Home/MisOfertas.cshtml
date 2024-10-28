@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Web_Subasta.Models.ViewModels.OfertaViewModel
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -20,8 +21,8 @@
     <div class="container">
         <h1 class="text-center">Mis Ofertas</h1>
         <div class="row">
-            @*
-            @foreach (var producto in Model)
+            
+            @foreach (var producto in ofertasUsuario)
             {
                 <div class="col-md-4">
                     <div class="card">
@@ -37,7 +38,7 @@
                 </div>
             }
         </div>
-            *@
+            
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
