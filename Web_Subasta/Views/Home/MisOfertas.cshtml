@@ -22,7 +22,7 @@
         <h1 class="text-center">Mis Ofertas</h1>
         <div class="row">
             
-            @foreach (var producto in Model.ofertasUsuario) 
+            @foreach (var oferta in Model.ofertasUsuario) 
             {
                 <div class="col-md-4">
                     <div class="card">
@@ -30,8 +30,8 @@
                         <div class="card-body">
                             @* <h5 class="card-title">@producto.tipo</h5>*@
                             @* <p class="card-text">@producto.descripcion</p>*@
-                            <p><strong>Estado:</strong> @producto.estadoOferta</p>
-                            <p><strong>Oferta:</strong> @producto.montoOferta</p>
+                            <p><strong>Estado:</strong> @oferta.estadoOferta</p>
+                            <p><strong>Oferta:</strong> @oferta.montoOferta</p>
                             <a href="#" class="btn btn-ver">Ver</a>
                         </div>
                     </div>

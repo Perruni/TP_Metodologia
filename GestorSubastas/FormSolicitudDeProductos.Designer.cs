@@ -30,17 +30,19 @@
         {
             button1 = new Button();
             button2 = new Button();
-            txtNombre = new TextBox();
-            txtMontoBase = new TextBox();
-            txtMetodoEntrega = new TextBox();
-            rtxtDescripcion = new TextBox();
             dataGridViewSubastas = new DataGridView();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
+            ProductoNombre = new Label();
+            ProductoPrecio = new Label();
+            ProductoEntrega = new Label();
+            ImagenProducto = new PictureBox();
+            ProductoDescripcion = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSubastas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ImagenProducto).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -67,40 +69,12 @@
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
-            // txtNombre
-            // 
-            txtNombre.Location = new Point(364, 103);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(196, 23);
-            txtNombre.TabIndex = 2;
-            // 
-            // txtMontoBase
-            // 
-            txtMontoBase.Location = new Point(360, 160);
-            txtMontoBase.Name = "txtMontoBase";
-            txtMontoBase.Size = new Size(200, 23);
-            txtMontoBase.TabIndex = 4;
-            // 
-            // txtMetodoEntrega
-            // 
-            txtMetodoEntrega.Location = new Point(364, 231);
-            txtMetodoEntrega.Name = "txtMetodoEntrega";
-            txtMetodoEntrega.Size = new Size(196, 23);
-            txtMetodoEntrega.TabIndex = 5;
-            // 
-            // rtxtDescripcion
-            // 
-            rtxtDescripcion.Location = new Point(360, 300);
-            rtxtDescripcion.Name = "rtxtDescripcion";
-            rtxtDescripcion.Size = new Size(396, 23);
-            rtxtDescripcion.TabIndex = 6;
-            // 
             // dataGridViewSubastas
             // 
             dataGridViewSubastas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewSubastas.Location = new Point(12, 114);
+            dataGridViewSubastas.Location = new Point(12, 82);
             dataGridViewSubastas.Name = "dataGridViewSubastas";
-            dataGridViewSubastas.Size = new Size(302, 150);
+            dataGridViewSubastas.Size = new Size(329, 275);
             dataGridViewSubastas.TabIndex = 8;
             dataGridViewSubastas.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -118,63 +92,110 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(364, 82);
+            label2.Location = new Point(360, 82);
             label2.Name = "label2";
-            label2.Size = new Size(71, 18);
+            label2.Size = new Size(78, 18);
             label2.TabIndex = 10;
-            label2.Text = "Nombre";
+            label2.Text = "Nombre:";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(360, 129);
+            label3.Location = new Point(360, 138);
             label3.Name = "label3";
-            label3.Size = new Size(104, 18);
+            label3.Size = new Size(110, 18);
             label3.TabIndex = 11;
-            label3.Text = "Monto Base";
+            label3.Text = "Precio Base:";
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(364, 201);
+            label4.Location = new Point(360, 192);
             label4.Name = "label4";
-            label4.Size = new Size(163, 18);
+            label4.Size = new Size(170, 18);
             label4.TabIndex = 12;
-            label4.Text = "Metodo de entrega";
+            label4.Text = "Metodo de entrega:";
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(364, 273);
+            label5.Location = new Point(360, 246);
             label5.Name = "label5";
-            label5.Size = new Size(101, 18);
+            label5.Size = new Size(108, 18);
             label5.TabIndex = 13;
-            label5.Text = "Descripcion";
+            label5.Text = "Descripcion:";
+            // 
+            // ProductoNombre
+            // 
+            ProductoNombre.AutoSize = true;
+            ProductoNombre.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ProductoNombre.Location = new Point(362, 107);
+            ProductoNombre.Name = "ProductoNombre";
+            ProductoNombre.Size = new Size(79, 18);
+            ProductoNombre.TabIndex = 14;
+            ProductoNombre.Text = "Producto";
+            // 
+            // ProductoPrecio
+            // 
+            ProductoPrecio.AutoSize = true;
+            ProductoPrecio.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ProductoPrecio.Location = new Point(362, 160);
+            ProductoPrecio.Name = "ProductoPrecio";
+            ProductoPrecio.Size = new Size(57, 18);
+            ProductoPrecio.TabIndex = 15;
+            ProductoPrecio.Text = "Precio";
+            // 
+            // ProductoEntrega
+            // 
+            ProductoEntrega.AutoSize = true;
+            ProductoEntrega.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ProductoEntrega.Location = new Point(362, 216);
+            ProductoEntrega.Name = "ProductoEntrega";
+            ProductoEntrega.Size = new Size(71, 18);
+            ProductoEntrega.TabIndex = 16;
+            ProductoEntrega.Text = "Entrega";
+            // 
+            // ImagenProducto
+            // 
+            ImagenProducto.Location = new Point(552, 47);
+            ImagenProducto.Name = "ImagenProducto";
+            ImagenProducto.Size = new Size(224, 247);
+            ImagenProducto.TabIndex = 18;
+            ImagenProducto.TabStop = false;
+            // 
+            // ProductoDescripcion
+            // 
+            ProductoDescripcion.Location = new Point(132, 271);
+            ProductoDescripcion.Name = "ProductoDescripcion";
+            ProductoDescripcion.Size = new Size(168, 23);
+            ProductoDescripcion.TabIndex = 19;
             // 
             // FormSolicitudDeProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(ImagenProducto);
+            Controls.Add(ProductoEntrega);
+            Controls.Add(ProductoPrecio);
+            Controls.Add(ProductoNombre);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(dataGridViewSubastas);
-            Controls.Add(rtxtDescripcion);
-            Controls.Add(txtMetodoEntrega);
-            Controls.Add(txtMontoBase);
-            Controls.Add(txtNombre);
             Controls.Add(button2);
             Controls.Add(button1);
+            Controls.Add(ProductoDescripcion);
             Name = "FormSolicitudDeProductos";
             Text = "FormSolicitudDeProductos";
             Load += FormSolicitudDeProductos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewSubastas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ImagenProducto).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -183,15 +204,16 @@
 
         private Button button1;
         private Button button2;
-        private TextBox txtNombre;
-        private TextBox txtMontoBase;
-        private TextBox txtMetodoEntrega;
-        private TextBox rtxtDescripcion;
         private DataGridView dataGridViewSubastas;
         private Label label1;
         private Label label2;
         private Label label3;
         private Label label4;
         private Label label5;
+        private Label ProductoNombre;
+        private Label ProductoPrecio;
+        private Label ProductoEntrega;
+        private PictureBox ImagenProducto;
+        private TextBox ProductoDescripcion;
     }
 }

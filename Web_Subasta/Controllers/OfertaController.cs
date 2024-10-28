@@ -33,7 +33,7 @@ namespace Web_Subasta.Controllers
 
 
 
-        [HttpGet("usuario/{userID}")]
+        [HttpGet("MisOfertas")]
         public async Task<IActionResult> GetUsuarioOf(int userID)
         {
             List<Oferta>? oferta = null;
@@ -47,7 +47,7 @@ namespace Web_Subasta.Controllers
                 {
                     ofertasUsuario = oferta
                 };
-                return View("~/Views/Home/Activas.cshtml", viewModel);//Poner la vista correspondiente
+                return View("~/Views/Home/MisOfertas.cshtml", viewModel);//Poner la vista correspondiente
             }
             return NotFound();
         }

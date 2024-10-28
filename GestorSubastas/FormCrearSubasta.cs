@@ -39,10 +39,17 @@ namespace GestorSubastas
             var titulo = textBoxTitulo.Text;
             var fechaInicio = dateTimePickerInicio.Value;
             var fechaFin = dateTimePickerFin.Value;
-
+            
             if (fechaFin < fechaInicio)
             {
                 MessageBox.Show("La fecha de finalización no puede ser anterior a la fecha de inicio.");
+                return;
+            }
+
+            var fechaHoy = DateTime.Now;
+            if (fechaInicio < fechaHoy)
+            {
+                MessageBox.Show("La fecha de inicio debe ser un dia despues que la de hoy.");
                 return;
             }
 
@@ -55,6 +62,12 @@ namespace GestorSubastas
             if (!Enum.TryParse<Subasta.MetodosdePago>(comboBoxMetodosPago.SelectedItem.ToString(), out var metodopago))
             {
                 MessageBox.Show("Método de pago no válido.");
+                return;
+            }
+
+            if (titulo == null)
+            {
+                MessageBox.Show("Ingrese un titulo.");
                 return;
             }
 

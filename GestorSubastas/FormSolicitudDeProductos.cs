@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,21 @@ namespace GestorSubastas
         {
             InitializeComponent();
 
+            ProductoDescripcion = new TextBox
+            {
+                Multiline = true,
+                Width = 150,  // Ancho del TextBox
+                Height = 100, // Alto del TextBox
+                Location = new Point(362, 271),
+                ScrollBars = ScrollBars.Vertical, // Agregar barra de desplazamiento
+                ReadOnly = true // Hacerlo solo de lectura
+            };
+
+            this.Controls.Add(ProductoDescripcion); // Agregar el TextBox al formulario
             _productoBusiness = productoBusiness;
             CargarSubastas();
+
+            
         }
 
         private async Task CargarSubastas()
@@ -38,14 +52,58 @@ namespace GestorSubastas
             dataGridViewSubastas.DataSource = productosPendientes;
         }
 
-        private void CargarDatosProducto()
+        private async void CargarDatosProducto()
         {
-            txtNombre.Text = _producto.nombreProducto;
-            txtMontoBase.Text = _producto.precioBase.ToString("C");
-            txtMetodoEntrega.Text = _producto.metodoEntrega;
-            rtxtDescripcion.Text = _producto.descripcion;
+            ProductoNombre.Text = _producto.nombreProducto;
+            ProductoPrecio.Text = _producto.precioBase.ToString("C", new CultureInfo("es-AR"));
+            ProductoEntrega.Text = _producto.metodoEntrega;
+            ProductoDescripcion.Text = _producto.descripcion;
+            string imageUrl = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/" + _producto.ImagenUrl;
 
+            // Cargar la imagen en el PictureBox de forma asíncrona
+            await LoadImageFromUrlAsync(imageUrl);
+        }
 
+        private async Task LoadImageFromUrlAsync(string imageUrl)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // Descargar los datos de la imagen como un arreglo de bytes
+                    byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
+
+                    // Convertir los bytes en un objeto Image y asignarlo al PictureBox
+                    using (var ms = new System.IO.MemoryStream(imageBytes))
+                    {
+                        using (var originalImage = Image.FromStream(ms))
+                        {
+                            // Definir el tamaño máximo
+                            const int maxWidth = 200;  // Ancho máximo
+                            const int maxHeight = 200; // Alto máximo
+
+                            // Calcular la escala
+                            double ratioX = (double)maxWidth / originalImage.Width;
+                            double ratioY = (double)maxHeight / originalImage.Height;
+                            double ratio = Math.Min(ratioX, ratioY);
+
+                            // Calcular las dimensiones escaladas
+                            int newWidth = (int)(originalImage.Width * ratio);
+                            int newHeight = (int)(originalImage.Height * ratio);
+
+                            // Crear la imagen escalada
+                            using (var newImage = new Bitmap(originalImage, newWidth, newHeight))
+                            {
+                                ImagenProducto.Image = new Bitmap(newImage); // Asignar la imagen escalada al PictureBox
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la imagen: " + ex.Message);
+            }
         }
 
         private void button1_ClickAsync(object sender, EventArgs e)
@@ -74,9 +132,12 @@ namespace GestorSubastas
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            _producto = (Producto)dataGridViewSubastas.Rows[e.RowIndex].DataBoundItem;
-
-            CargarDatosProducto();
+            if (e.RowIndex >= 0) // Comprobar que se hace clic en una fila válida
+            {
+                _producto = (Producto)dataGridViewSubastas.Rows[e.RowIndex].DataBoundItem;
+                CargarDatosProducto();
+            }
+            
         }
     }
 }
