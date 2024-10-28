@@ -40,6 +40,12 @@ namespace GestorSubastas
             var fechaInicio = dateTimePickerInicio.Value;
             var fechaFin = dateTimePickerFin.Value;
 
+            if (fechaFin < fechaInicio)
+            {
+                MessageBox.Show("La fecha de finalización no puede ser anterior a la fecha de inicio.");
+                return;
+            }
+
             if (comboBoxMetodosPago.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, seleccione un método de pago.");
