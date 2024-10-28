@@ -28,27 +28,27 @@ namespace Web_Subasta.Controllers
         }
 
 
-        /*[HttpGet("Usuario/{UsuarioID}")]
-        public async Task<IActionResult> GetUsuario(int UsuarioID)
+        [HttpGet("Usuario/{userID}")]
+        public async Task<IActionResult> GetUsuario(int userID)
         {
-            Usuario usuario = null;
-
-           // await InitializeHttpClientAsync();
-            HttpResponseMessage response = await client.GetAsync($"api/Usuario/{UsuarioID}");
-
-            if (response.IsSuccessStatusCode)
+           
+            if (userID != null)
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                usuario = JsonSerializer.Deserialize<Usuario>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+                ModelState.AddModelError(string.Empty, "El ID de usuario No existe.");
+                return BadRequest(ModelState);
             }
+            
+            var usuario = await _serviceAPI.GetUsuario(userID);
 
+           
             if (usuario == null)
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, "Error al enviar los datos.");
+                return View("login");
             }
-            return Ok(usuario);
-        }*/
+    
+            return View("Activas"); 
+        }
 
 
         [HttpPost]
