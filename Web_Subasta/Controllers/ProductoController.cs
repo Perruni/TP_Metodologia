@@ -32,7 +32,7 @@ namespace Web_Subasta.Controllers
         }
 
         [HttpGet("{productoID}")]
-        public async Task<IActionResult> GetProducto(int productoID)
+        public async Task<IActionResult> GetProductoID(int productoID)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Web_Subasta.Controllers
                     return NotFound(new { message = "Producto no encontrado" });
                 }
 
-                return Ok(producto); 
+                return Ok(producto);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace Web_Subasta.Controllers
                 precioBase = productoVM.PrecioBase,
                 descripcion = productoVM.Descripcion,
                 metodoEntrega = productoVM.MetodoEntrega,
-                imagenUrl = productoVM.ImagenUrl,
+                imagenUrl = productoVM.ImagenUrlArchivo,
                
             };
 
@@ -116,6 +116,32 @@ namespace Web_Subasta.Controllers
             }
             return NotFound();
         }
-    }
 
+
+        [HttpGet("detallesproducto")]
+        public async Task<IActionResult> GetDetallesProducto(int productoID)
+        {
+            productoID = 5;
+          
+                var producto = await _service.GetProducto(productoID);
+
+                var subasta = await _service.GetSubasta((int)producto.subastaID);
+                
+
+                if (producto != null)
+                {
+                var viewModel = new ProductoViewModel
+                {
+                    Producto = producto,
+                    Subasta = subasta,
+
+                };
+                    return View("~/Views/Home/productos.cshtml", viewModel);
+                }
+                return NotFound();
+            
+         
+        }
+
+}
 }
