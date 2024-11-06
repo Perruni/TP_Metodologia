@@ -19,8 +19,10 @@
                         <img id="imgPreview" src="~/images/house-placeholder.jpg" class="card-img-top" alt="Vista previa de la propiedad" style="max-height: 300px;" />
                         <div class="card-body">
                             <label asp-for="ImagenUrlArchivo" class="form-label">Subir fotos del producto o propiedad</label>
-                            <input asp-for="ImagenUrlArchivo" type="file" class="form-control" accept="image/*" />
+                            <input asp-for="ImagenUrlArchivo" id="productImageInput" type="file" class="form-control" accept="image/*" />
                             <span asp-validation-for="ImagenUrlArchivo" class="text-danger"></span>
+
+
                         </div>
                     </div>
                 </div>
@@ -80,6 +82,7 @@
     </div>
 </div>
 
+
 <script>
     document.getElementById('productImageInput').addEventListener('change', function (event) {
         const file = event.target.files[0];
@@ -89,7 +92,7 @@
             const reader = new FileReader();
             reader.onload = function (e) {
                 imgPreview.src = e.target.result;
-            }
+            };
             reader.readAsDataURL(file);
         } else {
             imgPreview.src = '~/images/house-placeholder.jpg';

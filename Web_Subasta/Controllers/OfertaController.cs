@@ -113,8 +113,13 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostOferta([FromBody] OfertaDTO ofertaDto, int userID, int productoID)
+        public async Task<IActionResult> PostOferta([FromForm] OfertaDTO ofertaDto, int userID, int productoID)
+
+
         {
+            userID = 1;
+            productoID = 8;
+
             if (ofertaDto == null)
             {
                 return BadRequest("Los datos de la oferta son inválidos");

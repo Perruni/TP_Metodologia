@@ -7,12 +7,12 @@ namespace Web_Subasta.Models.ViewModels
     public class ProductoViewModel
     {
         public int ProductoID { get; set; }
-        public string NombreProducto => Producto.nombreProducto;
+        public string NombreProducto { get; set; }
 
         public EstadoProducto EstadoProducto { get; set; }
-        public string Descripcion => Producto.descripcion;
+        public string Descripcion { get; set; }
 
-        public double PrecioBase => Producto.precioBase;
+        public double PrecioBase { get; set; }
         public string MetodoEntrega { get; set; }
 
         public DateTime FechaSolicitud { get; set; }
@@ -27,20 +27,24 @@ namespace Web_Subasta.Models.ViewModels
 
         public string titulo { get; set; }
 
-        public DateTime fechaInicio => Subasta.fechaInicio;
+        public DateTime fechaInicio { get; set; }
 
-        public DateTime fechaFinalizado=>  Subasta.fechaFinalizado;
+        public DateTime fechaFinalizado { get; set; }
 
         public int CantidadOfertas { get; set; }
 
         //Titulo de subasta
-        public string Titulo => Subasta.titulo;
+
+        public string ImagenUrl { get; set; }
+        public string Titulo { get; set; }
 
         public Subasta Subasta { get; set; }
 
         public int SubastaId { get; set; }
 
         public Producto Producto { get; set; }
+
+        public int montoOferta { get; set; }
 
 
     }

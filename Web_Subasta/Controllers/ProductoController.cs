@@ -62,6 +62,7 @@ namespace Web_Subasta.Controllers
             subastaId = 1;
             userId = 1;
 
+
             var data = new ProductoDTO{
                 nombreProducto = productoVM.NombreProducto,
                 precioBase = productoVM.PrecioBase,
@@ -121,12 +122,15 @@ namespace Web_Subasta.Controllers
         [HttpGet("detallesproducto")]
         public async Task<IActionResult> GetDetallesProducto(int productoID)
         {
-            productoID = 5;
+            productoID = 8;
           
                 var producto = await _service.GetProducto(productoID);
 
                 var subasta = await _service.GetSubasta((int)producto.subastaID);
-                
+
+            var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
+
+
 
                 if (producto != null)
                 {
@@ -134,6 +138,13 @@ namespace Web_Subasta.Controllers
                 {
                     Producto = producto,
                     Subasta = subasta,
+                    fechaInicio = subasta.fechaInicio,
+                    fechaFinalizado = subasta.fechaFinalizado,
+                    NombreProducto = producto.nombreProducto,
+                    Descripcion = producto.descripcion,
+                    PrecioBase = producto.precioBase,
+                    CantidadOfertas = cantidadOfertas,
+                    Titulo = subasta.titulo
 
                 };
                     return View("~/Views/Home/productos.cshtml", viewModel);
@@ -142,6 +153,27 @@ namespace Web_Subasta.Controllers
             
          
         }
+        [HttpGet("productosactivos")]
+        public async Task<IActionResult> GetProductosPorSubasta(int subastaID)
+        {
+            subastaID = 1;
 
-}
+            var subasta = await _service.GetSubastaProductos(subastaID);
+            if (subasta == null)
+            {
+                return NotFound(new { message = "Subasta no encontrada" });
+            }
+
+            // Crear el ViewModel para pasar a la vista
+            var viewModel = new ProductoViewModel
+            {
+                Subasta = subasta,
+                productoUsuario = subasta.listaProductos ?? new List<Producto>()
+
+            };
+
+            return View("~/Views/Home/ProductosActivos.cshtml", viewModel);
+        }
+
+    }
 }

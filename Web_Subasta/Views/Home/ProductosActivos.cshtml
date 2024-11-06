@@ -1,0 +1,36 @@
+﻿@*@model Web_Subasta.Models.ViewModels.ProductoViewModel
+
+
+<div class="container mt-5">
+    <h2>Productos en la Subasta: @(Model.Subasta?.titulo ?? "Sin título")</h2>
+    <p><strong>Fecha de inicio:</strong> @(Model.Subasta?.fechaInicio.ToShortDateString() ?? "Fecha no disponible")</p>
+    <p><strong>Fecha de fin:</strong> @(Model.Subasta?.fechaFinalizado.ToShortDateString() ?? "Fecha no disponible")</p>
+
+    <h6>Lista de Productos:</h6>
+    <div class="row">
+        @if (Model.productoUsuario != null && Model.productoUsuario.Any())
+        {
+            foreach (var producto in Model.productoUsuario)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="@producto.ImagenUrl" class="card-img-top" alt="@producto.nombreProducto" />
+                        <div class="card-body">
+                            <h5 class="card-title">@producto.nombreProducto</h5>
+                            <p class="card-text">Precio: @producto.precioBase.ToString("C")</p>
+                            <p class="card-text">Descripción: @producto.descripcion</p>
+                            <p class="card-text">Estado: @producto.estadoProducto</p>
+                            <a href="@Url.Action("GetDetallesProducto", "Producto", new { productoID = producto.productoID })" class="btn btn-primary">Detalles</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <p>No hay productos en esta subasta.</p>
+            </div>
+        }
+    </div>
+</div>*@
