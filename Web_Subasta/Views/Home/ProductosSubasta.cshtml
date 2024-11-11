@@ -15,30 +15,30 @@
     @if (Model.productoUsuario != null && Model.productoUsuario.Any())
     {
         <h4>Productos en la Subasta</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nombre del Producto</th>
-                    <th>Descripción</th>
-                    <th>Precio Base</th>
-                    <th>Método de Entrega</th>
-                    <th>Imagen</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var producto in Model.productoUsuario)
-                {
-                    <tr>
-                        <td>@producto.nombreProducto</td>
-                        <td>@producto.descripcion</td>
-                        <td>@producto.precioBase.ToString("C")</td>
-                        <td>@producto.metodoEntrega</td>
-                        <td>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+        <div class="row">
+            @foreach (var producto in Model.productoUsuario)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@producto.nombreProducto</h5>
+                            <p class="card-text">@producto.descripcion</p>
+                            <p><strong>Precio Base:</strong> @producto.precioBase.ToString("C")</p>
+                            <p><strong>Método de Entrega:</strong> @producto.metodoEntrega</p>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-controller="Producto"
+                               asp-action="GetDetallesProducto"
+                               asp-route-productoID="@producto.productoID"
+                               class="btn btn-primary">
+                                Ver Detalles
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     }
     else
     {

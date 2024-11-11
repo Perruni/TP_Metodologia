@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using Web_Subasta.Services;
 using Web_Subasta.Models.ViewModels;
 using Core.Shared.DTOs.Oferta;
+using static Core.Entities.Producto;
 
 namespace Web_Subasta.Controllers
 {
@@ -122,7 +123,6 @@ namespace Web_Subasta.Controllers
         [HttpGet("detallesproducto")]
         public async Task<IActionResult> GetDetallesProducto(int productoID)
         {
-            productoID = 8;
           
                 var producto = await _service.GetProducto(productoID);
 
@@ -144,7 +144,8 @@ namespace Web_Subasta.Controllers
                     Descripcion = producto.descripcion,
                     PrecioBase = producto.precioBase,
                     CantidadOfertas = cantidadOfertas,
-                    Titulo = subasta.titulo
+                    Titulo = subasta.titulo,
+                    EstadoProducto = (EstadoProducto)subasta.estadoSubasta
 
                 };
                     return View("~/Views/Home/productos.cshtml", viewModel);
@@ -157,7 +158,6 @@ namespace Web_Subasta.Controllers
         public async Task<IActionResult> ProductosEnSubasta(int subastaID)
         {
 
-            subastaID = 2;
             var subasta = await _service.GetSubastaProductos(subastaID);
             Console.WriteLine(subasta); // Imprimir en la consola para depuración
             if (subasta == null)
@@ -167,7 +167,7 @@ namespace Web_Subasta.Controllers
 
             if (subasta.listaProductos == null)
             {
-                subasta.listaProductos = new List<Producto>(); // Inicializa la lista si es null
+                subasta.listaProductos = new List<Producto>(); 
             }
 
             var viewModel = new ProductoViewModel
@@ -179,7 +179,7 @@ namespace Web_Subasta.Controllers
                 productoUsuario = subasta.listaProductos
             };
 
-            return View(viewModel);
+            return View("~/Views/Home/productosSubasta.cshtml", viewModel);
         }
 
     }

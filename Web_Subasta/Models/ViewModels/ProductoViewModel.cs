@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Core.Entities;
 using Core.Shared.DTOs.Subastas;
+using static Core.Entities.Subasta;
 
 namespace Web_Subasta.Models.ViewModels
 {
@@ -11,6 +12,9 @@ namespace Web_Subasta.Models.ViewModels
         public string NombreProducto { get; set; }
 
         public EstadoProducto EstadoProducto { get; set; }
+
+        public EstadoSubasta EstadoSubasta { get; set; }
+
         public string Descripcion { get; set; }
 
         public double PrecioBase { get; set; }
