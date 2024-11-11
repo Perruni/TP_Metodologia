@@ -36,12 +36,7 @@
 
                 <div class="mb-3">
                     <label asp-for="titulo" class="form-label">Seleccionar Subasta</label>
-                   @* @if (Model.subastaLista == null)
-                    {
-                        <p>Error: la lista de subastas no ha sido inicializada.</p>
-                    }
-                    else
-                    {
+                    
                         <select asp-for="titulo" class="form-select">
                             <option value="">Elegir...</option>
                             @foreach (var subasta in Model.subastaLista)
@@ -49,8 +44,7 @@
                                 <option value="@subasta.titulo">@subasta.titulo</option>
                             }
                         </select>
-                    }
-                    *@ 
+                    
                     <span asp-validation-for="titulo" class="text-danger"></span>
                 </div>
 

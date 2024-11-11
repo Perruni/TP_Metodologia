@@ -153,26 +153,33 @@ namespace Web_Subasta.Controllers
             
          
         }
-        [HttpGet("productosactivos")]
-        public async Task<IActionResult> GetProductosPorSubasta(int subastaID)
+        [HttpGet("productosubasta")]
+        public async Task<IActionResult> ProductosEnSubasta(int subastaID)
         {
-            subastaID = 1;
 
+            subastaID = 2;
             var subasta = await _service.GetSubastaProductos(subastaID);
+            Console.WriteLine(subasta); // Imprimir en la consola para depuración
             if (subasta == null)
             {
-                return NotFound(new { message = "Subasta no encontrada" });
+                return NotFound();
             }
 
-            // Crear el ViewModel para pasar a la vista
+            if (subasta.listaProductos == null)
+            {
+                subasta.listaProductos = new List<Producto>(); // Inicializa la lista si es null
+            }
+
             var viewModel = new ProductoViewModel
             {
                 Subasta = subasta,
-                productoUsuario = subasta.listaProductos ?? new List<Producto>()
-
+                Titulo = subasta.titulo,
+                fechaInicio = subasta.fechaInicio,
+                fechaFinalizado = subasta.fechaFinalizado,
+                productoUsuario = subasta.listaProductos
             };
 
-            return View("~/Views/Home/ProductosActivos.cshtml", viewModel);
+            return View(viewModel);
         }
 
     }

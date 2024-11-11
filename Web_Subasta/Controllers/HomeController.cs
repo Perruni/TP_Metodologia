@@ -115,7 +115,7 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
-        public IActionResult ProductosActivos()
+        public IActionResult ProductosSubasta()
         {
             return View();
         }
