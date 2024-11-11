@@ -20,6 +20,12 @@
                         <p class="card-text">Fecha de fin: @subasta.fechaFinalizado.ToShortDateString()</p>
                         <p class="card-text">Estado: @subasta.estadoSubasta.ToString()</p>
                         <p class="card-text">Método de Pago: @subasta.metodosdePago.ToString()</p>
+                        <a asp-controller="Producto"
+                           asp-action="ProductosEnSubasta"
+                           asp-route-subastaID="@subasta.subastaID"
+                           class="btn btn-primary">
+                            Ver
+                        </a>
                     </div>
                 </div>
             </div>
