@@ -110,7 +110,12 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
-        public IActionResult VistaVendedor()
+        public IActionResult productoVendedor()
+        {
+            return View();
+        }
+
+        public IActionResult ProductosSubasta()
         {
             return View();
         }

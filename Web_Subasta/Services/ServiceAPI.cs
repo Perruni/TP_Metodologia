@@ -72,7 +72,7 @@ namespace Web_Subasta.Services
             try
             {
 
-                var response = await _client.PostAsJsonAsync($"Producto/{userID}/{productoID}", oferta);
+                var response = await _client.PostAsJsonAsync($"oferta/{userID}/{productoID}", oferta);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -425,7 +425,7 @@ namespace Web_Subasta.Services
             try
             {
                 var response = await _client.GetAsync($"Producto/{productoID}");
-                if (response.IsSuccessStatusCode)
+     if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions

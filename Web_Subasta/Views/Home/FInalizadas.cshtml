@@ -4,7 +4,10 @@
 
     ViewData["Title"] = "Subastas Finalizadas";
 }
-
+@{
+    Layout = "_Layout";
+    ViewData["ShowSidebar"] = true;  // Deshabilitar el sidebar en esta vista
+}
 <div class="container mt-5">
     <div class="row">
         @foreach (var subasta in Model.subastaLista)

@@ -18,9 +18,11 @@
                         <!-- Imagen de vista previa -->
                         <img id="imgPreview" src="~/images/house-placeholder.jpg" class="card-img-top" alt="Vista previa de la propiedad" style="max-height: 300px;" />
                         <div class="card-body">
-                            <label asp-for="ImagenUrl" class="form-label">Subir fotos del producto o propiedad</label>
-                            <input asp-for="ImagenUrl" type="file" class="form-control" accept="image/*" />
-                            <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+                            <label asp-for="ImagenUrlArchivo" class="form-label">Subir fotos del producto o propiedad</label>
+                            <input asp-for="ImagenUrlArchivo" id="productImageInput" type="file" class="form-control" accept="image/*" />
+                            <span asp-validation-for="ImagenUrlArchivo" class="text-danger"></span>
+
+
                         </div>
                     </div>
                 </div>
@@ -34,12 +36,7 @@
 
                 <div class="mb-3">
                     <label asp-for="titulo" class="form-label">Seleccionar Subasta</label>
-                   @* @if (Model.subastaLista == null)
-                    {
-                        <p>Error: la lista de subastas no ha sido inicializada.</p>
-                    }
-                    else
-                    {
+                    
                         <select asp-for="titulo" class="form-select">
                             <option value="">Elegir...</option>
                             @foreach (var subasta in Model.subastaLista)
@@ -47,8 +44,7 @@
                                 <option value="@subasta.titulo">@subasta.titulo</option>
                             }
                         </select>
-                    }
-                    *@ 
+                    
                     <span asp-validation-for="titulo" class="text-danger"></span>
                 </div>
 
@@ -80,6 +76,7 @@
     </div>
 </div>
 
+
 <script>
     document.getElementById('productImageInput').addEventListener('change', function (event) {
         const file = event.target.files[0];
@@ -89,7 +86,7 @@
             const reader = new FileReader();
             reader.onload = function (e) {
                 imgPreview.src = e.target.result;
-            }
+            };
             reader.readAsDataURL(file);
         } else {
             imgPreview.src = '~/images/house-placeholder.jpg';

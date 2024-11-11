@@ -32,7 +32,7 @@ namespace Web_Subasta.Controllers
         }
 
         [HttpGet("{productoID}")]
-        public async Task<IActionResult> GetProducto(int productoID)
+        public async Task<IActionResult> GetProductoID(int productoID)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Web_Subasta.Controllers
                     return NotFound(new { message = "Producto no encontrado" });
                 }
 
-                return Ok(producto); 
+                return Ok(producto);
             }
             catch (Exception ex)
             {
@@ -62,12 +62,13 @@ namespace Web_Subasta.Controllers
             subastaId = 1;
             userId = 1;
 
+
             var data = new ProductoDTO{
                 nombreProducto = productoVM.NombreProducto,
                 precioBase = productoVM.PrecioBase,
                 descripcion = productoVM.Descripcion,
                 metodoEntrega = productoVM.MetodoEntrega,
-                imagenUrl = productoVM.ImagenUrl,
+                imagenUrl = productoVM.ImagenUrlArchivo,
                
             };
 
@@ -116,6 +117,70 @@ namespace Web_Subasta.Controllers
             }
             return NotFound();
         }
-    }
 
+
+        [HttpGet("detallesproducto")]
+        public async Task<IActionResult> GetDetallesProducto(int productoID)
+        {
+            productoID = 8;
+          
+                var producto = await _service.GetProducto(productoID);
+
+                var subasta = await _service.GetSubasta((int)producto.subastaID);
+
+            var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
+
+
+
+                if (producto != null)
+                {
+                var viewModel = new ProductoViewModel
+                {
+                    Producto = producto,
+                    Subasta = subasta,
+                    fechaInicio = subasta.fechaInicio,
+                    fechaFinalizado = subasta.fechaFinalizado,
+                    NombreProducto = producto.nombreProducto,
+                    Descripcion = producto.descripcion,
+                    PrecioBase = producto.precioBase,
+                    CantidadOfertas = cantidadOfertas,
+                    Titulo = subasta.titulo
+
+                };
+                    return View("~/Views/Home/productos.cshtml", viewModel);
+                }
+                return NotFound();
+            
+         
+        }
+        [HttpGet("productosubasta")]
+        public async Task<IActionResult> ProductosEnSubasta(int subastaID)
+        {
+
+            subastaID = 2;
+            var subasta = await _service.GetSubastaProductos(subastaID);
+            Console.WriteLine(subasta); // Imprimir en la consola para depuración
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            if (subasta.listaProductos == null)
+            {
+                subasta.listaProductos = new List<Producto>(); // Inicializa la lista si es null
+            }
+
+            var viewModel = new ProductoViewModel
+            {
+                Subasta = subasta,
+                Titulo = subasta.titulo,
+                fechaInicio = subasta.fechaInicio,
+                fechaFinalizado = subasta.fechaFinalizado,
+                productoUsuario = subasta.listaProductos
+            };
+
+            return View(viewModel);
+        }
+
+    }
 }

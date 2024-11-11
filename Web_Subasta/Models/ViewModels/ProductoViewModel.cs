@@ -1,6 +1,7 @@
 ﻿using static Core.Entities.Producto;
 using System.ComponentModel.DataAnnotations;
 using Core.Entities;
+using Core.Shared.DTOs.Subastas;
 
 namespace Web_Subasta.Models.ViewModels
 {
@@ -19,15 +20,35 @@ namespace Web_Subasta.Models.ViewModels
 
         public EstadoSolicitud EstadoSolicitud { get; set; }
 
-        public IFormFile ImagenUrl { get; set; }
+        public IFormFile ImagenUrlArchivo { get; set; }
 
-        public List<Producto>? productoUsuario { get; set; }
+        public List<Producto>? productoUsuario { get; set; } = new List<Producto>();
 
-        public List<Subasta>? subastaLista { get; set; }
+        //public List<Subasta>? subastaLista { get; set; } = new List<SubastaDTO>();
+
+        public List<Subasta> subastaLista { get; set; }
 
         public string titulo { get; set; }
 
-        public string ImagenUrlProduc { get; set; }
+        public DateTime fechaInicio { get; set; }
+
+        public DateTime fechaFinalizado { get; set; }
+
+        public int CantidadOfertas { get; set; }
+
+        //Titulo de subasta
+
+        public string imagenUrl { get; set; }
+        public string Titulo { get; set; }
+
+        public Subasta Subasta { get; set; }
+
+        public int SubastaId { get; set; }
+
+        public Producto Producto { get; set; }
+
+        public int montoOferta { get; set; }
+
 
     }
 }

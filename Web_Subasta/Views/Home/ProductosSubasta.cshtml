@@ -1,0 +1,51 @@
+﻿@model Web_Subasta.Models.ViewModels.ProductoViewModel
+
+@{
+    ViewData["Title"] = "Productos de la Subasta";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model != null)
+{
+    <h3>Subasta: @Model.Titulo</h3>
+    <p>Fecha de inicio: @Model.fechaInicio.ToString("dd/MM/yyyy")</p>
+    <p>Fecha de finalización: @Model.fechaFinalizado.ToString("dd/MM/yyyy")</p>
+
+    @if (Model.productoUsuario != null && Model.productoUsuario.Any())
+    {
+        <h4>Productos en la Subasta</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre del Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio Base</th>
+                    <th>Método de Entrega</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var producto in Model.productoUsuario)
+                {
+                    <tr>
+                        <td>@producto.nombreProducto</td>
+                        <td>@producto.descripcion</td>
+                        <td>@producto.precioBase.ToString("C")</td>
+                        <td>@producto.metodoEntrega</td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No hay productos activos para esta subasta.</p>
+    }
+}
+else
+{
+    <p>Subasta no encontrada.</p>
+}
