@@ -9,7 +9,7 @@ using Core.Shared.DTOs.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
+//Falta get oferta ganadora para traer la oferta ganadora de un producto especifico
 namespace Master_API.Controllers
 {
     [Route("api/[controller]")]

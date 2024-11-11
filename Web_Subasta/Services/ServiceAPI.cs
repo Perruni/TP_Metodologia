@@ -7,6 +7,7 @@ using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Oferta;
 using Core.Shared.DTOs.Usuario;
 using Core.Shared.DTOs.Subastas;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Web_Subasta.Services
@@ -41,7 +42,6 @@ namespace Web_Subasta.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     result = JsonSerializer.Deserialize<Datos_usuarioDTO>(jsonResponse, new JsonSerializerOptions
                     {
@@ -76,7 +76,6 @@ namespace Web_Subasta.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     result = JsonSerializer.Deserialize<OfertaDTO>(jsonResponse, new JsonSerializerOptions
                     {
@@ -111,7 +110,6 @@ namespace Web_Subasta.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Leer la respuesta y deserializar el producto devuelto
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     result = JsonSerializer.Deserialize<ProductoDTO>(jsonResponse, new JsonSerializerOptions
                     {
@@ -120,6 +118,8 @@ namespace Web_Subasta.Services
                 }
                 else
                 {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Detalle del error: {errorResponse}");
                     Console.WriteLine($"Error al añadir el producto: {response.ReasonPhrase}");
                 }
             }
