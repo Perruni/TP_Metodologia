@@ -145,7 +145,7 @@ namespace Web_Subasta.Controllers
                     PrecioBase = producto.precioBase,
                     CantidadOfertas = cantidadOfertas,
                     Titulo = subasta.titulo,
-                    EstadoProducto = (EstadoProducto)subasta.estadoSubasta
+                    EstadoProducto = (EstadoProducto)producto.estadoProducto
 
                 };
                     return View("~/Views/Home/productos.cshtml", viewModel);
