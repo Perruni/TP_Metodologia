@@ -36,5 +36,7 @@ namespace Web_Subasta.Services
         public Task<List<Oferta>> GetOfertasUsuario(int usuarioID);
         public Task<int> GetCantidadOfertas(int productoID);
 
+        public Task<UsuarioDTO> LoginUsuario(string email, string contrasenia);
+
     }
 }

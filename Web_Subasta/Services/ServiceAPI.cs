@@ -713,5 +713,27 @@ namespace Web_Subasta.Services
 
             return result;
         }
+
+        //-----------------------------------------Login-----------------------------------------
+        public async Task<UsuarioDTO> LoginUsuario(string email, string contrasenia)
+        {
+            try
+            {
+                // Crear el objeto que contiene las credenciales
+                var loginData = new { email = email, contrasenia = contrasenia };
+                var response = await _client.PostAsJsonAsync("Usuario/Login", loginData);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<UsuarioDTO>(jsonResponse);
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            return null;
+        }
     }
 }

@@ -26,6 +26,32 @@ namespace Web_Subasta.Controllers
 
             _serviceAPI = serviceAPI;
         }
+        [HttpGet("Login")]
+        public IActionResult Login()
+        {
+            return View("~/Views/Acount/login.cshtml");
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model); // Retorna el modelo con errores si no es válido
+            }
+
+            // Aquí llamas al servicio para verificar las credenciales del usuario
+            var usuario = await _serviceAPI.LoginUsuario(model.email, model.contrasenia);
+
+            if (usuario != null)
+            {
+                // Si el usuario existe, lo rediriges a la página de subastas o cualquier otra página
+                return RedirectToAction("Subasta", "Activas");
+            }
+
+            ModelState.AddModelError(string.Empty, "Credenciales inválidas.");
+            return View("~/Views/Acount/login.cshtml"); // Si las credenciales son incorrectas, vuelve al formulario de login
+        }
 
 
         [HttpGet("Usuario/{userID}")]
