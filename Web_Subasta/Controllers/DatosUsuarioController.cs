@@ -29,7 +29,7 @@ namespace Web_Subasta.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDatosUsuario(int userId)
         {
-            Datos_usuario datosUsuario = null;          
+            Datos_usuario datosUsuario;          
 
             datosUsuario = await _service.GetDatosUsuario(userId);
 
@@ -38,7 +38,7 @@ namespace Web_Subasta.Controllers
             {
                 var viewModel = new DatosUsuarioVM
                 {
-                    _datosUsuario = datosUsuario
+                    _datosUsuario = datosUsuario,
                 };
                 return View("~/Views/Home/Activas.cshtml", viewModel);
             }
