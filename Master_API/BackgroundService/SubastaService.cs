@@ -16,7 +16,7 @@ namespace Master_API.Services
 
         public async Task<List<Subasta>> GetSubastasToCloseAsync(DateTime currentTime)
         {
-            return await _dbContext.Subastas.Where(s => s.fechaFinalizado <= currentTime && s.estadoSubasta == Subasta.EstadoSubasta.Activa)
+            return await _dbContext.Subastas.Where(s => (s.fechaFinalizado <= currentTime && s.estadoSubasta == Subasta.EstadoSubasta.Activa) || (s.estadoSubasta == Subasta.EstadoSubasta.Finalizadas))
                                             .Include(p => p.listaProductos)
                                             .ToListAsync();
         }

@@ -80,6 +80,19 @@ namespace Master_API.Controllers
             return Ok(oferta);
         }
 
+        [HttpGet("OfertaGadora/{productoID}")]
+        public async Task<ActionResult<Oferta>> GetOfertaGanadora(int productoID)
+        {
+            var oferta = await _ofertaBusiness.GetOfertaGanadora(productoID);
+
+            if (oferta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(oferta);
+        }
+
         [HttpPost("{userID}/{productoID}")]
         public async Task<ActionResult<OfertaDTO>> PostOfertas(OfertaDTO request, int userID, int productoID)
         {

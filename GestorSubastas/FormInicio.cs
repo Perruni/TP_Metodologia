@@ -103,5 +103,11 @@ namespace GestorSubastas
             var formEditarSubasta = new FormEditarSubasta(_subastaBusiness);
             formEditarSubasta.ShowDialog();
         }
+
+        private void BotonInformes_Click(object sender, EventArgs e)
+        {
+            
+
+        }
     }
 }

@@ -165,6 +165,7 @@
             BotonInformes.TabIndex = 6;
             BotonInformes.Text = "Informes";
             BotonInformes.UseVisualStyleBackColor = true;
+            BotonInformes.Click += BotonInformes_Click;
             // 
             // FormInicio
             // 
