@@ -241,11 +241,20 @@ namespace Core.Data
 
         public Task<List<Subasta>> GetSubastasFinalizadas()
         {
-            var subastasFinalizadas = _dbContext.Subastas.Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || s.estadoSubasta == Subasta.EstadoSubasta.Deshabilitado)
+            var subastasFinalizadas = _dbContext.Subastas.Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Finalizadas)
                                                     .ToListAsync();
 
             return subastasFinalizadas;
         }
+
+        public Task<List<Subasta>> GetSubastasDeshabilitadas()
+        {
+            var subastasFinalizadas = _dbContext.Subastas.Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Deshabilitado)
+                                                    .ToListAsync();
+
+            return subastasFinalizadas;
+        }
+
 
         public Task<Subasta?> GetSubastaProductos(int subastaID)
         {

@@ -15,6 +15,8 @@ namespace Core.Busisness.Interfaces
         public Task<List<Subasta>> GetSubastasActivas();
         public Task<List<Subasta>> GetSubastasProximas();
         public Task<List<Subasta>> GetSubastasFinalizadas();
+        public Task<List<Subasta>> GetSubastasDeshabilitadas();
+
         public Task<Subasta?> GetSubastaProductos(int subastaID);
 
     }

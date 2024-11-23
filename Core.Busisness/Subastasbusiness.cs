@@ -42,6 +42,12 @@ namespace Core.Busisness
             return _repository.GetSubastasFinalizadas();
         }
 
+        public Task<List<Subasta>> GetSubastasDeshabilitadas()
+        {
+            return _repository.GetSubastasDeshabilitadas();
+        }
+
+
         public Task<List<Subasta>> GetSubastasProximas()
         {
             return _repository.GetSubastasProximas();
