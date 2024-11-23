@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Shared", "Core.Shared\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestorSubastas", "GestorSubastas\GestorSubastas.csproj", "{DE20D4EA-8100-4436-82AC-4041E4FC3639}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovileSubastas", "MovileSubastas\MovileSubastas.csproj", "{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,12 @@ Global
 		{DE20D4EA-8100-4436-82AC-4041E4FC3639}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE20D4EA-8100-4436-82AC-4041E4FC3639}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE20D4EA-8100-4436-82AC-4041E4FC3639}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA8FCBAF-D967-4CDC-A48B-387C8E4EF869}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -83,13 +83,7 @@ namespace Master_API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             string imagenUrl = null;
-            if (request.imagenUrl != null)
-            {
-                imagenUrl = await _azureBlobStorageService.UploadAsync(request.imagenUrl, Container.contenedorimagenes);
-            }
-
 
             // Crear una nueva instancia de Producto
             var nuevoProducto = new Producto
@@ -108,6 +102,11 @@ namespace Master_API.Controllers
 
             // Agregar el nuevo producto al contexto
             await _productoBusiness.AddProducto(nuevoProducto);
+
+            if (request.imagenUrl != null)
+            {
+                imagenUrl = await _azureBlobStorageService.UploadAsync(request.imagenUrl, Container.contenedorimagenes);
+            }
 
             return CreatedAtAction(nameof(GetProductID), new { productID = nuevoProducto.productoID }, nuevoProducto);
 
