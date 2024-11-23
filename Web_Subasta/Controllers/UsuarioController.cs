@@ -74,6 +74,19 @@ namespace Web_Subasta.Controllers
             return View("Activas", usuario);
         }
 
+        [HttpGet("Register")]
+        public IActionResult Register(int userId)
+
+        {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
+
+            return View("~/Views/Acount/register.cshtml");
+
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> PostUsuario(RegisterViewModel model)
@@ -100,6 +113,12 @@ namespace Web_Subasta.Controllers
                 ModelState.AddModelError(string.Empty, "Error al registrar el usuario.");
                 return View("Register", model);
             }
+        }
+
+        [HttpGet]
+        public IActionResult DatosUsuario()
+        {
+            return View("~/Views/Home/DatosUsuario.cshtml");
         }
 
         [HttpPut("{userId}")]
