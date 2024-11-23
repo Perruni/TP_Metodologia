@@ -66,6 +66,7 @@ namespace Web_Subasta.Controllers
                 direccion = modelo.direccion,
                 telefono = modelo.telefono,
                 codigoArea = modelo.codigoArea,
+                usuarioID = userId
 
             };
 
@@ -73,7 +74,7 @@ namespace Web_Subasta.Controllers
 
             if (respuesta != null)
             {
-                return View("DatosUsuario");
+                return View("~/Views/Home/Index.cshtml");
             }
             else
             {

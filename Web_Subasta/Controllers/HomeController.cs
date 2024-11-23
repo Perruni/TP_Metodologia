@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using Core.Shared.DTOs.Subastas;
+using Web_Subasta.Models.ViewModels;
 
 namespace Web_Subasta.Controllers
 {
@@ -80,8 +81,12 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
-        public IActionResult DatosUsuario()
+        public IActionResult DatosUsuario(int userId)
         {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
             return View();
         }
 

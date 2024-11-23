@@ -19,17 +19,12 @@ namespace Web_Subasta.Controllers
 
         private readonly IServiceAPI _serviceAPI;        
         private readonly TPI_DbContext _context;
-
+        
         public UsuarioController(TPI_DbContext context, IServiceAPI serviceAPI)
         {
             _context = context;
 
             _serviceAPI = serviceAPI;
-        }
-        [HttpGet("Login")]
-        public IActionResult Login()
-        {
-            return View("~/Views/Acount/login.cshtml");
         }
 
         [HttpPost("Login")]
@@ -40,18 +35,34 @@ namespace Web_Subasta.Controllers
                 return View(model); // Retorna el modelo con errores si no es válido
             }
 
-            // Aquí llamas al servicio para verificar las credenciales del usuario
+            // Llamas al servicio para verificar las credenciales del usuario
             var usuario = await _serviceAPI.LoginUsuario(model.email, model.contrasenia);
 
             if (usuario != null)
             {
-                // Si el usuario existe, lo rediriges a la página de subastas o cualquier otra página
-                return RedirectToAction("Subasta", "Activas");
+
+                // Redirigir a la página principal o a una página de subastas
+                return RedirectToAction("Activas", "Subasta");
             }
 
             ModelState.AddModelError(string.Empty, "Credenciales inválidas.");
             return View("~/Views/Acount/login.cshtml"); // Si las credenciales son incorrectas, vuelve al formulario de login
         }
+
+        [HttpGet("login")]
+        public IActionResult Login(int userId)
+
+        {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
+
+            return View("~/Views/Acount/login.cshtml");
+
+        }
+
+
 
 
         [HttpGet("Usuario/{userID}")]
@@ -93,7 +104,7 @@ namespace Web_Subasta.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Register", model);
+                return View("register", model);
             }
 
             var data = new Usuario
@@ -102,11 +113,11 @@ namespace Web_Subasta.Controllers
                 contrasenia = model.Contrasenia,
             };
 
-            var respuesta = await _serviceAPI.AddUsuario(data);
+            var usuario = await _serviceAPI.AddUsuario(data);
 
-            if (respuesta != null)
+            if (usuario != null)
             {
-                return RedirectToAction("DatosUsuario");
+                return RedirectToAction("DatosUsuario", new { userId = usuario.usuarioID });
             }
             else
             {
@@ -116,8 +127,13 @@ namespace Web_Subasta.Controllers
         }
 
         [HttpGet]
-        public IActionResult DatosUsuario()
+        public IActionResult DatosUsuario(int userId)
         {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
+
             return View("~/Views/Home/DatosUsuario.cshtml");
         }
 
