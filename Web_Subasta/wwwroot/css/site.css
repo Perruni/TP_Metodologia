@@ -29,20 +29,10 @@ header, .footer {
         opacity: 0.8;
     }
 
-.navbar {
-    padding: 0px;
-    background-color: #282828;
-    
-}
-
-    .navbar .navbar-brand {
-        color: #EDEDED; /* Cambia el color de la marca */
-        font-size: 24px;
-    }
-
 .navbar-nav .nav-item .nav-link {
     color: #EDEDED;
-    margin-right: 20px; /* Espacio entre los enlaces del navbar */
+    font-size: 1.25rem; /* Cambia el tamaño de la fuente globalmente */
+    margin-right: 20px; /* Espacio entre los enlaces */
 }
 
 .navbar-buttons {
@@ -55,7 +45,7 @@ header, .footer {
         background-color: #796e64;
         color: white;
         border: none;
-        padding: 8px 15px;
+        padding: 10px 15px;
         border-radius: 20px;
         cursor: pointer;
     }
@@ -64,12 +54,36 @@ header, .footer {
         background-color: #D4A517;
     }
 
+/* Alineación de los elementos "Subasta", "Mis Ofertas", etc. */
+.navbar-collapse {
+    display: flex;
+    justify-content: flex-start; /* Asegura que el contenido no esté desalineado */
+}
+
+.navbar-nav {
+    margin-left: 0; /* Elimina márgenes innecesarios */
+}
+
+.navbar .navbar-brand {
+    color: #EDEDED;
+    font-size: 30px;
+}
+
+.navbar-collapse .navbar-nav {
+    display: flex;
+    justify-content: flex-start; /* Alineación a la izquierda */
+}
+
+    .navbar-collapse .navbar-nav .nav-item {
+        margin-right: 20px; /* Ajusta el espacio entre los elementos de la navegación */
+    }
+
 main {
     display: flex;
     flex-wrap: wrap;
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     margin: 0; /* Elimina todos los márgenes de main */
     flex: 1;
@@ -91,21 +105,22 @@ main {
 }
 
 .sidebar-title {
-    font-size: 20px;
+    font-size: 30px;
     color: #333;
     margin-bottom: 15px;
     border-bottom: 2px solid #796e64;
+    font-family: 'Times New Roman'
 }
 
 .sidebar-button {
-    font-size: 20px;
+    font-size: 25px;
     display: block;
-    color: #fff
- !important;
+    color: #fff !important;
     text-decoration: none;
     padding: 15px 0;
     transition: background-color 0.5s, box-shadow 0.5s;
     border-radius: 10px;
+    font-family: 'Times New Roman', sans-serif;
 }
 
     .sidebar-button:hover {
@@ -152,4 +167,81 @@ footer {
     .sidebar, .content {
         flex: 1;
     }
+}
+
+.card {
+    border: none;
+    border-radius: 15px; 
+    background: #ffffff;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-10px); /* Desplazamiento */
+        box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.15); /* Sombra */
+    }
+
+/* Títulos de las tarjetas */
+.card-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Detalles del texto de las subastas */
+.card-text {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Botón "Ver" */
+.card a.btn {
+    background-color: #D4A517; 
+    border-color: #D4A517; /* bordes */
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 25px; /* Bordes más redondeados */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+    /* Efecto hover en el botón */
+    .card a.btn:hover {
+        background-color: #B88B14; /* Color dorado */
+        transform: translateY(-3px); /* Efecto de elevación*/
+    }
+h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.subasta-info {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subasta-titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6e6158;
+}
+
+.subasta-info p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Estilo para las fechas */
+.subasta-info .text-primary {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.subasta-info .text-danger {
+    font-size: 1.1rem;
+    font-weight: bold;
 }
