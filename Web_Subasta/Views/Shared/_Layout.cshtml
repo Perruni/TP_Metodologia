@@ -32,8 +32,20 @@
                     </ul>
                 </div>
                 <div class="navbar-buttons ms-auto">
-                    <a class="nav-inicio" id="nav-inicio" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
-                    <a class="nav-registro" asp-controller="Usuario" asp-action="Register">Registrate</a>
+                    @if (Context.Session.GetString("UsuarioID") != null)
+                    {
+                        <div class="navbar-buttons ms-auto">
+                            <span>Hola, @Context.Session.GetString("UsuarioNombre")</span>
+                            <a class="nav-link" href="/Usuario/Logout">Cerrar sesión</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="navbar-buttons ms-auto">
+                            <a class="nav-inicio" id="nav-inicio" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
+                            <a class="nav-registro" asp-controller="Usuario" asp-action="Register">Registrate</a>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

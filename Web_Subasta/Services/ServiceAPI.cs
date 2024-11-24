@@ -215,7 +215,7 @@ namespace Web_Subasta.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var subastaResponse = JsonSerializer.Deserialize<Datos_usuario>(jsonResponse, new JsonSerializerOptions
+                    datos = JsonSerializer.Deserialize<Datos_usuario>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
@@ -714,7 +714,7 @@ namespace Web_Subasta.Services
             return result;
         }
 
-        //-----------------------------------------Login-----------------------------------------
+        //-----------------------------------------Login----------------------------------------- esto no funciona ya que no hay un endpoint en la api que haga esto
         public async Task<UsuarioDTO> LoginUsuario(string email, string contrasenia)
         {
             try

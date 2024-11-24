@@ -94,8 +94,12 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
-        public IActionResult DatosUsuario()
+        public IActionResult DatosUsuario(int userId)
         {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
             return View();
         }
 
