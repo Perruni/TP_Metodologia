@@ -334,6 +334,64 @@ namespace Core.Data
             return usuarios;
         }
 
+        public Task<Usuario> LoginUsuario(string email)
+        {
+           var usuario = _dbContext.Usuarios.Where(u => u.email == email)
+                .FirstOrDefaultAsync();
+
+            return usuario;
+
+
+        }
+
+        public bool CompareUserToDB(string email)
+        {
+           
+                var UserExist = _dbContext.Usuarios.Any(b => b.email == email);
+                return UserExist;
+            
+        }
+        public byte[] GetUsuarioHash(string email)
+        {
+            byte[] hash;
+
+            var User = _dbContext.Usuarios.Where(b => b.email == email).FirstOrDefault();
+            hash = User.HashPassword;
+
+            return hash;
+        }
+        public byte[] GetUsuarioSalt(string email)
+        {
+            byte[] salt;
+            var User = _dbContext.Usuarios.Where(b => b.email == email).FirstOrDefault();
+            salt = User.Salt;
+            return salt;
+        }
+
+        public Usuario ObtainUsuario(string email)
+        {
+                var User = _dbContext.Usuarios
+                    .Where(b => b.email == email)                    
+                    .FirstOrDefault();
+
+                return User;
+            
+        }
+
+        public bool CreateUser(string email, byte[] hashedPassword, byte[] saltBytes)
+        {
+            var user = new Usuario
+            {
+                email = email,
+                HashPassword = hashedPassword,
+                Salt = saltBytes
+            };
+
+            _dbContext.Usuarios.Add(user);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
 
         #endregion
     }

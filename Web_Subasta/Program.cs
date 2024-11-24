@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using BlobImagesTest.Services;
 using Web_Subasta.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +65,15 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Habilitar logging en la consola
 builder.Logging.AddDebug();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Usuario/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
+
 
 var app = builder.Build();
 

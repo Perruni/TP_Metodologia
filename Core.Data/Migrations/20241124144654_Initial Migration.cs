@@ -42,8 +42,8 @@ namespace Core.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    contrasenia = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    HashPassword = table.Column<byte[]>(type: "longblob", nullable: false),
+                    Salt = table.Column<byte[]>(type: "longblob", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -14,6 +14,8 @@ using System.Net.Http.Headers;
 using Core.Shared.DTOs.Oferta;
 using Web_Subasta.Services;
 using Web_Subasta.Models.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {

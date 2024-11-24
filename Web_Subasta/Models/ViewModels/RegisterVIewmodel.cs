@@ -9,8 +9,13 @@ namespace Web_Subasta.Models.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "La contraseña es obligatoria.")]
-        [StringLength(100, ErrorMessage = "La contraseña debe tener al menos {2} caracteres.", MinimumLength = 6)]
-        public string Contrasenia { get; set; }
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = null!;
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        public string ConfirmPassword { get; set; } = null!;
 
 
     }

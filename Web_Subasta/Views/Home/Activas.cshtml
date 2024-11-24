@@ -8,25 +8,34 @@
 
 <div class="container mt-5">
     <div class="row">
-        @foreach (var subasta in Model.subastaLista)
+        @if (Model.subastaLista == null || !Model.subastaLista.Any())
         {
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Subasta: @subasta.titulo</h5>
-                        <p class="card-text">Fecha de inicio: @subasta.fechaInicio.ToShortDateString()</p>
-                        <p class="card-text">Fecha de fin: @subasta.fechaFinalizado.ToShortDateString()</p>
-                        <p class="card-text">Estado: @subasta.estadoSubasta.ToString()</p>
-                        <p class="card-text">Método de Pago: @subasta.metodosdePago.ToString()</p>
-                        <a asp-controller="Producto"
-                           asp-action="ProductosEnSubasta"
-                           asp-route-subastaID="@subasta.subastaID"
-                           class="btn btn-primary">
-                            Ver
-                        </a>
+            <div class="col-12 text-center">
+                <p class="text-muted">No hay subastas activas</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var subasta in Model.subastaLista)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Subasta: @subasta.titulo</h5>
+                            <p class="card-text">Fecha de inicio: @subasta.fechaInicio.ToShortDateString()</p>
+                            <p class="card-text">Fecha de fin: @subasta.fechaFinalizado.ToShortDateString()</p>
+                            <p class="card-text">Estado: @subasta.estadoSubasta.ToString()</p>
+                            <p class="card-text">Método de Pago: @subasta.metodosdePago.ToString()</p>
+                            <a asp-controller="Producto"
+                               asp-action="ProductosEnSubasta"
+                               asp-route-subastaID="@subasta.subastaID"
+                               class="btn btn-primary">
+                                Ver
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         }
     </div>
 </div>

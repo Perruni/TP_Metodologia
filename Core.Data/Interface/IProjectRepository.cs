@@ -44,6 +44,16 @@ namespace Core.Data.Interface
         public Task<Usuario> GetUsuario(int userID);
         public Task<Usuario> UpdateUsuario(Usuario usuario);
         public Task<Usuario> Deleteusuario(int userID);
+        public Task<Usuario> LoginUsuario(string email);
         public Task<List<Usuario>> GetUsuarios();
+        public bool CompareUserToDB(string email);
+        public byte[] GetUsuarioHash(string email);
+        public byte[] GetUsuarioSalt(string email);
+        public bool CreateUser(string email, byte[] hashedPassword, byte[] saltBytes);
+        public Usuario ObtainUsuario(string email);
+
+
+
+
     }
 }

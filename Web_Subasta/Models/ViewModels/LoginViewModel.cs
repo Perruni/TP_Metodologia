@@ -7,7 +7,10 @@ namespace Web_Subasta.Models.ViewModels
         [Required]
         public string email { get; set; } = null!;
 
+
         [Required]
-        public string contrasenia{ get; set; } = null!;
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = null!;
+
     }
 }
