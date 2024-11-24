@@ -1,0 +1,161 @@
+﻿@model Web_Subasta.Models.ViewModels.CertificadoViewModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center; 
+            justify-content: flex-start; 
+            gap: 20px; 
+            padding: 20px;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: right; /* Mover texto hacia la derecha */
+        }
+
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+            .header-text h1, .header-text h2 {
+                margin: 5px 0;
+            }
+
+            .header-text p {
+                margin: 5px 0;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .logo {
+            width: 400px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .terms {
+            font-size: 12px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-container">
+        <img src="/img/logo.png" alt="Logo" class="logo">
+        <div class="header-content">
+            <h1>M.E.W Subastas</h1>
+            <h2>Certificado de Adjudicación de Producto</h2>
+            <p><strong>N° de Certificado:</strong> [Número]</p>
+            <p><strong>Fecha de Emisión:</strong> [Fecha]</p>
+            <p><strong>De la subasta:</strong> [Subasta]</p>
+            <p><strong>Finalizado el:</strong> [Fecha Final]</p>
+        </div>
+    </header>
+
+    <section>
+        <h3 class="section-title">Información del Ganador</h3>
+        <table>
+            <tr>
+                <th>Nombre del ganador</th>
+                <th>Datos de Contacto</th>
+                <th>DNI</th>
+                <th>Domicilio</th>
+            </tr>
+            <tr>
+                <td>Nombre</td>
+                <td>Contacto</td>
+                <td>DNI</td>
+                <td>Domicilio</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3 class="section-title">Información del Vendedor</h3>
+        <table>
+            <tr>
+                <th>Nombre del vendedor</th>
+                <th>Datos de Contacto</th>
+                <th>DNI</th>
+                <th>Domicilio</th>
+            </tr>
+            <tr>
+                <td>Nombre</td>
+                <td>Contacto</td>
+                <td>DNI</td>
+                <td>Domicilio</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3 class="section-title">Detalles del Producto</h3>
+        <table>
+            <tr>
+                <th>Nro Producto</th>
+                <th>Producto</th>
+                <th>Precio Total</th>
+            </tr>
+            <tr>
+                <td>NumeroProducto</td>
+                <td>NombreProducto</td>
+                <td>PrecioTotal.ToString("C")</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <p>Fecha de adjudicación: </p>
+        <p>Método de Pago:</p>
+        <p>Precio Final: </p>
+        <p>Modo de entrega:</p>
+    </section>
+
+    <section class="terms">
+        <h3 class="section-title">Términos y Condiciones</h3>
+        <p>
+            Este Certificado de Adjudicación acredita que el comprador mencionado ha ganado el
+            derecho a la adjudicación del producto arriba descrito por el precio final establecido en la subasta.
+            La entrega del producto está sujeta a las condiciones acordadas entre el vendedor
+            y el comprador, y cualquier disputa deberá ser resuelta de acuerdo con las normativas vigentes.
+        </p>
+    </section>
+</body>
+</html>
