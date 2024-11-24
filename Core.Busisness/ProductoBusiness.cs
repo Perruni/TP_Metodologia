@@ -44,6 +44,13 @@ namespace Core.Busisness
             return _repository.GetProducto(productoID);
         }
 
+        public Task<List<Producto>> GetProductosSinOfertas()
+        {
+
+            return _repository.GetProductosSinOfertas();
+            
+        }
+
         public Task<List<Producto>> GetProductos()
         {
             return _repository.GetProductos();

@@ -52,6 +52,15 @@ namespace Core.Data
             return DatosProducto;
         }
 
+        public Task<List<Producto>> GetProductosSinOfertas()
+        {
+            var productosSinOfertas = _dbContext.Productos
+                .Where(p => !_dbContext.Ofertas.Any(o => o.productoID == p.productoID))
+                .ToListAsync();
+
+            return productosSinOfertas;
+        }
+
         public Task<List<Producto>> GetProductos()
         {
             return _dbContext.Productos.ToListAsync();
@@ -265,6 +274,7 @@ namespace Core.Data
         }
 
 
+
         #endregion
 
         #region DATOS_USUARIO
@@ -394,5 +404,8 @@ namespace Core.Data
         }
 
         #endregion
+
+
+        
     }
 }

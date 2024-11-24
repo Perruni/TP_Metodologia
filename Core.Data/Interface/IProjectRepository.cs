@@ -28,6 +28,7 @@ namespace Core.Data.Interface
         public Task<Producto> HabilitarProducto(int PrudctoID, int habilitacionProducto);
         public Task<Producto> DeleteProducto(int ProductoID);
         public Task<Producto> DatosProducto(int productoID);
+        public Task<List <Producto>> GetProductosSinOfertas();
         public Task<Producto> CancelarProducto(Producto producto);
         public Task<Datos_usuario> GetDatosUsuario(int userID);
         public Task<Datos_usuario> AddDatosUsuario(Datos_usuario datosUsuario);
@@ -46,6 +47,8 @@ namespace Core.Data.Interface
         public Task<Usuario> Deleteusuario(int userID);
         public Task<Usuario> LoginUsuario(string email);
         public Task<List<Usuario>> GetUsuarios();
+
+        //qrys para informes 
         public bool CompareUserToDB(string email);
         public byte[] GetUsuarioHash(string email);
         public byte[] GetUsuarioSalt(string email);

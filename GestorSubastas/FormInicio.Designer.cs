@@ -86,7 +86,7 @@
             dataGridView1.DataSource = subastaBindingSource;
             dataGridView1.Location = new Point(12, 138);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(776, 285);
+            dataGridView1.Size = new Size(714, 285);
             dataGridView1.TabIndex = 3;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -175,6 +175,7 @@
             Controls.Add(BotonCrear);
             Name = "FormInicio";
             Text = "M.E.W Subastas";
+            Load += FormInicio_Load_1;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)subastaBindingSource).EndInit();
             ResumeLayout(false);

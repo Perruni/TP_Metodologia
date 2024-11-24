@@ -1,5 +1,7 @@
 using Core.Busisness.Interfaces;
+using Core.Data;
 using Core.Data.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestorSubastas
 {
@@ -11,9 +13,10 @@ namespace GestorSubastas
         private readonly IUsuarioBussiness _usuarioBussiness;
         private readonly IDatosUsuarioBusiness _datosUsuarioBusiness;
         private readonly IProjectRepository _projectRepository;
+        private readonly TPI_DbContext _context;
 
 
-        public FormInicio(IProjectRepository projectRepository, ISubastaBusiness subastaBusiness, IProductoBusiness productoBusiness, IOfertaBussiness ofertaBussiness, IUsuarioBussiness usuarioBussiness, IDatosUsuarioBusiness datosUsuarioBusiness)
+        public FormInicio(IProjectRepository projectRepository, ISubastaBusiness subastaBusiness, IProductoBusiness productoBusiness, IOfertaBussiness ofertaBussiness, IUsuarioBussiness usuarioBussiness, IDatosUsuarioBusiness datosUsuarioBusiness, TPI_DbContext context)
         {
             _projectRepository = projectRepository;
             _usuarioBussiness = usuarioBussiness;
@@ -21,6 +24,7 @@ namespace GestorSubastas
             _productoBusiness = productoBusiness;
             _ofertaBusiness = ofertaBussiness;
             _subastaBusiness = subastaBusiness;
+            _context = context;
             InitializeComponent();
         }
 
@@ -106,7 +110,13 @@ namespace GestorSubastas
 
         private void BotonInformes_Click(object sender, EventArgs e)
         {
-            
+            var formInformes = new FormInformes(_subastaBusiness, _context);
+            formInformes.ShowDialog();
+
+        }
+
+        private void FormInicio_Load_1(object sender, EventArgs e)
+        {
 
         }
     }

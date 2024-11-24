@@ -46,7 +46,7 @@ namespace Web_Subasta.Controllers
 		}
 
 
-		public IActionResult Activas()
+        public IActionResult Activas()
         {
             return View();
         }
