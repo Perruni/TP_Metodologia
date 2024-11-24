@@ -4,30 +4,39 @@
     ViewData["Title"] = "Productos de la Subasta";
 }
 
-<h2>@ViewData["Title"]</h2>
 
 @if (Model != null)
 {
-    <h3>Subasta: @Model.Titulo</h3>
-    <p>Fecha de inicio: @Model.fechaInicio.ToString("dd/MM/yyyy")</p>
-    <p>Fecha de finalización: @Model.fechaFinalizado.ToString("dd/MM/yyyy")</p>
+    <div class="subasta-info text-center mb-5">
+        <h3 class="subasta-titulo">@Model.Titulo</h3>
+        <p class="text-muted">Subasta activa</p>
+        <div class="d-flex justify-content-center">
+            <div class="mx-4">
+                <strong>Fecha de Inicio:</strong>
+                <span class="text-primary">@Model.fechaInicio.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="mx-4">
+                <strong>Fecha de Finalización:</strong>
+                <span class="text-danger">@Model.fechaFinalizado.ToString("dd/MM/yyyy")</span>
+            </div>
+        </div>
+    </div>
 
     @if (Model.productoUsuario != null && Model.productoUsuario.Any())
     {
-        <h4>Productos en la Subasta</h4>
 
         <div class="row">
             @foreach (var producto in Model.productoUsuario)
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-lg">
                         <div class="card-body">
                             <h5 class="card-title">@producto.nombreProducto</h5>
                             <p class="card-text">@producto.descripcion</p>
                             <p><strong>Precio Base:</strong> @producto.precioBase.ToString("C")</p>
                             <p><strong>Método de Entrega:</strong> @producto.metodoEntrega</p>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer text-center">
                             <a asp-controller="Producto"
                                asp-action="GetDetallesProducto"
                                asp-route-productoID="@producto.productoID"
@@ -42,10 +51,10 @@
     }
     else
     {
-        <p>No hay productos activos para esta subasta.</p>
+        <p class="text-center">No hay productos activos para esta subasta.</p>
     }
 }
 else
 {
-    <p>Subasta no encontrada.</p>
+    <p class="text-center text-danger">Subasta no encontrada.</p>
 }

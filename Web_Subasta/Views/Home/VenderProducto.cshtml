@@ -36,16 +36,16 @@
 
                 <div class="mb-3">
                     <label asp-for="titulo" class="form-label">Seleccionar Subasta</label>
-                    
-                        <select asp-for="titulo" class="form-select">
-                            <option value="">Elegir...</option>
-                            @foreach (var subasta in Model.subastaLista)
-                            {
-                                <option value="@subasta.titulo">@subasta.titulo</option>
-                            }
-                        </select>
-                    
-                    <span asp-validation-for="titulo" class="text-danger"></span>
+
+                    <select asp-for="subastaId" class="form-select">
+                        <option value="">Elegir...</option>
+                        @foreach (var subasta in Model.subastaLista)
+                        {
+                            <option value="@subasta.subastaID">@subasta.titulo</option>
+                        }
+                    </select>
+
+                    <span asp-validation-for="subastaId" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">

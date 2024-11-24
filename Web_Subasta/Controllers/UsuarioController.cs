@@ -1,7 +1,7 @@
-﻿using Core.Data;
+﻿using Core.Busisness.Interfaces;
+using Core.Busisness;
+using Core.Data;
 using Core.Entities;
-using Core.Shared.DTOs.Oferta;
-using Core.Shared.DTOs.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http.Headers;
@@ -9,6 +9,15 @@ using System.Text;
 using System.Text.Json;
 using Web_Subasta.Models.ViewModels;
 using Web_Subasta.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Proyecto.Core.Business;
+using Microsoft.Identity.Client;
+
+
+
 
 namespace Web_Subasta.Controllers
 {
@@ -17,41 +26,99 @@ namespace Web_Subasta.Controllers
     public class UsuarioController : Controller
     {
 
-        private readonly IServiceAPI _serviceAPI;        
+        private readonly IServiceAPI _serviceAPI;
         private readonly TPI_DbContext _context;
+        private readonly IUsuarioBussiness _userBusiness;
 
-        public UsuarioController(TPI_DbContext context, IServiceAPI serviceAPI)
+        public UsuarioController(TPI_DbContext context, IServiceAPI serviceAPI, IUsuarioBussiness usuarioBussiness)
         {
             _context = context;
-
             _serviceAPI = serviceAPI;
+            _userBusiness = usuarioBussiness;
+
         }
+
+        [HttpGet("Register")]
+        public IActionResult Register()
+        {
+            if (User.Identity!.IsAuthenticated) return RedirectToAction("Activas", "Subasta");
+            return View("~/Views/Acount/register.cshtml");
+        }
+
+
+        [HttpPost("Register")]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!_userBusiness.CreateUser(model.Email, model.Password))
+                {
+                    ViewData["ExistUser"] = "El usuario ya existe";
+                    return View("~/Views/Acount/register.cshtml",model);
+                }
+
+                return RedirectToAction("Login" , "Usuario");
+            }
+            return View("~/Views/Acount/register.cshtml",model);
+        }
+
+
         [HttpGet("Login")]
         public IActionResult Login()
         {
+            if (User.Identity!.IsAuthenticated) return RedirectToAction("Activas", "Subasta");
             return View("~/Views/Acount/login.cshtml");
         }
+
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model); // Retorna el modelo con errores si no es válido
+                var user = _userBusiness.ObtainUsuario(model.email);
+                if (user != null)
+                {
+                    byte[] hashPassword = CryptoHelper.HashPassword(model.Password, user.Salt);
+                    if (user.HashPassword.SequenceEqual(hashPassword))
+                    {
+                        List<Claim> claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.NameIdentifier, user.usuarioID.ToString())
+                        };
+                        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        AuthenticationProperties properties = new AuthenticationProperties()
+                        {
+                            AllowRefresh = true,
+                        };
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity),
+                            properties
+                            );
+                        return RedirectToAction("Activas", "Subasta");
+                    }
+                }
+                ViewData["LoginError"] = "Usuario o contraseña incorrecta";
             }
-
-            // Aquí llamas al servicio para verificar las credenciales del usuario
-            var usuario = await _serviceAPI.LoginUsuario(model.email, model.contrasenia);
-
-            if (usuario != null)
-            {
-                // Si el usuario existe, lo rediriges a la página de subastas o cualquier otra página
-                return RedirectToAction("Subasta", "Activas");
-            }
-
-            ModelState.AddModelError(string.Empty, "Credenciales inválidas.");
-            return View("~/Views/Acount/login.cshtml"); // Si las credenciales son incorrectas, vuelve al formulario de login
+            return View("~/Views/Acount/login.cshtml",model);
+            
         }
+
+
+        //[HttpGet("login")]
+        //public IActionResult Login(int userId)
+        //{
+        //    var model = new DatosUsuarioVM
+        //    {
+        //        userId = userId
+        //    };
+
+        //    return View("~/Views/Acount/login.cshtml");
+
+        //}
+
+
 
 
         [HttpGet("Usuario/{userID}")]
@@ -74,26 +141,13 @@ namespace Web_Subasta.Controllers
             return View("Activas", usuario);
         }
 
-        [HttpGet("Register")]
-        public IActionResult Register(int userId)
 
-        {
-            var model = new DatosUsuarioVM
-            {
-                userId = userId
-            };
-
-            return View("~/Views/Acount/register.cshtml");
-
-        }
-
-
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> PostUsuario(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View("Register", model);
+                return View("register", model);
             }
 
             var data = new Usuario
@@ -102,26 +156,31 @@ namespace Web_Subasta.Controllers
                 contrasenia = model.Contrasenia,
             };
 
-            var respuesta = await _serviceAPI.AddUsuario(data);
+            var usuario = await _serviceAPI.AddUsuario(data);
 
-            if (respuesta != null)
+            if (usuario != null)
             {
-                return RedirectToAction("DatosUsuario");
+                return RedirectToAction("DatosUsuario", new { userId = usuario.usuarioID });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Error al registrar el usuario.");
                 return View("Register", model);
             }
-        }
+        }*/
 
         [HttpGet]
-        public IActionResult DatosUsuario()
+        public IActionResult DatosUsuario(int userId)
         {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
+
             return View("~/Views/Home/DatosUsuario.cshtml");
         }
 
-        [HttpPut("{userId}")]
+        /*[HttpPut("{userId}")]
         public async Task<IActionResult> UpdateUsuario(int userId, [FromBody] UsuarioDTO usuarioDto)
         {
             if (usuarioDto == null || userId <= 0)
@@ -144,7 +203,7 @@ namespace Web_Subasta.Controllers
             }
 
             return NoContent();
-        }
+        }*/
 
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteUsuario(int userId)

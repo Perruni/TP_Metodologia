@@ -43,6 +43,7 @@ builder.Services.AddScoped<TPI_DbContext>(provider =>
 
 #endregion
 
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -51,11 +52,11 @@ builder.Services.AddControllers()
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", policy =>
+    options.AddPolicy("AllowAll", builder =>
     {
-        policy.AllowAnyOrigin() // Permitir solicitudes desde cualquier origen
-              .AllowAnyMethod() // Permitir cualquier método HTTP (GET, POST, etc.)
-              .AllowAnyHeader(); // Permitir cualquier encabezado
+        builder.AllowAnyOrigin()  
+               .AllowAnyMethod() 
+               .AllowAnyHeader();
     });
 });
 
@@ -81,6 +82,8 @@ builder.Logging.AddConsole(); // Habilitar logging en la consola
 builder.Logging.AddDebug();
 
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

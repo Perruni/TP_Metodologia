@@ -33,16 +33,16 @@
             comboBox1 = new ComboBox();
             label1 = new Label();
             dataGridView1 = new DataGridView();
+            BotonEditar = new Button();
+            BotonSolicitudes = new Button();
+            BotonInformes = new Button();
+            subastaBindingSource = new BindingSource(components);
             subastaIDDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             tituloDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             fechaInicioDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             fechaFinalizadoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             estadoSubastaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             metodosdePagoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            subastaBindingSource = new BindingSource(components);
-            BotonEditar = new Button();
-            BotonSolicitudes = new Button();
-            BotonInformes = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)subastaBindingSource).BeginInit();
             SuspendLayout();
@@ -90,53 +90,6 @@
             dataGridView1.TabIndex = 3;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // subastaIDDataGridViewTextBoxColumn
-            // 
-            subastaIDDataGridViewTextBoxColumn.DataPropertyName = "subastaID";
-            subastaIDDataGridViewTextBoxColumn.HeaderText = "ID";
-            subastaIDDataGridViewTextBoxColumn.Name = "subastaIDDataGridViewTextBoxColumn";
-            subastaIDDataGridViewTextBoxColumn.Resizable = DataGridViewTriState.False;
-            subastaIDDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // tituloDataGridViewTextBoxColumn
-            // 
-            tituloDataGridViewTextBoxColumn.DataPropertyName = "titulo";
-            tituloDataGridViewTextBoxColumn.HeaderText = "Titulo";
-            tituloDataGridViewTextBoxColumn.Name = "tituloDataGridViewTextBoxColumn";
-            tituloDataGridViewTextBoxColumn.Width = 122;
-            // 
-            // fechaInicioDataGridViewTextBoxColumn
-            // 
-            fechaInicioDataGridViewTextBoxColumn.DataPropertyName = "fechaInicio";
-            fechaInicioDataGridViewTextBoxColumn.HeaderText = "Inicio";
-            fechaInicioDataGridViewTextBoxColumn.Name = "fechaInicioDataGridViewTextBoxColumn";
-            fechaInicioDataGridViewTextBoxColumn.Width = 122;
-            // 
-            // fechaFinalizadoDataGridViewTextBoxColumn
-            // 
-            fechaFinalizadoDataGridViewTextBoxColumn.DataPropertyName = "fechaFinalizado";
-            fechaFinalizadoDataGridViewTextBoxColumn.HeaderText = "Fin";
-            fechaFinalizadoDataGridViewTextBoxColumn.Name = "fechaFinalizadoDataGridViewTextBoxColumn";
-            fechaFinalizadoDataGridViewTextBoxColumn.Width = 123;
-            // 
-            // estadoSubastaDataGridViewTextBoxColumn
-            // 
-            estadoSubastaDataGridViewTextBoxColumn.DataPropertyName = "estadoSubasta";
-            estadoSubastaDataGridViewTextBoxColumn.HeaderText = "Estado";
-            estadoSubastaDataGridViewTextBoxColumn.Name = "estadoSubastaDataGridViewTextBoxColumn";
-            estadoSubastaDataGridViewTextBoxColumn.Width = 122;
-            // 
-            // metodosdePagoDataGridViewTextBoxColumn
-            // 
-            metodosdePagoDataGridViewTextBoxColumn.DataPropertyName = "metodosdePago";
-            metodosdePagoDataGridViewTextBoxColumn.HeaderText = "Metodo de Pago";
-            metodosdePagoDataGridViewTextBoxColumn.Name = "metodosdePagoDataGridViewTextBoxColumn";
-            metodosdePagoDataGridViewTextBoxColumn.Width = 122;
-            // 
-            // subastaBindingSource
-            // 
-            subastaBindingSource.DataSource = typeof(Core.Entities.Subasta);
-            // 
             // BotonEditar
             // 
             BotonEditar.Location = new Point(131, 12);
@@ -167,6 +120,46 @@
             BotonInformes.UseVisualStyleBackColor = true;
             BotonInformes.Click += BotonInformes_Click;
             // 
+            // subastaBindingSource
+            // 
+            subastaBindingSource.DataSource = typeof(Core.Entities.Subasta);
+            // 
+            // subastaIDDataGridViewTextBoxColumn
+            // 
+            subastaIDDataGridViewTextBoxColumn.DataPropertyName = "subastaID";
+            subastaIDDataGridViewTextBoxColumn.HeaderText = "subastaID";
+            subastaIDDataGridViewTextBoxColumn.Name = "subastaIDDataGridViewTextBoxColumn";
+            // 
+            // tituloDataGridViewTextBoxColumn
+            // 
+            tituloDataGridViewTextBoxColumn.DataPropertyName = "titulo";
+            tituloDataGridViewTextBoxColumn.HeaderText = "titulo";
+            tituloDataGridViewTextBoxColumn.Name = "tituloDataGridViewTextBoxColumn";
+            // 
+            // fechaInicioDataGridViewTextBoxColumn
+            // 
+            fechaInicioDataGridViewTextBoxColumn.DataPropertyName = "fechaInicio";
+            fechaInicioDataGridViewTextBoxColumn.HeaderText = "fechaInicio";
+            fechaInicioDataGridViewTextBoxColumn.Name = "fechaInicioDataGridViewTextBoxColumn";
+            // 
+            // fechaFinalizadoDataGridViewTextBoxColumn
+            // 
+            fechaFinalizadoDataGridViewTextBoxColumn.DataPropertyName = "fechaFinalizado";
+            fechaFinalizadoDataGridViewTextBoxColumn.HeaderText = "fechaFinalizado";
+            fechaFinalizadoDataGridViewTextBoxColumn.Name = "fechaFinalizadoDataGridViewTextBoxColumn";
+            // 
+            // estadoSubastaDataGridViewTextBoxColumn
+            // 
+            estadoSubastaDataGridViewTextBoxColumn.DataPropertyName = "estadoSubasta";
+            estadoSubastaDataGridViewTextBoxColumn.HeaderText = "estadoSubasta";
+            estadoSubastaDataGridViewTextBoxColumn.Name = "estadoSubastaDataGridViewTextBoxColumn";
+            // 
+            // metodosdePagoDataGridViewTextBoxColumn
+            // 
+            metodosdePagoDataGridViewTextBoxColumn.DataPropertyName = "metodosdePago";
+            metodosdePagoDataGridViewTextBoxColumn.HeaderText = "metodosdePago";
+            metodosdePagoDataGridViewTextBoxColumn.Name = "metodosdePagoDataGridViewTextBoxColumn";
+            // 
             // FormInicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -195,7 +188,6 @@
         private ComboBox comboBox1;
         private Label label1;
         private DataGridView dataGridView1;
-        private BindingSource subastaBindingSource;
         private Button BotonEditar;
         private Button BotonSolicitudes;
         private Button BotonInformes;
@@ -205,5 +197,6 @@
         private DataGridViewTextBoxColumn fechaFinalizadoDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn estadoSubastaDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn metodosdePagoDataGridViewTextBoxColumn;
+        private BindingSource subastaBindingSource;
     }
 }

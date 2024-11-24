@@ -5,84 +5,144 @@
 }
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@Model.Titulo</title>
+    <!-- Aquí puedes incluir un archivo CSS personalizado si es necesario -->
     <style>
+        /* General */
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
-            padding: 20px;
-                }
-        .card {
+            color: #333;
+        }
 
+        .card {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-
+            margin: 20px auto;
             max-width: 800px;
-            margin: auto;
-                }
+            padding: 20px;
+        }
+
         .card-header {
-                background-color: #007bff;
-                    color: white;
-                    padding: 15px;
-                    font-size: 24px;
-                }
-                .container {
-                    display: flex;
-                    align-items: center; /* Center vertically */
-                    justify-content: space-between; /* Space between image and data */
-                    padding: 20px;
-                }
-                .image-container {
-                    flex: 1; /* Occupy the necessary space for the image */
-                    text-align: center; /* Center the image in its container */
-                }
-                .data-container {
-                    flex: 2; /* Occupy more space for the data */
-                    text-align: left; /* Align text to the left */
-                }
-                .form-container {
-                    padding: 20px;
-                    background-color: #f7f7f7;
-                    border-top: 1px solid #ddd;
-                }
+            background-color: #6e6158;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        /* Imagen */
+        .image-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Datos del producto */
+        .data-container {
+            flex: 2;
+        }
+
+        h3, h4 {
+            margin: 0;
+        }
+
+        hr {
+            margin: 10px 0;
+            border: 0;
+            border-top: 2px solid #796e64;
+        }
+
+        /* Formulario */
+        .form-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .offer-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-submit {
+            padding: 10px 20px;
+            background-color: #6e6158;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-submit:hover {
+                background-color: #5a4b3b;
+            }
+
+        /* Mensajes de error */
+        .text-danger {
+            color: #d9534f;
+            text-align: center;
+        }
+
+
+
     </style>
 </head>
 <body>
     <div class="card">
+        <!-- Header de la tarjeta -->
         <div class="card-header">
-            @Model.Titulo
+            <h2>@Model.Titulo</h2>
         </div>
+
         <div class="container">
+            <!-- Sección de imagen y fechas -->
             <div class="image-container">
-                <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{Model.Producto.ImagenUrl}")" width="300" />
+                <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{Model.Producto.ImagenUrl}")" alt="Imagen del producto" class="product-image" />
                 <p><strong>Inicia:</strong> @Model.fechaInicio.ToString("dd/MM/yyyy HH:mm")</p>
                 <p><strong>Finaliza:</strong> @Model.fechaFinalizado.ToString("dd/MM/yyyy HH:mm")</p>
             </div>
 
+            <!-- Sección de datos del producto -->
             <div class="data-container">
-                <h3>TITULO DE LA SUBASTA: @Model.NombreProducto</h3>
+                <h3>@Model.NombreProducto</h3>
                 <hr />
-                <h4>PRECIO BASE: @Model.PrecioBase.ToString("N")</h4>
-                <p><strong>CANTIDAD DE OFERTAS:</strong> @Model.CantidadOfertas</p>
+                <h4>Precio Base: @Model.PrecioBase.ToString("N")</h4>
+                <p><strong>Cantidad de Ofertas:</strong> @Model.CantidadOfertas</p>
                 <p><strong>Descripción:</strong> @Model.Descripcion</p>
             </div>
         </div>
 
-        @* Solo muestra el formulario de oferta si la subasta está activa *@
+        <!-- Formulario de ofertas (solo si está en subasta) -->
         @if (Model.EstadoProducto == Core.Entities.Producto.EstadoProducto.EnSubasta)
         {
             <div class="form-container">
+                <h4>Realiza una oferta</h4>
                 <form asp-controller="Oferta" asp-action="PostOferta" method="post">
                     <input type="hidden" name="productoID" value="@Model.ProductoID" />
-                    <label for="montoOferta">Monto a Ofertar</label>
-                    <input type="number" id="montoOferta" name="montoOferta" step="0.01" value="0" required />
-                    <button type="submit">Ofertar</button>
+                    <label for="montoOferta">Monto a Ofertar:</label>
+                    <input type="number" id="montoOferta" name="montoOferta" step="0.01" value="0" required class="offer-input" />
+                    <button type="submit" class="btn-submit">Ofertar</button>
                 </form>
             </div>
         }

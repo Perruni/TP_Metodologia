@@ -38,13 +38,25 @@ namespace Core.Data.Interface
         public Task<List<Subasta>> GetSubastasActivas();
         public Task<List<Subasta>> GetSubastasProximas();
         public Task<List<Subasta>> GetSubastasFinalizadas();
+        public Task<List<Subasta>> GetSubastasDeshabilitadas();
+
         public Task<Subasta?> GetSubastaProductos(int subastaID);
         public Task<Usuario> AddUsuario(Usuario usuario);
         public Task<Usuario> GetUsuario(int userID);
         public Task<Usuario> UpdateUsuario(Usuario usuario);
         public Task<Usuario> Deleteusuario(int userID);
+        public Task<Usuario> LoginUsuario(string email);
         public Task<List<Usuario>> GetUsuarios();
 
         //qrys para informes 
+        public bool CompareUserToDB(string email);
+        public byte[] GetUsuarioHash(string email);
+        public byte[] GetUsuarioSalt(string email);
+        public bool CreateUser(string email, byte[] hashedPassword, byte[] saltBytes);
+        public Usuario ObtainUsuario(string email);
+
+
+
+
     }
 }

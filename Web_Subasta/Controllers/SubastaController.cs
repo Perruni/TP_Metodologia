@@ -13,6 +13,8 @@ using Web_Subasta.Models.ViewModels;
 using System.Text.Json;
 using System.Collections.Generic;
 using Web_Subasta.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {

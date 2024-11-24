@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using Core.Shared.DTOs.Subastas;
+using Web_Subasta.Services;
+using Web_Subasta.Models.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {
@@ -17,16 +21,21 @@ namespace Web_Subasta.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<HomeController> _logger;
         private readonly TPI_DbContext _context;
+        private readonly IServiceAPI _service;
 
-        public HomeController(TPI_DbContext context, IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
+        
+        
+        public HomeController(TPI_DbContext context, IHttpClientFactory httpClientFactory, ILogger<HomeController> logger, IServiceAPI serviceAPI)
         {
             _context = context;
             _httpClientFactory = httpClientFactory;
             _logger = logger;
+            _service = serviceAPI;
+
         }
 
-		
-		public IActionResult Index()
+
+        public IActionResult Index()
         {
             return View("Index");
         }
@@ -37,7 +46,7 @@ namespace Web_Subasta.Controllers
 		}
 
 
-		public IActionResult Activas()
+        public IActionResult Activas()
         {
             return View();
         }
@@ -69,10 +78,22 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
-
-        public IActionResult VenderProducto()
+        public IActionResult Certificado()
         {
             return View();
+        }
+
+
+        public async Task<IActionResult> VenderProducto()
+        {
+            var subastasProximas = await _service.GetSubastasProximas();
+
+            var viewModel = new ProductoViewModel
+            {
+                subastaLista = subastasProximas
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult productos()
@@ -80,8 +101,12 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
-        public IActionResult DatosUsuario()
+        public IActionResult DatosUsuario(int userId)
         {
+            var model = new DatosUsuarioVM
+            {
+                userId = userId
+            };
             return View();
         }
 

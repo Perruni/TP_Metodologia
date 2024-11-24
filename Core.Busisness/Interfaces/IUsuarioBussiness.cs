@@ -14,6 +14,14 @@ namespace Core.Busisness.Interfaces
         public Task<Usuario> UpdateUsuario(Usuario usuario);
         public Task<Usuario> Deleteusuario(int userID);
 
+        public bool CompareUserToDB(string email);
+        public byte[] GetUsuarioHash(string email);
+        public byte[] GetUsuarioSalt(string email);
+        public bool CreateUser(string email, string password);
+        public Usuario ObtainUsuario(string email);
+
+
+
 
     }
 }

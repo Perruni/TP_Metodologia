@@ -36,7 +36,7 @@ namespace Master_API.Controllers
 
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult<Usuario?>> PostUsuario(UsuarioDTO request)
         {
             if (!ModelState.IsValid)
@@ -53,9 +53,9 @@ namespace Master_API.Controllers
             await _usuarioBusiness.AddUsuario(nuevoUsuario);
 
             return CreatedAtAction(nameof(GetUserID), new { UsuarioID = nuevoUsuario.usuarioID }, nuevoUsuario);
-        }
+        }*/
 
-        [HttpPut("{userId}")]
+        /*[HttpPut("{userId}")]
         public async Task<ActionResult<Usuario?>> PutUsuario(UsuarioDTO request, int userId)
         {
 
@@ -83,7 +83,7 @@ namespace Master_API.Controllers
 
             return CreatedAtAction(nameof(GetUserID), new { UsuarioID = usuario.usuarioID }, usuario);
 
-        }
+        }*/
 
         [HttpDelete("{userId}")]
         public async Task<ActionResult<Usuario?>> DeleteUsuario(int userId)

@@ -14,6 +14,8 @@ using System.Net.Http.Headers;
 using Core.Shared.DTOs.Oferta;
 using Web_Subasta.Services;
 using Web_Subasta.Models.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {
@@ -34,8 +36,12 @@ namespace Web_Subasta.Controllers
 
 
         [HttpGet("MisOfertas")]
-        public async Task<IActionResult> GetUsuarioOf(int userID)
+        public async Task<IActionResult> GetUsuarioOf()
         {
+
+            var userID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+
             List<Oferta>? oferta = null;
 
             oferta = await _serviceAPI.GetOfertasUsuario(userID);           
@@ -113,12 +119,12 @@ namespace Web_Subasta.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> PostOferta([FromForm] OfertaDTO ofertaDto, int userID, int productoID)
-
-
+        public async Task<IActionResult> PostOferta([FromForm] OfertaDTO ofertaDto, int productoID)
         {
-            userID = 1;
-            productoID = 8;
+            
+
+            var userID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
 
             if (ofertaDto == null)
             {
@@ -132,7 +138,7 @@ namespace Web_Subasta.Controllers
             };
 
             //Falta pasar id de usuario y porducto al hacer oferta
-            var respuesta = await _serviceAPI.AddOferta(data,userID,productoID);
+            var respuesta = await _serviceAPI.AddOferta(data, userID, productoID);
 
             if (respuesta != null)
             {

@@ -15,6 +15,11 @@ using Web_Subasta.Services;
 using Web_Subasta.Models.ViewModels;
 using Core.Shared.DTOs.Oferta;
 using static Core.Entities.Producto;
+using BlobImagesTest.Services;
+using Core.Busisness.Interfaces;
+using Core.Shared.Enum;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {
@@ -24,11 +29,17 @@ namespace Web_Subasta.Controllers
 
         private readonly TPI_DbContext _context;
         private readonly IServiceAPI _service;
+        private readonly IProductoBusiness _productoBusiness;
+        private readonly IAzureBlobStorageService _azureBlobStorageService;      
 
-        public ProductoController(TPI_DbContext context, IServiceAPI serviceAPI)
+
+        public ProductoController(TPI_DbContext context, IServiceAPI serviceAPI, IProductoBusiness productoBusiness, IAzureBlobStorageService azureBlobStorageService)
         {
             _context = context;
             _service = serviceAPI;
+            _productoBusiness = productoBusiness;
+            _azureBlobStorageService = azureBlobStorageService;
+
 
         }
 
@@ -60,26 +71,37 @@ namespace Web_Subasta.Controllers
             {
                 return BadRequest("Los datos del producto son inválidos");
             }
-            subastaId = 1;
+
             userId = 1;
 
+            string imagenUrl = null;
 
-            var data = new ProductoDTO{
+            if (productoVM.ImagenUrlArchivo != null && productoVM.ImagenUrlArchivo.Length > 0)
+            {
+                imagenUrl = await _azureBlobStorageService.UploadAsync(productoVM.ImagenUrlArchivo, Container.contenedorimagenes);
+            }
+
+            var nuevoProducto = new Producto
+            {
+                usuarioID = userId,
+                subastaID = subastaId,
                 nombreProducto = productoVM.NombreProducto,
                 precioBase = productoVM.PrecioBase,
-                descripcion = productoVM.Descripcion,
                 metodoEntrega = productoVM.MetodoEntrega,
-                imagenUrl = productoVM.ImagenUrlArchivo,
-               
+                fechaSolicitud = DateTime.Now,
+                descripcion = productoVM.Descripcion,
+                estadoProducto = Producto.EstadoProducto.EnRevision,
+                estadoSolicitud = Producto.EstadoSolicitud.Pendiente,
+                ImagenUrl = imagenUrl // Aquí asignamos la URL de la imagen subida (si existe)
             };
 
-          
-            var respuesta = await _service.AddProducto(data, userId, subastaId);
+            var resultado = await _productoBusiness.AddProducto(nuevoProducto);
 
-            if (respuesta != null)
+            if (resultado != null)
             {
                 return View("~/Views/Home/MisProductos.cshtml");
             }
+
             return NotFound();
         }
 
@@ -128,7 +150,7 @@ namespace Web_Subasta.Controllers
 
                 var subasta = await _service.GetSubasta((int)producto.subastaID);
 
-            var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
+                var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
 
 
@@ -136,6 +158,7 @@ namespace Web_Subasta.Controllers
                 {
                 var viewModel = new ProductoViewModel
                 {
+                    ProductoID = productoID,
                     Producto = producto,
                     Subasta = subasta,
                     fechaInicio = subasta.fechaInicio,
