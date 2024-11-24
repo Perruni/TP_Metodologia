@@ -96,7 +96,7 @@ namespace Web_Subasta.Controllers
                             new ClaimsPrincipal(claimsIdentity),
                             properties
                             );
-                        return RedirectToAction("Activas", "Home");
+                        return RedirectToAction("Activas", "Subasta");
                     }
                 }
                 ViewData["LoginError"] = "Usuario o contraseña incorrecta";
