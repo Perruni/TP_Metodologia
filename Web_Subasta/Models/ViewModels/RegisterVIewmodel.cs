@@ -14,7 +14,7 @@ namespace Web_Subasta.Models.ViewModels
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        [Compare("Password", ErrorMessage = "La contraseña no coincide.")]
         public string ConfirmPassword { get; set; } = null!;
 
 

@@ -5,6 +5,7 @@ namespace Web_Subasta.Models.ViewModels
     public class LoginViewModel
     {
         [Required]
+        [EmailAddress]
         public string email { get; set; } = null!;
 
 

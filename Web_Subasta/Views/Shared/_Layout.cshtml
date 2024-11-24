@@ -19,10 +19,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Oferta" asp-action="MisOfertas">Mis Ofertas</a>
-                        </li>
+                    <ul class="navbar-nav flex-grow-1">                      
+                           <li class="nav-item">
+                                <a class="nav-link" asp-controller="Oferta" asp-action="MisOfertas">Mis Ofertas</a>
+                           </li>  
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Producto" asp-action="detallesproducto">Mis Productos</a>
                         </li>
@@ -32,20 +32,22 @@
                     </ul>
                 </div>
                 <div class="navbar-buttons ms-auto">
-                    @if (Context.Session.GetString("UsuarioID") != null)
+                 @if (Context.Session.GetString("UsuarioID") != null)
                     {
-        <div class="navbar-buttons ms-auto">
-            <span>Hola, @Context.Session.GetString("UsuarioNombre")</span>
-            <a class="nav-link" href="/Usuario/Logout">Cerrar sesión</a>
-        </div>
+                       <div class="navbar-buttons ms-auto">
+                           <div class="user-info">
+                               <span>@Context.Session.GetString("UsuarioNombre")</span>
+                               <a class="nav-link nav-registro" href="/Usuario/Logout">Cerrar sesión</a>
+                           </div>
+                       </div>
                     }
-                    else
-                    {
-        <div class="navbar-buttons ms-auto">
-            <a class="nav-inicio" id="nav-inicio" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
-            <a class="nav-registro" asp-controller="Usuario" asp-action="Register">Registrate</a>
-        </div>
-                    }
+                 else
+                {
+                <div class="navbar-buttons ms-auto">
+                    <a class="nav-inicio" id="nav-inicio" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
+                    <a class="nav-registro" asp-controller="Usuario" asp-action="Register">Registrate</a>
+                </div>
+                }
                 </div>
             </div>
         </nav>

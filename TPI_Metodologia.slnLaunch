@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "WEB Y API",
+    "Projects": [
+      {
+        "Path": "Master_API\\Master_API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Web_Subasta\\Web_Subasta.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

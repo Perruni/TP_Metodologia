@@ -33,7 +33,18 @@ namespace Web_Subasta.Controllers
             _serviceAPI = serviceAPI;
         }
 
-
+        
+        public IActionResult MisOfertas()
+        {
+            
+            if (!User.Identity.IsAuthenticated)
+            {
+                
+                return RedirectToAction("login", "Usuario");
+            }
+           
+            return View("~/Views/Home/MisOfertas.cshtml");
+        }
 
         [HttpGet("MisOfertas")]
         public async Task<IActionResult> GetUsuarioOf()

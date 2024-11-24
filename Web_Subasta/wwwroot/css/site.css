@@ -245,3 +245,31 @@ h2 {
     font-size: 1.1rem;
     font-weight: bold;
 }
+
+.navbar-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.user-info {
+    display: flex;
+    align-items: center; 
+    background-color: #d3d3d3; 
+    padding: 10px 15px; 
+    border-radius: 30px; 
+    gap: 10px; 
+}
+
+    .user-info span {
+        font-weight: bold;
+        color: black;
+    }
+
+.nav-link.nav-registro {
+    background-color: #D4A517; 
+    color: white;
+    border-radius: 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    text-decoration: none;
+}

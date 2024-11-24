@@ -37,6 +37,7 @@ namespace Web_Subasta.Controllers
             _userBusiness = usuarioBussiness;
 
         }
+      
 
         [HttpGet("Register")]
         public IActionResult Register()
