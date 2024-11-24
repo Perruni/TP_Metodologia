@@ -36,8 +36,12 @@ namespace Web_Subasta.Controllers
 
 
         [HttpGet("MisOfertas")]
-        public async Task<IActionResult> GetUsuarioOf(int userID)
+        public async Task<IActionResult> GetUsuarioOf()
         {
+
+            var userID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+
             List<Oferta>? oferta = null;
 
             oferta = await _serviceAPI.GetOfertasUsuario(userID);           
