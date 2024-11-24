@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Data.Migrations
 {
     [DbContext(typeof(TPI_DbContext))]
-    [Migration("20241025180942_Initial Migration")]
+    [Migration("20241124144654_Initial Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -173,9 +173,13 @@ namespace Core.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("usuarioID"));
 
-                    b.Property<string>("contrasenia")
+                    b.Property<byte[]>("HashPassword")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longblob");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("longblob");
 
                     b.Property<string>("email")
                         .IsRequired()

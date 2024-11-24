@@ -9,6 +9,8 @@ using Core.Shared.DTOs.Usuario;
 using Core.Shared.DTOs.Subastas;
 using Web_Subasta.Services;
 using Web_Subasta.Models.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {

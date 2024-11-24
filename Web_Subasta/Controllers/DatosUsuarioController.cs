@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.Text;
 using Web_Subasta.Models.ViewModels;
 using Web_Subasta.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {

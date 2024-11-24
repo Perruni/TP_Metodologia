@@ -170,9 +170,13 @@ namespace Core.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("usuarioID"));
 
-                    b.Property<string>("contrasenia")
+                    b.Property<byte[]>("HashPassword")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longblob");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("longblob");
 
                     b.Property<string>("email")
                         .IsRequired()

@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text;
-using Core.Shared;
 using Core.Shared.DTOs.Subastas;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
@@ -19,6 +18,8 @@ using static Core.Entities.Producto;
 using BlobImagesTest.Services;
 using Core.Busisness.Interfaces;
 using Core.Shared.Enum;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_Subasta.Controllers
 {
