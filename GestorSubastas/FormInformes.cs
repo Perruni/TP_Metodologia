@@ -21,11 +21,11 @@ namespace GestorSubastas
         private readonly ISubastaBusiness _subastaBusiness;
         private readonly TPI_DbContext _context;
         private readonly IProjectRepository _projectRepository;
-        public FormInformes(ISubastaBusiness subastaBusiness, TPI_DbContext context)
+        public FormInformes(IProjectRepository projectRepository, TPI_DbContext context)
         {
             InitializeComponent();
-            _subastaBusiness = subastaBusiness;
             _context = context;
+            _projectRepository = projectRepository;
 
 
         }

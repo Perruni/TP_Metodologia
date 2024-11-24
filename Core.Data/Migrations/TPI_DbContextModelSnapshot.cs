@@ -17,10 +17,10 @@ namespace Core.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Core.Entities.Datos_usuario", b =>
                 {
@@ -31,19 +31,19 @@ namespace Core.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("apellido")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("codigoArea")
                         .HasColumnType("int");
 
                     b.Property<string>("direccion")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("telefono")
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("usuarioID");
 
@@ -56,16 +56,16 @@ namespace Core.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ofertaID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ofertaID"));
 
                     b.Property<int>("estadoOferta")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("fechaOferta")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("montoOferta")
-                        .HasColumnType("float");
+                        .HasColumnType("real");
 
                     b.Property<int?>("productoID")
                         .HasColumnType("int");
@@ -88,15 +88,15 @@ namespace Core.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("productoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("productoID"));
 
                     b.Property<string>("ImagenUrl")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("descripcion")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("estadoProducto")
                         .HasColumnType("int");
@@ -105,18 +105,18 @@ namespace Core.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("fechaSolicitud")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("metodoEntrega")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombreProducto")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("precioBase")
-                        .HasColumnType("double");
+                        .HasColumnType("float");
 
                     b.Property<int?>("subastaID")
                         .HasColumnType("int");
@@ -139,23 +139,23 @@ namespace Core.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("subastaID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("subastaID"));
 
                     b.Property<int>("estadoSubasta")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("fechaFinalizado")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("fechaInicio")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("metodosdePago")
                         .HasColumnType("int");
 
                     b.Property<string>("titulo")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("subastaID");
 
@@ -168,19 +168,19 @@ namespace Core.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("usuarioID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("usuarioID"));
 
                     b.Property<byte[]>("HashPassword")
                         .IsRequired()
-                        .HasColumnType("longblob");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Salt")
                         .IsRequired()
-                        .HasColumnType("longblob");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("usuarioID");
 

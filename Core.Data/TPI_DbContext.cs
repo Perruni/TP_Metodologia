@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Core.Data;
+
 
 namespace Core.Data
 {
@@ -25,7 +27,7 @@ namespace Core.Data
         {
             if (_config != null && !optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql(_config.ConnectionString, ServerVersion.AutoDetect(_config.ConnectionString));
+                optionsBuilder.UseSqlServer(_config.ConnectionString);
             }
         }
 

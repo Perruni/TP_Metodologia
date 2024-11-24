@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -12,44 +11,37 @@ namespace Core.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "Subastas",
                 columns: table => new
                 {
                     subastaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    titulo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    fechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    fechaFinalizado = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fechaFinalizado = table.Column<DateTime>(type: "datetime2", nullable: false),
                     estadoSubasta = table.Column<int>(type: "int", nullable: false),
                     metodosdePago = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subastas", x => x.subastaID);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
                     usuarioID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    HashPassword = table.Column<byte[]>(type: "longblob", nullable: false),
-                    Salt = table.Column<byte[]>(type: "longblob", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HashPassword = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.usuarioID);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Datos_usuario",
@@ -57,14 +49,10 @@ namespace Core.Data.Migrations
                 {
                     usuarioID = table.Column<int>(type: "int", nullable: false),
                     DNI = table.Column<int>(type: "int", nullable: false),
-                    nombre = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    apellido = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    direccion = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    telefono = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     codigoArea = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -76,27 +64,22 @@ namespace Core.Data.Migrations
                         principalTable: "Usuarios",
                         principalColumn: "usuarioID",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
                     productoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nombreProducto = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreProducto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     estadoProducto = table.Column<int>(type: "int", nullable: false),
-                    descripcion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    precioBase = table.Column<double>(type: "double", nullable: false),
-                    metodoEntrega = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    fechaSolicitud = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    precioBase = table.Column<double>(type: "float", nullable: false),
+                    metodoEntrega = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fechaSolicitud = table.Column<DateTime>(type: "datetime2", nullable: false),
                     estadoSolicitud = table.Column<int>(type: "int", nullable: false),
-                    ImagenUrl = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ImagenUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     usuarioID = table.Column<int>(type: "int", nullable: true),
                     subastaID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -113,17 +96,16 @@ namespace Core.Data.Migrations
                         column: x => x.usuarioID,
                         principalTable: "Usuarios",
                         principalColumn: "usuarioID");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Ofertas",
                 columns: table => new
                 {
                     ofertaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    montoOferta = table.Column<float>(type: "float", nullable: false),
-                    fechaOferta = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    montoOferta = table.Column<float>(type: "real", nullable: false),
+                    fechaOferta = table.Column<DateTime>(type: "datetime2", nullable: false),
                     estadoOferta = table.Column<int>(type: "int", nullable: false),
                     usuarioID = table.Column<int>(type: "int", nullable: true),
                     productoID = table.Column<int>(type: "int", nullable: true)
@@ -141,8 +123,7 @@ namespace Core.Data.Migrations
                         column: x => x.usuarioID,
                         principalTable: "Usuarios",
                         principalColumn: "usuarioID");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ofertas_productoID",

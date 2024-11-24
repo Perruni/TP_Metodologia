@@ -31,21 +31,19 @@
             components = new System.ComponentModel.Container();
             label1 = new Label();
             GridProductosG = new DataGridView();
-            productoIDDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            nombreProductoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            precioBaseDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            estadoProductoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            productoBindingSource = new BindingSource(components);
             ComboFinalizadas = new ComboBox();
             dataGridView1 = new DataGridView();
-            productoIDDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            estadoOfertaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ofertaBindingSource = new BindingSource(components);
             label2 = new Label();
             label3 = new Label();
+            productoBindingSource = new BindingSource(components);
+            ofertaBindingSource = new BindingSource(components);
+            montoOfertaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            fechaOfertaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nombreProductoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            precioBaseDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)GridProductosG).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)productoBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)productoBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ofertaBindingSource).BeginInit();
             SuspendLayout();
             // 
@@ -62,41 +60,13 @@
             // 
             GridProductosG.AutoGenerateColumns = false;
             GridProductosG.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            GridProductosG.Columns.AddRange(new DataGridViewColumn[] { productoIDDataGridViewTextBoxColumn, nombreProductoDataGridViewTextBoxColumn, precioBaseDataGridViewTextBoxColumn, estadoProductoDataGridViewTextBoxColumn });
+            GridProductosG.Columns.AddRange(new DataGridViewColumn[] { nombreProductoDataGridViewTextBoxColumn, precioBaseDataGridViewTextBoxColumn });
             GridProductosG.DataSource = productoBindingSource;
             GridProductosG.Location = new Point(12, 139);
             GridProductosG.Name = "GridProductosG";
             GridProductosG.Size = new Size(443, 299);
             GridProductosG.TabIndex = 1;
             GridProductosG.CellContentClick += GridProductosG_CellContentClick;
-            // 
-            // productoIDDataGridViewTextBoxColumn
-            // 
-            productoIDDataGridViewTextBoxColumn.DataPropertyName = "productoID";
-            productoIDDataGridViewTextBoxColumn.HeaderText = "productoID";
-            productoIDDataGridViewTextBoxColumn.Name = "productoIDDataGridViewTextBoxColumn";
-            // 
-            // nombreProductoDataGridViewTextBoxColumn
-            // 
-            nombreProductoDataGridViewTextBoxColumn.DataPropertyName = "nombreProducto";
-            nombreProductoDataGridViewTextBoxColumn.HeaderText = "nombreProducto";
-            nombreProductoDataGridViewTextBoxColumn.Name = "nombreProductoDataGridViewTextBoxColumn";
-            // 
-            // precioBaseDataGridViewTextBoxColumn
-            // 
-            precioBaseDataGridViewTextBoxColumn.DataPropertyName = "precioBase";
-            precioBaseDataGridViewTextBoxColumn.HeaderText = "precioBase";
-            precioBaseDataGridViewTextBoxColumn.Name = "precioBaseDataGridViewTextBoxColumn";
-            // 
-            // estadoProductoDataGridViewTextBoxColumn
-            // 
-            estadoProductoDataGridViewTextBoxColumn.DataPropertyName = "estadoProducto";
-            estadoProductoDataGridViewTextBoxColumn.HeaderText = "estadoProducto";
-            estadoProductoDataGridViewTextBoxColumn.Name = "estadoProductoDataGridViewTextBoxColumn";
-            // 
-            // productoBindingSource
-            // 
-            productoBindingSource.DataSource = typeof(Core.Entities.Producto);
             // 
             // ComboFinalizadas
             // 
@@ -111,29 +81,13 @@
             // 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { productoIDDataGridViewTextBoxColumn1, estadoOfertaDataGridViewTextBoxColumn });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { montoOfertaDataGridViewTextBoxColumn, fechaOfertaDataGridViewTextBoxColumn });
             dataGridView1.DataSource = ofertaBindingSource;
             dataGridView1.Location = new Point(454, 139);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(243, 299);
             dataGridView1.TabIndex = 3;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
-            // 
-            // productoIDDataGridViewTextBoxColumn1
-            // 
-            productoIDDataGridViewTextBoxColumn1.DataPropertyName = "productoID";
-            productoIDDataGridViewTextBoxColumn1.HeaderText = "productoID";
-            productoIDDataGridViewTextBoxColumn1.Name = "productoIDDataGridViewTextBoxColumn1";
-            // 
-            // estadoOfertaDataGridViewTextBoxColumn
-            // 
-            estadoOfertaDataGridViewTextBoxColumn.DataPropertyName = "estadoOferta";
-            estadoOfertaDataGridViewTextBoxColumn.HeaderText = "estadoOferta";
-            estadoOfertaDataGridViewTextBoxColumn.Name = "estadoOfertaDataGridViewTextBoxColumn";
-            // 
-            // ofertaBindingSource
-            // 
-            ofertaBindingSource.DataSource = typeof(Core.Entities.Oferta);
             // 
             // label2
             // 
@@ -143,7 +97,6 @@
             label2.Size = new Size(136, 15);
             label2.TabIndex = 4;
             label2.Text = "Ganancias de la Subasta:";
-            label2.Click += label2_Click;
             // 
             // label3
             // 
@@ -153,6 +106,38 @@
             label3.Size = new Size(0, 15);
             label3.TabIndex = 5;
             label3.Click += label3_Click;
+            // 
+            // productoBindingSource
+            // 
+            productoBindingSource.DataSource = typeof(Core.Entities.Producto);
+            // 
+            // ofertaBindingSource
+            // 
+            ofertaBindingSource.DataSource = typeof(Core.Entities.Oferta);
+            // 
+            // montoOfertaDataGridViewTextBoxColumn
+            // 
+            montoOfertaDataGridViewTextBoxColumn.DataPropertyName = "montoOferta";
+            montoOfertaDataGridViewTextBoxColumn.HeaderText = "montoOferta";
+            montoOfertaDataGridViewTextBoxColumn.Name = "montoOfertaDataGridViewTextBoxColumn";
+            // 
+            // fechaOfertaDataGridViewTextBoxColumn
+            // 
+            fechaOfertaDataGridViewTextBoxColumn.DataPropertyName = "fechaOferta";
+            fechaOfertaDataGridViewTextBoxColumn.HeaderText = "fechaOferta";
+            fechaOfertaDataGridViewTextBoxColumn.Name = "fechaOfertaDataGridViewTextBoxColumn";
+            // 
+            // nombreProductoDataGridViewTextBoxColumn
+            // 
+            nombreProductoDataGridViewTextBoxColumn.DataPropertyName = "nombreProducto";
+            nombreProductoDataGridViewTextBoxColumn.HeaderText = "nombreProducto";
+            nombreProductoDataGridViewTextBoxColumn.Name = "nombreProductoDataGridViewTextBoxColumn";
+            // 
+            // precioBaseDataGridViewTextBoxColumn
+            // 
+            precioBaseDataGridViewTextBoxColumn.DataPropertyName = "precioBase";
+            precioBaseDataGridViewTextBoxColumn.HeaderText = "precioBase";
+            precioBaseDataGridViewTextBoxColumn.Name = "precioBaseDataGridViewTextBoxColumn";
             // 
             // FormGestionGanancias
             // 
@@ -169,8 +154,8 @@
             Text = "FormGestionGanancias";
             Load += FormGestionGanancias_Load;
             ((System.ComponentModel.ISupportInitialize)GridProductosG).EndInit();
-            ((System.ComponentModel.ISupportInitialize)productoBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)productoBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)ofertaBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -183,15 +168,13 @@
         private ComboBox comboBox1;
         private DataGridView GridProductosG;
         private ComboBox ComboFinalizadas;
-        private BindingSource productoBindingSource;
-        private BindingSource ofertaBindingSource;
-        private DataGridViewTextBoxColumn productoIDDataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn estadoOfertaDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn productoIDDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn precioBaseDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn estadoProductoDataGridViewTextBoxColumn;
         private Label label2;
         private Label label3;
+        private DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn precioBaseDataGridViewTextBoxColumn;
+        private BindingSource productoBindingSource;
+        private DataGridViewTextBoxColumn montoOfertaDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn fechaOfertaDataGridViewTextBoxColumn;
+        private BindingSource ofertaBindingSource;
     }
 }

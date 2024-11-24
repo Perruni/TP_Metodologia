@@ -43,7 +43,8 @@ namespace GestorSubastas
                 {
                     p.productoID,
                     p.nombreProducto,
-                    p.precioBase,   
+                    p.precioBase, 
+                   
                     
                 }).ToList();
 

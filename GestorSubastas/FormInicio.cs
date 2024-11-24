@@ -110,7 +110,7 @@ namespace GestorSubastas
 
         private void BotonInformes_Click(object sender, EventArgs e)
         {
-            var formInformes = new FormInformes(_subastaBusiness, _context);
+            var formInformes = new FormInformes(_projectRepository, _context);
             formInformes.ShowDialog();
 
         }
