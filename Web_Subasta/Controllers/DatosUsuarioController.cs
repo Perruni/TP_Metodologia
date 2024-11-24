@@ -12,6 +12,8 @@ using Web_Subasta.Models.ViewModels;
 using Web_Subasta.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Web_Subasta.Controllers
 {
@@ -74,9 +76,37 @@ namespace Web_Subasta.Controllers
 
             var respuesta = await _service.AddDatosUsuario(data, userId);
 
+
             if (respuesta != null)
             {
-                return View("~/Views/Home/Index.cshtml");
+                // Autenticamos al usuario después de agregar sus datos
+                var user = await _service.GetUsuario(userId); // Obtener el usuario de la base de datos
+                if (user != null)
+                {
+                    var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.usuarioID.ToString()),
+                new Claim(ClaimTypes.Name, user.email), // O cualquier otro campo que necesites
+            };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    // Iniciar sesión
+                    var authProperties = new AuthenticationProperties
+                    {
+                        AllowRefresh = true,
+                    };
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
+
+                    // Guardamos en la sesión el nombre del usuario y el ID para mostrarlo en la vista
+                    HttpContext.Session.SetString("UsuarioID", user.usuarioID.ToString());
+                    HttpContext.Session.SetString("Correo : ", user.email);
+
+                    // Redirigir al usuario a la página principal o al área de subastas
+                    return RedirectToAction("Activas", "Subasta");
+                }
             }
             else
             {
@@ -84,10 +114,8 @@ namespace Web_Subasta.Controllers
                 return View("~/Views/Home/DatosUsuario.cshtml", modelo);
             }
 
-
-
+            return View("~/Views/Home/DatosUsuario.cshtml", modelo);
         }
 
     }
-
 }

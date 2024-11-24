@@ -27,24 +27,24 @@
                             <a class="nav-link" asp-controller="Producto" asp-action="detallesproducto">Mis Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="VenderProducto">Vender</a>
+                            <a class="nav-link" asp-controller="Producto" asp-action="VenderProducto">Vender</a>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar-buttons ms-auto">
                     @if (Context.Session.GetString("UsuarioID") != null)
                     {
-                        <div class="navbar-buttons ms-auto">
-                            <span>Hola, @Context.Session.GetString("UsuarioNombre")</span>
-                            <a class="nav-link" href="/Usuario/Logout">Cerrar sesión</a>
-                        </div>
+        <div class="navbar-buttons ms-auto">
+            <span>Hola, @Context.Session.GetString("UsuarioNombre")</span>
+            <a class="nav-link" href="/Usuario/Logout">Cerrar sesión</a>
+        </div>
                     }
                     else
                     {
-                        <div class="navbar-buttons ms-auto">
-                            <a class="nav-inicio" id="nav-inicio" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
-                            <a class="nav-registro" asp-controller="Usuario" asp-action="Register">Registrate</a>
-                        </div>
+        <div class="navbar-buttons ms-auto">
+            <a class="nav-inicio" id="nav-inicio" asp-controller="Usuario" asp-action="Login">Iniciar Sesión</a>
+            <a class="nav-registro" asp-controller="Usuario" asp-action="Register">Registrate</a>
+        </div>
                     }
                 </div>
             </div>
@@ -66,6 +66,7 @@
         <div class="content">
             <!-- aca cada plantilla sube su contenido en el centro -->
             @RenderBody()
+
         </div>
     </main>
 

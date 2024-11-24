@@ -72,7 +72,7 @@ namespace Web_Subasta.Controllers
                 return BadRequest("Los datos del producto son inválidos");
             }
 
-            userId = 1;
+            var userID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             string imagenUrl = null;
 

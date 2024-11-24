@@ -57,7 +57,13 @@ namespace Web_Subasta.Controllers
                     return View("~/Views/Acount/register.cshtml",model);
                 }
 
-                return RedirectToAction("Login" , "Usuario");
+                var user = _userBusiness.ObtainUsuario(model.Email);
+
+                if (user != null)
+        {
+            // Redirigimos a la vista 'DatosUsuario' pasando el 'userId'
+            return RedirectToAction("DatosUsuario", "Usuario", new { userId = user.usuarioID });
+        }
             }
             return View("~/Views/Acount/register.cshtml",model);
         }
@@ -81,7 +87,11 @@ namespace Web_Subasta.Controllers
                 {
                     byte[] hashPassword = CryptoHelper.HashPassword(model.Password, user.Salt);
                     if (user.HashPassword.SequenceEqual(hashPassword))
+
                     {
+                        HttpContext.Session.SetString("UsuarioID", user.usuarioID.ToString());
+                        HttpContext.Session.SetString("UsuarioNombre", user.email);
+
                         List<Claim> claims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.NameIdentifier, user.usuarioID.ToString())
@@ -118,6 +128,19 @@ namespace Web_Subasta.Controllers
 
         //}
 
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            // Eliminar la cookie de autenticación
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Limpiar los datos de la sesión
+            HttpContext.Session.Remove("UsuarioID");
+            HttpContext.Session.Remove("UsuarioNombre");
+
+            // Redirigir a la página de login
+            return RedirectToAction("Login", "Usuario");
+        }
 
 
 
