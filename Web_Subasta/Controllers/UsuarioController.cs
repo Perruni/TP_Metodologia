@@ -74,7 +74,7 @@ namespace Web_Subasta.Controllers
             return View("Activas", usuario);
         }
 
-        [HttpGet("Register")]
+        /*[HttpGet("Register")]
         public IActionResult Register(int userId)
 
         {
@@ -85,7 +85,7 @@ namespace Web_Subasta.Controllers
 
             return View("~/Views/Acount/register.cshtml");
 
-        }
+        }*/
 
 
         [HttpPost]

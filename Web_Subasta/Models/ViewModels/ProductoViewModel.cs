@@ -47,7 +47,7 @@ namespace Web_Subasta.Models.ViewModels
 
         public Subasta Subasta { get; set; }
 
-        public int SubastaId { get; set; }
+        public int subastaId { get; set; }
 
         public Producto Producto { get; set; }
 

@@ -1,0 +1,37 @@
+﻿@page "/"
+@using MovilSubastas.Services
+@using Core.Entities;
+@inject IServicesAPI ServiceAPI
+
+
+<h1>Hello, world!</h1>
+<p>Welcome to your new app.</p>
+
+@if (subasta == null)
+{
+    <p>Loading...</p>  <!-- Mensaje de carga mientras los datos se obtienen -->
+}
+else if (subasta.Count == 0)
+{
+    <p>No active auctions found.</p>  <!-- Mensaje cuando no haya subastas activas -->
+}
+else
+{
+    <ul>
+        @foreach (var item in subasta)
+        {
+            <li>@item.titulo - @item.estadoSubasta</li>  <!-- Muestra los detalles de cada subasta -->
+        }
+    </ul>
+}
+
+@code {
+    // Lista para almacenar las subastas activas
+    private List<Subasta>? subasta;
+
+    // Se ejecuta cuando se inicializa el componente
+    protected override async Task OnInitializedAsync()
+    {
+        subasta = await ServiceAPI.GetSubastasActivas();  // Llama al servicio para obtener las subastas activas
+    }
+}

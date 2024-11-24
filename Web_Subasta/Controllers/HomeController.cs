@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Usuario;
 using Core.Shared.DTOs.Subastas;
+using Web_Subasta.Services;
+using Web_Subasta.Models.ViewModels;
 
 namespace Web_Subasta.Controllers
 {
@@ -17,16 +19,21 @@ namespace Web_Subasta.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<HomeController> _logger;
         private readonly TPI_DbContext _context;
+        private readonly IServiceAPI _service;
 
-        public HomeController(TPI_DbContext context, IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
+        
+        
+        public HomeController(TPI_DbContext context, IHttpClientFactory httpClientFactory, ILogger<HomeController> logger, IServiceAPI serviceAPI)
         {
             _context = context;
             _httpClientFactory = httpClientFactory;
             _logger = logger;
+            _service = serviceAPI;
+
         }
 
-		
-		public IActionResult Index()
+
+        public IActionResult Index()
         {
             return View("Index");
         }
@@ -70,9 +77,16 @@ namespace Web_Subasta.Controllers
         }
 
 
-        public IActionResult VenderProducto()
+        public async Task<IActionResult> VenderProducto()
         {
-            return View();
+            var subastasProximas = await _service.GetSubastasProximas();
+
+            var viewModel = new ProductoViewModel
+            {
+                subastaLista = subastasProximas
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult productos()

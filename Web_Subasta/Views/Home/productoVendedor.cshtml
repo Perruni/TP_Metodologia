@@ -75,7 +75,7 @@
 
         <div class="form-container">
             <form asp-controller="Oferta" method="post" asp-action="PostOferta">
-                <input type="hidden" name="SubastaId" value="@Model.SubastaId" />
+                <input type="hidden" name="SubastaId" value="@Model.subastaId" />
                 <label for="montoOfertado">Monto a Ofertar</label>
                 <input type="number" id="montoOfertado" name="MontoOfertado" step="0.01" value="0" required />
                 <button type="submit">Ofertar</button>
