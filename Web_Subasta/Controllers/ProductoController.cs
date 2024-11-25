@@ -152,8 +152,6 @@ namespace Web_Subasta.Controllers
 
                 var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
-
-
                 if (producto != null)
                 {
                 var viewModel = new ProductoViewModel
