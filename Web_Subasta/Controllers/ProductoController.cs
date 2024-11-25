@@ -244,7 +244,8 @@ namespace Web_Subasta.Controllers
                 Titulo = subasta.titulo,
                 fechaInicio = subasta.fechaInicio,
                 fechaFinalizado = subasta.fechaFinalizado,
-                productoUsuario = subasta.listaProductos
+                productoUsuario = subasta.listaProductos,
+                EstadoSubasta = subasta.estadoSubasta
                
             };
 
