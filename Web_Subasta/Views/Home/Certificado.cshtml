@@ -71,17 +71,18 @@
     </style>
 </head>
 <body>
-    <header class="header-container">
-        <img src="/img/logo.png" alt="Logo" class="logo">
-        <div class="header-content">
+    <header class="header-container" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <img src="/img/logo.png" alt="Logo" class="logo" style="width: 400px; height: auto;">
+        <div class="header-content" style="text-align: right;">
             <h1>M.E.W Subastas</h1>
-            <h2>Certificado de Adjudicación de Producto</h2>
+            <h2 style="color: white;">Certificado de Adjudicación de Producto</h2>
             <p><strong>N° de Certificado:</strong> @Model.ProductoID</p>
             <p><strong>Fecha de Emisión:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</p>
             <p><strong>De la subasta:</strong> @Model.TituloSubasta</p>
             <p><strong>Finalizado el:</strong> @Model.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")</p>
         </div>
     </header>
+
 
     <section>
         <h3 class="section-title">Información del Ganador</h3>

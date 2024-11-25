@@ -172,20 +172,26 @@ namespace Web_Subasta.Controllers
         public async Task<IActionResult> GetDetallesProducto(int productoID)
         {
           
-                var producto = await _service.GetProducto(productoID);
+            var producto = await _service.GetProducto(productoID);
 
-              var subasta = await _service.GetSubasta((int)producto.subastaID);
+            var subasta = await _service.GetSubasta((int)producto.subastaID);
 
-                var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
+            var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
             var ofertamasalta = await _service.GetOfertaGanadora(productoID);
 
             bool esSubastaFinalizada = subasta.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || subasta.fechaFinalizado <= DateTime.Now;
 
-            int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            bool esVendedor = false;
+            bool esGanador = false;
 
-            bool esVendedor = usuarioID == producto.usuarioID;
+            if (User.Identity.IsAuthenticated)
+            {
+                int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+                esVendedor = usuarioID == producto.usuarioID;
+                esGanador = usuarioID == ofertamasalta.usuarioID;
+            }
 
 
             if (producto != null)
@@ -204,7 +210,8 @@ namespace Web_Subasta.Controllers
                     Titulo = subasta.titulo,
                     EstadoProducto = (EstadoProducto)producto.estadoProducto,
                     EsSubastaFinalizada = esSubastaFinalizada,
-                    EsVendedor = esVendedor
+                    EsVendedor = esVendedor,
+                    EsGanador = esGanador
 
                 };
                     return View("~/Views/Home/productos.cshtml", viewModel);
@@ -218,7 +225,7 @@ namespace Web_Subasta.Controllers
         {
 
             var subasta = await _service.GetSubastaProductos(subastaID);
-            Console.WriteLine(subasta); // Imprimir en la consola para depuración
+
             if (subasta == null)
             {
                 return NotFound();
@@ -236,6 +243,7 @@ namespace Web_Subasta.Controllers
                 fechaInicio = subasta.fechaInicio,
                 fechaFinalizado = subasta.fechaFinalizado,
                 productoUsuario = subasta.listaProductos
+               
             };
 
             return View("~/Views/Home/productosSubasta.cshtml", viewModel);

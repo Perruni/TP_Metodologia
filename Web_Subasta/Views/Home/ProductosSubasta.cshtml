@@ -31,6 +31,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-lg">
                         <div class="card-body">
+                            <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{producto.ImagenUrl}")"/>
                             <h5 class="card-title">@producto.nombreProducto</h5>
                             <p class="card-text">@producto.descripcion</p>
                             <p><strong>Precio Base:</strong> @producto.precioBase.ToString("C")</p>
