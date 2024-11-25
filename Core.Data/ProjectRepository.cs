@@ -151,7 +151,9 @@ namespace Core.Data
             var ofertasGanadoras = _dbContext.Ofertas
                 .Where(o => o.estadoOferta == EstadoOferta.Ganadora &&
                             o.producto != null &&
-                            o.producto.subastaID == subastaID)                                        
+                            o.producto.subastaID == subastaID)
+                .Include(p => p.usuario)
+                .Include(p => p.producto)
                 .ToListAsync();
 
             return ofertasGanadoras;
