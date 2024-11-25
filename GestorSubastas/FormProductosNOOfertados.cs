@@ -73,7 +73,7 @@ namespace GestorSubastas
             try
             {
                 // Cambia la ruta al directorio de Downloads o especifica otra ruta
-                string filePath = @"C:\Users\m2726\Downloads\productos_sin_ofertas.pdf";
+                string filePath = @$"C:\Users\{Environment.UserName}\Downloads\productos_sin_ofertas.pdf";
 
                 // Verifica si el archivo ya existe
                 if (File.Exists(filePath))
@@ -93,7 +93,7 @@ namespace GestorSubastas
                         var document = new Document(pdf);
 
                         // Título
-                        document.Add(new Paragraph("Productos sin Ofertas")
+                        document.Add(new Paragraph("MEW Subastas Productos sin Ofertas")
                             .SetFontSize(18)
                             .SetTextAlignment(TextAlignment.CENTER));
 

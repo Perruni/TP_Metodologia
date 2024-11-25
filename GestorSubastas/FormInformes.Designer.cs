@@ -54,7 +54,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(12, 151);
+            button2.Location = new Point(12, 107);
             button2.Name = "button2";
             button2.Size = new Size(132, 23);
             button2.TabIndex = 5;
@@ -64,7 +64,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(12, 297);
+            button4.Location = new Point(12, 246);
             button4.Name = "button4";
             button4.Size = new Size(140, 23);
             button4.TabIndex = 7;
@@ -75,7 +75,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 187);
+            label3.Location = new Point(12, 75);
             label3.Name = "label3";
             label3.Size = new Size(279, 15);
             label3.TabIndex = 9;
@@ -84,7 +84,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(12, 344);
+            label4.Location = new Point(12, 228);
             label4.Name = "label4";
             label4.Size = new Size(315, 15);
             label4.TabIndex = 10;
@@ -93,25 +93,25 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(12, 426);
+            label5.Location = new Point(9, 285);
             label5.Name = "label5";
-            label5.Size = new Size(78, 15);
+            label5.Size = new Size(297, 15);
             label5.TabIndex = 11;
-            label5.Text = "Informe extra";
+            label5.Text = "Informe de ganancias en un rango especifico de fechas";
             // 
             // button1
             // 
-            button1.Location = new Point(12, 386);
+            button1.Location = new Point(12, 303);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(140, 23);
             button1.TabIndex = 12;
-            button1.Text = "Informe extra";
+            button1.Text = "Rango Subastas";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_1;
             // 
             // button5
             // 
-            button5.Location = new Point(12, 223);
+            button5.Location = new Point(12, 175);
             button5.Name = "button5";
             button5.Size = new Size(132, 23);
             button5.TabIndex = 13;
@@ -122,7 +122,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(12, 258);
+            label6.Location = new Point(12, 157);
             label6.Name = "label6";
             label6.Size = new Size(240, 15);
             label6.TabIndex = 14;
@@ -130,22 +130,22 @@
             // 
             // button6
             // 
-            button6.Location = new Point(476, 75);
+            button6.Location = new Point(12, 373);
             button6.Name = "button6";
-            button6.Size = new Size(75, 23);
+            button6.Size = new Size(132, 23);
             button6.TabIndex = 15;
-            button6.Text = "Informe extra";
+            button6.Text = "Aportes Usuarios";
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(476, 115);
+            label7.Location = new Point(9, 346);
             label7.Name = "label7";
-            label7.Size = new Size(78, 15);
+            label7.Size = new Size(188, 15);
             label7.TabIndex = 16;
-            label7.Text = "Informe extra";
+            label7.Text = "Informe de aportes de los usuarios";
             // 
             // FormInformes
             // 

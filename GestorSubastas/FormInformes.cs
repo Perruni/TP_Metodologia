@@ -91,11 +91,15 @@ namespace GestorSubastas
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            var formGananciaSubastas = new FormGananciaSubastas(_projectRepository, _context);
+            formGananciaSubastas.ShowDialog();
 
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
+            var formAportesUsuario = new FormAportesUsuario(_projectRepository, _context);
+            formAportesUsuario.ShowDialog();
 
         }
     }

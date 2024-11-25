@@ -39,7 +39,7 @@
             label5 = new Label();
             comboBoxEstadodeSubasta = new ComboBox();
             label6 = new Label();
-            comboBoxTituloSubasta = new ComboBox();
+            textBox1 = new TextBox();
             SuspendLayout();
             // 
             // dateTimePickerInicio
@@ -145,20 +145,20 @@
             label6.TabIndex = 11;
             label6.Text = "Estado de subasta";
             // 
-            // comboBoxTituloSubasta
+            // textBox1
             // 
-            comboBoxTituloSubasta.FormattingEnabled = true;
-            comboBoxTituloSubasta.Location = new Point(198, 100);
-            comboBoxTituloSubasta.Name = "comboBoxTituloSubasta";
-            comboBoxTituloSubasta.Size = new Size(200, 23);
-            comboBoxTituloSubasta.TabIndex = 12;
+            textBox1.Location = new Point(198, 100);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(200, 23);
+            textBox1.TabIndex = 12;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // FormEditarSubasta
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(comboBoxTituloSubasta);
+            Controls.Add(textBox1);
             Controls.Add(label6);
             Controls.Add(comboBoxEstadodeSubasta);
             Controls.Add(label5);
@@ -189,6 +189,6 @@
         private Label label5;
         private ComboBox comboBoxEstadodeSubasta;
         private Label label6;
-        private ComboBox comboBoxTituloSubasta;
+        private TextBox textBox1;
     }
 }
