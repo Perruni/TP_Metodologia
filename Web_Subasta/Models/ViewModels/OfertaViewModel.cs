@@ -14,7 +14,9 @@ namespace Web_Subasta.Models.ViewModels
 
         public int cantidadOfertas { get; set; }
 
-        public Producto Producto { get; set; }
+        public Producto nombreProducto {  get; set; }
+
+        public Producto producto { get; set; }
 
         public Subasta Subasta { get; set; }
 

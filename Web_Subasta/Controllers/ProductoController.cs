@@ -185,12 +185,16 @@ namespace Web_Subasta.Controllers
             bool esVendedor = false;
             bool esGanador = false;
 
-            if (User.Identity.IsAuthenticated)
+            if (esSubastaFinalizada)
             {
-                int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-                esVendedor = usuarioID == producto.usuarioID;
-                esGanador = usuarioID == ofertamasalta.usuarioID;
+                if (User.Identity.IsAuthenticated)
+                {
+                    int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                    esVendedor = usuarioID == producto.usuarioID;
+                    esGanador = usuarioID == ofertamasalta?.usuarioID; 
+                }
             }
 
 

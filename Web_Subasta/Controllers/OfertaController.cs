@@ -46,6 +46,7 @@ namespace Web_Subasta.Controllers
              return View("~/Views/Home/MisOfertas.cshtml");
          }*/
 
+
         [HttpGet("MisOfertas")]
         public async Task<IActionResult> GetUsuarioOf()
         {
@@ -59,21 +60,27 @@ namespace Web_Subasta.Controllers
            
             List<Oferta>? oferta = await _serviceAPI.GetOfertasUsuario(userID);
 
+
             
             var producto = await _serviceAPI.GetProducto(userID);
+            
 
             if (oferta != null && oferta.Any())
             {
                 var viewModel = new OfertaViewModel
                 {
                     ofertasUsuario = oferta,
-                     
+                    producto = producto
+
                 };
                 return View("~/Views/Home/MisOfertas.cshtml", viewModel); 
             }
 
             return NotFound(); 
         }
+
+
+
 
         //Esto iria para certificado pero nose en que vista se realizara dejar esto por las dudas
         [HttpGet("{offerID}")]
@@ -160,7 +167,7 @@ namespace Web_Subasta.Controllers
             if (respuesta != null)
             {
 
-                return Ok("Datos enviados correctamente.");// Poner ruta correspondiente
+                return RedirectToAction("MisOfertas", "Oferta");
             }
             return NotFound();
         }
