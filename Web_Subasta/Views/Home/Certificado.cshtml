@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificado</title>
     <style>
+        /* Agregar estilos aquí */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -17,7 +18,6 @@
             text-align: center;
             margin-bottom: 20px;
         }
-
         .header-container {
             display: flex;
             align-items: center; 
@@ -25,29 +25,23 @@
             gap: 20px; 
             padding: 20px;
         }
-
         .header-content {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             text-align: right; /* Mover texto hacia la derecha */
         }
-
-
         .header-text {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
         }
-
-            .header-text h1, .header-text h2 {
-                margin: 5px 0;
-            }
-
-            .header-text p {
-                margin: 5px 0;
-            }
-
+        .header-text h1, .header-text h2 {
+            margin: 5px 0;
+        }
+        .header-text p {
+            margin: 5px 0;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -82,10 +76,10 @@
         <div class="header-content">
             <h1>M.E.W Subastas</h1>
             <h2>Certificado de Adjudicación de Producto</h2>
-            <p><strong>N° de Certificado:</strong> [Número]</p>
-            <p><strong>Fecha de Emisión:</strong> [Fecha]</p>
-            <p><strong>De la subasta:</strong> [Subasta]</p>
-            <p><strong>Finalizado el:</strong> [Fecha Final]</p>
+            <p><strong>N° de Certificado:</strong> @Model.ProductoID</p>
+            <p><strong>Fecha de Emisión:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</p>
+            <p><strong>De la subasta:</strong> @Model.TituloSubasta</p>
+            <p><strong>Finalizado el:</strong> @Model.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")</p>
         </div>
     </header>
 
@@ -99,10 +93,10 @@
                 <th>Domicilio</th>
             </tr>
             <tr>
-                <td>Nombre</td>
-                <td>Contacto</td>
-                <td>DNI</td>
-                <td>Domicilio</td>
+                <td>@Model.NombreGanador</td>
+                <td>@Model.ContactoGanador</td>
+                <td>@Model.DniGanador</td>
+                <td>@Model.DomicilioGanador</td>
             </tr>
         </table>
     </section>
@@ -117,10 +111,10 @@
                 <th>Domicilio</th>
             </tr>
             <tr>
-                <td>Nombre</td>
-                <td>Contacto</td>
-                <td>DNI</td>
-                <td>Domicilio</td>
+                <td>@Model.NombreVendedor</td>
+                <td>@Model.ContactoVendedor</td>
+                <td>@Model.DniVendedor</td>
+                <td>@Model.DomicilioVendedor</td>
             </tr>
         </table>
     </section>
@@ -134,18 +128,18 @@
                 <th>Precio Total</th>
             </tr>
             <tr>
-                <td>NumeroProducto</td>
-                <td>NombreProducto</td>
-                <td>PrecioTotal.ToString("C")</td>
+                <td>@Model.ProductoID</td>
+                <td>@Model.NombreProducto</td>
+                <td>@Model.PrecioBase.ToString("C")</td>
             </tr>
         </table>
     </section>
 
     <section>
-        <p>Fecha de adjudicación: </p>
-        <p>Método de Pago:</p>
-        <p>Precio Final: </p>
-        <p>Modo de entrega:</p>
+        <p><strong>Fecha de adjudicación:</strong> @Model.FechaSolicitud.ToString("dd/MM/yyyy")</p>
+        <p><strong>Método de Pago:</strong> @Model.MetodoPago</p>
+        <p><strong>Precio Final:</strong> @Model.PrecioBase.ToString("C")</p>
+        <p><strong>Modo de entrega:</strong> @Model.MetodoEntrega</p>
     </section>
 
     <section class="terms">

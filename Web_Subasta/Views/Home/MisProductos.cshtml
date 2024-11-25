@@ -1,31 +1,144 @@
 ﻿@model Web_Subasta.Models.ViewModels.ProductoViewModel
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Productos</title>
-    <link rel="stylesheet" href="~/css/styles.css">
+
+    <!-- Aquí comienza el CSS directamente dentro de la vista -->
+    <style>
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Estilo del contenedor de productos */
+        .productos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            justify-items: center;
+            margin-top: 20px;
+        }
+
+        /* Estilo para cada tarjeta de producto */
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Estilo para la imagen */
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Título y descripción del producto */
+        .card h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .card p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+
+        /* Precio */
+        .price {
+            font-size: 1.2em;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Estado del producto */
+        .status {
+            font-size: 1em;
+            color: #888;
+        }
+
+        /* Estilo para el enlace de ver detalles */
+        .ver-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #6e6158;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .ver-btn:hover {
+            background-color: #5a4b3b;
+        }
+
+        /* Estilo para el botón de nueva venta */
+        .nueva-venta-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .nueva-venta-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Mensaje cuando no hay productos */
+        .no-productos {
+            font-size: 1.2em;
+            color: #d9534f;
+            text-align: center;
+        }
+
+    </style>
+
+
 </head>
 <body>
     <div class="container">
         <h1>Mis Productos</h1>
-        <div class="productos-container">
 
-            @foreach (var producto in Model.productoUsuario)
+        <div class="productos-container">
+            @if (Model.productoUsuario != null && Model.productoUsuario.Any())
             {
-                <div class="card">
-                    <img src="@producto.ImagenUrl" alt="@producto.nombreProducto" />
-                    <h2> @producto.nombreProducto</h2>
-                    <p>@producto.descripcion</p>
-                    <p class="price">Precio Base: $@producto.precioBase.ToString("N0")</p>
-                    <p class="status">Estado: @producto.estadoProducto</p>
-                    <button class="ver-btn">Ver</button>
-                </div>
+                @foreach (var producto in Model.productoUsuario)
+                {
+                    <div class="card">
+                        <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{producto.ImagenUrl}")" alt="@producto.nombreProducto" />
+                        <h2>@producto.nombreProducto</h2>
+                        <p>@producto.descripcion</p>
+                        <p class="price">Precio Base: $@producto.precioBase.ToString("N0")</p>
+                        <p class="status">Estado: @producto.estadoProducto</p>
+                        <a href="@Url.Action("GetDetallesProducto", "Producto", new { productoID = producto.productoID })" class="ver-btn">Ver</a>
+                    </div>
+                }
             }
+            else
+            {
+                <p class="no-productos">No tienes productos disponibles.</p>
+            }
+
         </div>
 
-        <button id="nuevaVentaBtn" class="nueva-venta-btn">NUEVA VENTA</button>
     </div>
 </body>
 </html>

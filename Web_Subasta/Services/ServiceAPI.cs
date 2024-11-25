@@ -390,6 +390,35 @@ namespace Web_Subasta.Services
             return result;
         }
 
+        public async Task<Oferta> GetOfertaGanadora(int porductoID)
+        {
+            Oferta? result = null;
+            try
+            {
+                var response = await _client.GetAsync($"Oferta/OfertaGadora/{porductoID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonSerializer.Deserialize<Oferta>(jsonResponse, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Manejar errores de solicitud HTTP
+                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Manejar otros errores
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return result;
+        }
+
         public async Task<List<Oferta>> GetOfertasUsuario(int userID)
         {
             List<Oferta>? result = null;
