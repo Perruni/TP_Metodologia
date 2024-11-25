@@ -18,6 +18,8 @@ namespace Core.Busisness.Interfaces
         public Task<List<Subasta>> GetSubastasDeshabilitadas();
 
         public Task<Subasta?> GetSubastaProductos(int subastaID);
+        public Task<List<Producto>?> GetProductosSubasta(int subastaID);
+
 
     }
 }

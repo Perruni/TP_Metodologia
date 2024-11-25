@@ -30,9 +30,7 @@
         {
             label1 = new Label();
             button2 = new Button();
-            button3 = new Button();
             button4 = new Button();
-            label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
@@ -64,16 +62,6 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // button3
-            // 
-            button3.Location = new Point(12, 75);
-            button3.Name = "button3";
-            button3.Size = new Size(82, 23);
-            button3.TabIndex = 6;
-            button3.Text = "Ofertantes";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button1_Click;
-            // 
             // button4
             // 
             button4.Location = new Point(12, 297);
@@ -83,15 +71,6 @@
             button4.Text = "Producto No Ofertados";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 115);
-            label2.Name = "label2";
-            label2.Size = new Size(217, 15);
-            label2.TabIndex = 8;
-            label2.Text = "Informe de ofertantes de cada producto";
             // 
             // label3
             // 
@@ -181,9 +160,7 @@
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(button4);
-            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(label1);
             Name = "FormInformes";
@@ -197,9 +174,7 @@
 
         private Label label1;
         private Button button2;
-        private Button button3;
         private Button button4;
-        private Label label2;
         private Label label3;
         private Label label4;
         private Label label5;

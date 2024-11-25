@@ -39,7 +39,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 99);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(398, 339);
+            dataGridView1.Size = new Size(654, 339);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -60,6 +60,7 @@
             button1.TabIndex = 2;
             button1.Text = "Generar PDF";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // FormProductosNOOfertados
             // 

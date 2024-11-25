@@ -151,12 +151,7 @@ namespace Core.Data
             var ofertasGanadoras = _dbContext.Ofertas
                 .Where(o => o.estadoOferta == EstadoOferta.Ganadora &&
                             o.producto != null &&
-                            o.producto.subastaID == subastaID)
-                .GroupBy(o => o.productoID)
-                .Select(g => g
-                    .OrderByDescending(o => o.montoOferta)
-                    .ThenBy(o => o.fechaOferta)
-                    .FirstOrDefault())
+                            o.producto.subastaID == subastaID)                                        
                 .ToListAsync();
 
             return ofertasGanadoras;
@@ -268,11 +263,18 @@ namespace Core.Data
         public Task<Subasta?> GetSubastaProductos(int subastaID)
         {
             var subastaProductos = _dbContext.Subastas.Where(s => s.subastaID == subastaID)
-                                                      .Include(p => p.listaProductos)
+                                                      .Include(p => p.listaProductos)                                                      
                                                       .FirstOrDefaultAsync();
             return subastaProductos;
         }
 
+        public Task<List<Producto>?> GetProductosSubasta(int subastaID)
+        {
+            var subastaProductos = _dbContext.Productos.Where(p => p.subastaID == subastaID)
+                                                        .Include(o => o.listaOfertas)
+                                                      .ToListAsync();
+            return subastaProductos;
+        }
 
 
         #endregion

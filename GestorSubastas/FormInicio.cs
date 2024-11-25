@@ -119,5 +119,12 @@ namespace GestorSubastas
         {
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness);
+            formDetallesOfertantes.ShowDialog();
+
+        }
     }
 }

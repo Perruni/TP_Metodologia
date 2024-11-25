@@ -57,5 +57,10 @@ namespace Core.Busisness
         {
             return _repository.UpdateSubasta(subasta);
         }
+
+        public Task<List<Producto>?> GetProductosSubasta(int subastaID)
+        {
+            return _repository.GetProductosSubasta(subastaID);
+        }
     }
 }

@@ -33,16 +33,17 @@
             comboBox1 = new ComboBox();
             label1 = new Label();
             dataGridView1 = new DataGridView();
-            BotonEditar = new Button();
-            BotonSolicitudes = new Button();
-            BotonInformes = new Button();
-            subastaBindingSource = new BindingSource(components);
             subastaIDDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             tituloDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             fechaInicioDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             fechaFinalizadoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             estadoSubastaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             metodosdePagoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            subastaBindingSource = new BindingSource(components);
+            BotonEditar = new Button();
+            BotonSolicitudes = new Button();
+            BotonInformes = new Button();
+            Ofertantes = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)subastaBindingSource).BeginInit();
             SuspendLayout();
@@ -90,40 +91,6 @@
             dataGridView1.TabIndex = 3;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // BotonEditar
-            // 
-            BotonEditar.Location = new Point(131, 12);
-            BotonEditar.Name = "BotonEditar";
-            BotonEditar.Size = new Size(102, 44);
-            BotonEditar.TabIndex = 4;
-            BotonEditar.Text = "Editar";
-            BotonEditar.UseVisualStyleBackColor = true;
-            BotonEditar.Click += BotonEditar_Click;
-            // 
-            // BotonSolicitudes
-            // 
-            BotonSolicitudes.Location = new Point(239, 12);
-            BotonSolicitudes.Name = "BotonSolicitudes";
-            BotonSolicitudes.Size = new Size(102, 44);
-            BotonSolicitudes.TabIndex = 5;
-            BotonSolicitudes.Text = "Solicitudes de Productos";
-            BotonSolicitudes.UseVisualStyleBackColor = true;
-            BotonSolicitudes.Click += button2_Click;
-            // 
-            // BotonInformes
-            // 
-            BotonInformes.Location = new Point(347, 12);
-            BotonInformes.Name = "BotonInformes";
-            BotonInformes.Size = new Size(102, 44);
-            BotonInformes.TabIndex = 6;
-            BotonInformes.Text = "Informes";
-            BotonInformes.UseVisualStyleBackColor = true;
-            BotonInformes.Click += BotonInformes_Click;
-            // 
-            // subastaBindingSource
-            // 
-            subastaBindingSource.DataSource = typeof(Core.Entities.Subasta);
-            // 
             // subastaIDDataGridViewTextBoxColumn
             // 
             subastaIDDataGridViewTextBoxColumn.DataPropertyName = "subastaID";
@@ -160,12 +127,57 @@
             metodosdePagoDataGridViewTextBoxColumn.HeaderText = "metodosdePago";
             metodosdePagoDataGridViewTextBoxColumn.Name = "metodosdePagoDataGridViewTextBoxColumn";
             // 
+            // subastaBindingSource
+            // 
+            subastaBindingSource.DataSource = typeof(Core.Entities.Subasta);
+            // 
+            // BotonEditar
+            // 
+            BotonEditar.Location = new Point(131, 12);
+            BotonEditar.Name = "BotonEditar";
+            BotonEditar.Size = new Size(102, 44);
+            BotonEditar.TabIndex = 4;
+            BotonEditar.Text = "Editar";
+            BotonEditar.UseVisualStyleBackColor = true;
+            BotonEditar.Click += BotonEditar_Click;
+            // 
+            // BotonSolicitudes
+            // 
+            BotonSolicitudes.Location = new Point(239, 12);
+            BotonSolicitudes.Name = "BotonSolicitudes";
+            BotonSolicitudes.Size = new Size(102, 44);
+            BotonSolicitudes.TabIndex = 5;
+            BotonSolicitudes.Text = "Solicitudes de Productos";
+            BotonSolicitudes.UseVisualStyleBackColor = true;
+            BotonSolicitudes.Click += button2_Click;
+            // 
+            // BotonInformes
+            // 
+            BotonInformes.Location = new Point(347, 12);
+            BotonInformes.Name = "BotonInformes";
+            BotonInformes.Size = new Size(102, 44);
+            BotonInformes.TabIndex = 6;
+            BotonInformes.Text = "Informes";
+            BotonInformes.UseVisualStyleBackColor = true;
+            BotonInformes.Click += BotonInformes_Click;
+            // 
+            // Ofertantes
+            // 
+            Ofertantes.Location = new Point(455, 12);
+            Ofertantes.Name = "Ofertantes";
+            Ofertantes.Size = new Size(102, 44);
+            Ofertantes.TabIndex = 7;
+            Ofertantes.Text = "Ofertantes";
+            Ofertantes.UseVisualStyleBackColor = true;
+            Ofertantes.Click += button1_Click_1;
+            // 
             // FormInicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(800, 450);
+            Controls.Add(Ofertantes);
             Controls.Add(BotonInformes);
             Controls.Add(BotonSolicitudes);
             Controls.Add(BotonEditar);
@@ -198,5 +210,6 @@
         private DataGridViewTextBoxColumn estadoSubastaDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn metodosdePagoDataGridViewTextBoxColumn;
         private BindingSource subastaBindingSource;
+        private Button Ofertantes;
     }
 }
