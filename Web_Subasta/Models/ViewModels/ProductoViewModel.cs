@@ -53,6 +53,11 @@ namespace Web_Subasta.Models.ViewModels
 
         public int montoOferta { get; set; }
 
+        public bool EsSubastaFinalizada { get; set; }
+
+        public bool EsVendedor { get; set; }
+
+        public bool EsGanador { get; set; }
 
     }
 }

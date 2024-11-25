@@ -35,6 +35,7 @@ namespace Web_Subasta.Services
         public Task<Oferta> GetOfertaGanadora(int porductoID);
 
         public Task<List<Oferta>> GetOfertasGanadoras(int subastaID);
+        public Task<Oferta> GetOfertaGanadora(int porductoID);
         public Task<List<Oferta>> GetOfertasUsuario(int usuarioID);
         public Task<int> GetCantidadOfertas(int productoID);
 

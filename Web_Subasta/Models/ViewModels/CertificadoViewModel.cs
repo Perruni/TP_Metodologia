@@ -5,23 +5,29 @@ namespace Web_Subasta.Models.ViewModels
 {
     public class CertificadoViewModel
     {
-        public string NumeroCertificado { get; set; }
-        public string FechaEmision { get; set; }
-        public string NombreSubasta { get; set; }
-        public int NumeroSubasta { get; set; }
-        public string FechaFinalizacion { get; set; }
+        public int ProductoID { get; set; }
+        public string NombreProducto { get; set; }
+        public double PrecioBase { get; set; }
+        public string MetodoEntrega { get; set; }
+        public DateTime FechaSolicitud { get; set; }
+        public string ImagenUrl { get; set; }
+
+        // Datos de la Subasta
+        public string TituloSubasta { get; set; }
+        public DateTime FechaFinalizadoSubasta { get; set; }
+
+        public string MetodoPago { get; set; }
+
+        // Datos del Ganador
         public string NombreGanador { get; set; }
         public string ContactoGanador { get; set; }
         public string DniGanador { get; set; }
         public string DomicilioGanador { get; set; }
+
+        // Datos del Vendedor
         public string NombreVendedor { get; set; }
         public string ContactoVendedor { get; set; }
         public string DniVendedor { get; set; }
         public string DomicilioVendedor { get; set; }
-        public List<Producto> Productos { get; set; }
-        public string FechaAdjudicacion { get; set; }
-        public string MetodoPago { get; set; }
-        public decimal PrecioFinal { get; set; }
-        public string ModoEntrega { get; set; }
     }
 }

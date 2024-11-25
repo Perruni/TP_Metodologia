@@ -84,8 +84,15 @@ namespace Web_Subasta.Controllers
         }
 
 
+      
         public async Task<IActionResult> VenderProducto()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                
+                return RedirectToAction("Login", "Usuario");
+            }
+
             var subastasProximas = await _service.GetSubastasProximas();
 
             var viewModel = new ProductoViewModel
