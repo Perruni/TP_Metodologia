@@ -62,18 +62,33 @@ namespace Web_Subasta.Controllers
                 return StatusCode(500, new { message = "Ocurrió un error en el servidor", error = ex.Message });
             }
         }
-
-
-        [HttpPost]
-        public async Task<IActionResult> PostProducto(ProductoViewModel productoVM, int userId, int subastaId)
+        [HttpGet]
+        public async Task<IActionResult> VenderProducto()
         {
+            var subastasProximas = await _service.GetSubastasProximas();
+
+            var viewModel = new ProductoViewModel
+            {
+                subastaLista = subastasProximas
+            };
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostProducto(ProductoViewModel productoVM, int subastaId)
+        {
+
+            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userClaim) || !int.TryParse(userClaim, out int userID) || userID == 0)
+            {
+                return RedirectToAction("login", "Usuario");
+            }
+
             if (productoVM == null)
             {
                 return BadRequest("Los datos del producto son inválidos");
             }
-
-            var userID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
             string imagenUrl = null;
 
             if (productoVM.ImagenUrlArchivo != null && productoVM.ImagenUrlArchivo.Length > 0)
@@ -83,7 +98,7 @@ namespace Web_Subasta.Controllers
 
             var nuevoProducto = new Producto
             {
-                usuarioID = userId,
+                usuarioID = userID,
                 subastaID = subastaId,
                 nombreProducto = productoVM.NombreProducto,
                 precioBase = productoVM.PrecioBase,
@@ -95,12 +110,23 @@ namespace Web_Subasta.Controllers
                 ImagenUrl = imagenUrl // Aquí asignamos la URL de la imagen subida (si existe)
             };
 
-            var resultado = await _productoBusiness.AddProducto(nuevoProducto);
-
-            if (resultado != null)
+            try
             {
-                return View("~/Views/Home/MisProductos.cshtml");
+                var resultado = await _productoBusiness.AddProducto(nuevoProducto);
+                if (resultado != null)
+                {
+                    return RedirectToAction("MisProductos","Producto");
+                }
+                return NotFound();
             }
+            catch (Exception ex)
+            {
+                // Log or inspect the error
+                Console.WriteLine($"Error: {ex.Message}");
+                return BadRequest("Hubo un error al guardar el producto.");
+            }
+
+
 
             return NotFound();
         }
@@ -148,13 +174,21 @@ namespace Web_Subasta.Controllers
           
                 var producto = await _service.GetProducto(productoID);
 
-                var subasta = await _service.GetSubasta((int)producto.subastaID);
+              var subasta = await _service.GetSubasta((int)producto.subastaID);
 
                 var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
+            var ofertamasalta = await _service.GetOfertaGanadora(productoID);
+
+            bool esSubastaFinalizada = subasta.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || subasta.fechaFinalizado <= DateTime.Now;
+
+            int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            bool esVendedor = usuarioID == producto.usuarioID;
 
 
-                if (producto != null)
+
+            if (producto != null)
                 {
                 var viewModel = new ProductoViewModel
                 {
@@ -168,7 +202,9 @@ namespace Web_Subasta.Controllers
                     PrecioBase = producto.precioBase,
                     CantidadOfertas = cantidadOfertas,
                     Titulo = subasta.titulo,
-                    EstadoProducto = (EstadoProducto)producto.estadoProducto
+                    EstadoProducto = (EstadoProducto)producto.estadoProducto,
+                    EsSubastaFinalizada = esSubastaFinalizada,
+                    EsVendedor = esVendedor
 
                 };
                     return View("~/Views/Home/productos.cshtml", viewModel);
@@ -203,6 +239,110 @@ namespace Web_Subasta.Controllers
             };
 
             return View("~/Views/Home/productosSubasta.cshtml", viewModel);
+        }
+        [HttpGet("MisProductos")]
+        public async Task<IActionResult> MisProductos()
+        {
+            ProductoViewModel viewModel = new ProductoViewModel();
+
+            try
+            {
+                var userClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userClaim) || !int.TryParse(userClaim, out int userID) || userID == 0)
+                {
+                    return RedirectToAction("login", "Usuario");
+                }
+                // Obtener productos del usuario mediante la capa de negocio
+                var productos = await _productoBusiness.GetProductoUsuario(userID);
+
+                if (productos != null && productos.Any())
+                {
+                    viewModel.productoUsuario = productos;
+                }
+                else
+                {
+                    viewModel.productoUsuario = new List<Producto>();
+                    ViewBag.ErrorMessage = "No se encontraron productos para este usuario.";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Ocurrió un error al intentar obtener los productos.";
+                Console.WriteLine(ex.Message);
+            }
+
+            return View("~/Views/Home/MisProductos.cshtml",viewModel);
+        }
+
+
+        [HttpGet("Certificado")]
+        public async Task<IActionResult> Certificado(int productoID)
+        {
+
+            var producto = await _service.GetProducto(productoID);
+            if (producto == null)
+            {
+                return NotFound("Producto no encontrado.");
+            }
+
+            var vendedor = await _service.GetDatosUsuario(producto.usuarioID.Value);
+            if (vendedor == null)
+            {
+                return NotFound("Vendedor no encontrado.");
+            }
+
+            var oferta = await _service.GetOfertaGanadora(productoID);
+            if (oferta == null)
+            {
+                return NotFound("Oferta ganadora no encontrada.");
+            }
+
+            var ganador = await _service.GetDatosUsuario(oferta.usuarioID.Value);
+            if (ganador == null)
+            {
+                return NotFound("Ganador no encontrado.");
+            }
+
+            var subasta = await _service.GetSubasta(producto.subastaID.Value);
+            if (subasta == null)
+            {
+                return NotFound("Subasta no encontrada.");
+            }
+
+
+            if (producto != null)
+            {
+                var viewModel = new CertificadoViewModel
+                {
+                    ProductoID = producto.productoID,
+                    NombreProducto = producto.nombreProducto,
+                    PrecioBase = oferta.montoOferta,
+                    MetodoEntrega = producto.metodoEntrega,
+                    FechaSolicitud = producto.fechaSolicitud,
+
+                    // Datos de la subasta
+                    TituloSubasta = subasta.titulo,
+                    FechaFinalizadoSubasta = subasta.fechaFinalizado,
+                    MetodoPago = subasta.metodosdePago.ToString(),
+
+                    // Datos del ganador
+                    NombreGanador = ganador.nombre + " " + ganador.apellido,
+                    ContactoGanador = ganador.telefono,
+                    DomicilioGanador = ganador.direccion,
+                    DniGanador = ganador.DNI.ToString(),
+
+                    // Datos del vendedor
+                    NombreVendedor = vendedor.nombre + " " + vendedor.apellido,
+                    ContactoVendedor = vendedor.telefono,
+                    DomicilioVendedor = vendedor.direccion,
+                    DniVendedor = vendedor.DNI.ToString(),
+
+                };
+                return View("~/Views/Home/Certificado.cshtml", viewModel);
+            }
+            return NotFound();
+
         }
 
     }

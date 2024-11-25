@@ -150,6 +150,21 @@
         {
             <p class="text-danger">Este producto no está en subasta, por lo que no se pueden realizar ofertas.</p>
         }
+
+        @if (Model.EsSubastaFinalizada && Model.EsVendedor)
+        {
+            <div class="form-container">
+                <h4>Acción disponible</h4>
+                <form method="get" action="@Url.Action("Certificado", "Producto", new { id = Model.ProductoID })">
+                    <input type="hidden" name="productoID" value="@Model.ProductoID" />
+                    <button type="submit" class="btn-submit">Ver Certificado</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <p class="text-danger">La subasta no ha finalizado o no eres el vendedor, por lo que no puedes ver el certificado.</p>
+        }
     </div>
 </body>
 </html>

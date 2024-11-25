@@ -69,7 +69,7 @@ builder.Logging.AddDebug();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login";
+        options.LoginPath = "/Acount/Login";
         options.LogoutPath = "/Usuario/Logout";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
     });
