@@ -78,6 +78,8 @@ namespace Web_Subasta.Controllers
         }
 
 
+
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {

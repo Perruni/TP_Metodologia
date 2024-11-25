@@ -32,6 +32,9 @@ namespace Web_Subasta.Controllers
             
         }
 
+
+
+
         [HttpGet("{subastaID}")]
         public async Task<IActionResult> GetSubasta(int SubastaID)
         {
