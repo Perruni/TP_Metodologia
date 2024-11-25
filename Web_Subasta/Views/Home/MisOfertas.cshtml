@@ -22,22 +22,33 @@
         <h1 class="text-center">Mis Ofertas</h1>
         <div class="row">
             
-            @foreach (var oferta in Model.ofertasUsuario) 
+            @if (Model.ofertasUsuario != null && Model.ofertasUsuario.Any())
             {
-                <div class="col-md-4">
-                    <div class="card">
-                       @* <img src="@producto.ImagenUrl" class="card-img-top" alt="Imagen del producto">*@ 
-                        <div class="card-body">
-                            @*<h5 class="card-title">@producto.tipo</h5>*@
-                            @* <p class="card-text">@producto.descripcion</p>*@
-                            <p><strong>Estado:</strong> @oferta.estadoOferta</p>
-                            <p><strong>Oferta:</strong> @oferta.montoOferta</p>
-                            <a href="#" class="btn btn-ver">Ver</a>
+                @foreach (var oferta in Model.ofertasUsuario)
+                {
+                    <div class="col-md-4">
+                        <div class="card">
+                           <img src="@oferta.producto?.ImagenUrl" class="card-img-top" alt="Imagen del producto">
+                            <div class="card-body">
+                                <h5 class="card-title">@oferta.producto?.nombreProducto</h5>
+                                <p class="card-text">@oferta.producto?.descripcion</p>
+                                <p><strong>Estado:</strong> @oferta.estadoOferta</p>
+                                <p><strong>Oferta:</strong> @oferta.montoOferta</p>
+                                <a asp-controller="Producto"
+                                   asp-action="detallesproducto"
+                                   asp-route-productoID="@oferta.productoID"
+                                   class="btn btn-primary">
+                                    Ver
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-        </div>
+            else
+            {
+                <p>No hay ofertas disponibles.</p>
+            }
             
     </div>
 

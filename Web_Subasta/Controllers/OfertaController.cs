@@ -33,40 +33,46 @@ namespace Web_Subasta.Controllers
             _serviceAPI = serviceAPI;
         }
 
-        
-        public IActionResult MisOfertas()
-        {
-            
-            if (!User.Identity.IsAuthenticated)
-            {
-                
-                return RedirectToAction("login", "Usuario");
-            }
-           
-            return View("~/Views/Home/MisOfertas.cshtml");
-        }
+
+        /* public IActionResult MisOfertas()
+         {
+
+             if (!User.Identity.IsAuthenticated)
+             {
+
+                 return RedirectToAction("login", "Usuario");
+             }
+
+             return View("~/Views/Home/MisOfertas.cshtml");
+         }*/
 
         [HttpGet("MisOfertas")]
         public async Task<IActionResult> GetUsuarioOf()
         {
+            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var userID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (string.IsNullOrEmpty(userClaim) || !int.TryParse(userClaim, out int userID) || userID == 0)
+            {
+                return RedirectToAction("login", "Usuario");
+            }
 
+           
+            List<Oferta>? oferta = await _serviceAPI.GetOfertasUsuario(userID);
 
-            List<Oferta>? oferta = null;
+            
+            var producto = await _serviceAPI.GetProducto(userID);
 
-            oferta = await _serviceAPI.GetOfertasUsuario(userID);           
-
-
-            if (oferta != null)
+            if (oferta != null && oferta.Any())
             {
                 var viewModel = new OfertaViewModel
                 {
-                    ofertasUsuario = oferta
+                    ofertasUsuario = oferta,
+                     
                 };
-                return View("~/Views/Home/MisOfertas.cshtml", viewModel);//Poner la vista correspondiente
+                return View("~/Views/Home/MisOfertas.cshtml", viewModel); 
             }
-            return NotFound();
+
+            return NotFound(); 
         }
 
         //Esto iria para certificado pero nose en que vista se realizara dejar esto por las dudas

@@ -216,9 +216,7 @@ namespace Web_Subasta.Controllers
                 };
                     return View("~/Views/Home/productos.cshtml", viewModel);
                 }
-                return NotFound();
-            
-         
+                return NotFound(); 
         }
         [HttpGet("productosubasta")]
         public async Task<IActionResult> ProductosEnSubasta(int subastaID)

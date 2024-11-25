@@ -18,7 +18,7 @@ namespace Web_Subasta.Models.ViewModels
 
         public int estado { get; set; }
 
-        public List<Producto> ListaProductos { get; set; }
+        public  List<Producto> ListaProductos { get; set; }
        
     }
     

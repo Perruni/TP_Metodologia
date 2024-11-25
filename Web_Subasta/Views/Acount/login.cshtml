@@ -42,9 +42,11 @@
 
                                         <p class="mb-5 pb-lg-2" style="color: #393f81;">
                                             ¿No tienes cuenta?
-                                            <a href="/Acount/register" style="color: #393f81;">Regístrate</a>
+                                            <a asp-controller="Usuario" asp-action="Register" style="color: #393f81;">Registrate</a>
                                         </p>
+
                                     </form>
+
 
                                     <!-- Mensajes de error de validación -->
                                     @if (ViewData.ModelState.ErrorCount > 0)
