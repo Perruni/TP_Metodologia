@@ -83,8 +83,12 @@ namespace Web_Subasta.Controllers
             return View();
         }
 
+        public IActionResult Ganadores()
+        {
+            return View();
+        }
 
-      
+
         public async Task<IActionResult> VenderProducto()
         {
             if (!User.Identity.IsAuthenticated)

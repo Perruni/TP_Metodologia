@@ -59,5 +59,7 @@ namespace Web_Subasta.Models.ViewModels
 
         public bool EsGanador { get; set; }
 
+        public string NombreGanador { get; set; }
+
     }
 }

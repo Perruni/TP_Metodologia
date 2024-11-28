@@ -10,87 +10,116 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@Model.Titulo</title>
-    <!-- Aquí puedes incluir un archivo CSS personalizado si es necesario -->
+
+    <!-- CSS dentro de la vista -->
     <style>
         /* General */
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             color: #333;
+            margin: 0;
+            padding: 0;
         }
 
+        /* Card */
         .card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             margin: 20px auto;
-            max-width: 800px;
-            padding: 20px;
+            width: 70%;
+            padding: 30px;
         }
 
+        /* Card Header */
         .card-header {
             background-color: #6e6158;
-            color: #fff;
-            padding: 15px;
+            color: #FFFFFF;
+            padding: 20px;
             text-align: center;
         }
 
+        /* Container for image and data */
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
+            justify-content: space-between;
         }
 
-        /* Imagen */
+        /* Image Section */
         .image-container {
             flex: 1;
             text-align: center;
+            max-width: 450px;
         }
 
         .product-image {
             max-width: 100%;
             height: auto;
+            width: 400px; /* Fija un tamaño de imagen de 300px de ancho */
             border-radius: 8px;
+            object-fit: cover; /* Asegura que la imagen se recorte correctamente si tiene una gran calidad */
         }
 
-        /* Datos del producto */
+        /* Product Data Section */
         .data-container {
             flex: 2;
+            max-width: 500px;
         }
 
+        /* Títulos y Descripción */
         h3, h4 {
-            margin: 0;
+            margin: 30px 0;
         }
 
+        h4 {
+            color: #6e6158;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        .description-box {
+            border: 2px solid #796e64; /* Borde de color marrón claro */
+            background-color: #f4f4f4; /* Fondo gris claro */
+            padding: 20px;
+            border-radius: 8px; /* Bordes redondeados */
+            margin-top: 10px;
+        }
         hr {
             margin: 10px 0;
             border: 0;
             border-top: 2px solid #796e64;
         }
 
-        /* Formulario */
+        /* Formulario de Ofertas */
         .form-container {
-            margin-top: 20px;
+            margin-top: 60px;
             text-align: center;
         }
 
         .offer-input {
-            padding: 10px;
-            font-size: 16px;
-            width: 60%;
-            margin: 10px 0;
+            padding: 15px;
+            font-size: 18px;
+            width: 70%; /* Aumenta el ancho del input */
+            margin: 15px 0;
             border-radius: 5px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
         }
 
         .btn-submit {
-            padding: 10px 20px;
+            padding: 15px 30px;
             background-color: #6e6158;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 18px;
             transition: background-color 0.3s ease;
         }
 
@@ -102,17 +131,23 @@
         .text-danger {
             color: #d9534f;
             text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
         }
 
-
-
+        /* Añadir más espaciado entre las secciones */
+        hr {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
+    
     <div class="card">
         <!-- Header de la tarjeta -->
         <div class="card-header">
-            <h2>@Model.Titulo</h2>
+           
+            <h2 style="color: #FFFFFF;">@Model.Titulo</h2>  <!-- Cambiar color del título aquí -->
         </div>
 
         <div class="container">
@@ -126,15 +161,24 @@
             <!-- Sección de datos del producto -->
             <div class="data-container">
                 <h3>@Model.NombreProducto</h3>
+                <div class="description-box">
+                    <p><strong>Cantidad de Ofertas:</strong>@Model.CantidadOfertas<p>
+                </div>
                 <hr />
-                <h4>Precio Base: @Model.PrecioBase.ToString("N")</h4>
-                <p><strong>Cantidad de Ofertas:</strong> @Model.CantidadOfertas</p>
-                <p><strong>Descripción:</strong> @Model.Descripcion</p>
+                
+                <div class="description-box">
+                    <h4>Precio Base: @Model.PrecioBase.ToString("N")</h4>
+                </div>
+                
+                <div class="description-box">
+                    <p><strong>Descripción:</strong></p>
+                    <p>@Model.Descripcion</p>
+                </div>
             </div>
         </div>
 
-        <!-- Formulario de ofertas (solo si está en subasta) -->
-        @if (User.Identity.IsAuthenticated)  
+        <!-- Formulario de ofertas -->
+        @if (User.Identity.IsAuthenticated)
         {
             if (Model.EstadoProducto == Core.Entities.Producto.EstadoProducto.EnSubasta)
             {
@@ -153,11 +197,13 @@
                 <p class="text-danger">Este producto no está en subasta, por lo que no se pueden realizar ofertas.</p>
             }
         }
-        else
+        else if (Model.EstadoProducto == Core.Entities.Producto.EstadoProducto.EnSubasta)
         {
-            <p class="text-danger">
-                Debes estar autenticado para realizar una oferta.
-            </p>
+            <p class="text-danger">Debes estar autenticado para realizar una oferta.</p>
+        }
+        @if (Model.EsSubastaFinalizada)
+        {
+            <p><strong>El ganador es : </strong> @Model.NombreGanador<strong> ! </strong></p>
         }
 
         @if ((Model.EsSubastaFinalizada && Model.EsVendedor) || (Model.EsSubastaFinalizada && Model.EsGanador))
@@ -169,7 +215,7 @@
                 </form>
             </div>
         }
-        
+
     </div>
 </body>
 </html>

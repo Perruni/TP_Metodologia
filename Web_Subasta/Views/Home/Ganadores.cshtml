@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Web_Subasta.Models.ViewModels.GanadorSubastaViewModel>
+
+@{
+    ViewData["Title"] = "Ganadores de Subastas";
+}
+@using Web_Subasta.Models.ViewModels
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título de Subasta</th>
+                <th>Producto</th>
+                <th>Precio Final</th>
+                <th>Nombre del Ganador</th>
+                <th>Nombre del Vendedor</th>
+                <th>Fecha Finalización Subasta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ganador in Model)
+            {
+                <tr>
+                    <td>@ganador.TituloSubasta</td>
+                    <td>@ganador.NombreProducto</td>
+                    <td>@ganador.PrecioBase.ToString("C")</td>
+                    <td>@ganador.NombreGanador</td>
+                    <td>@ganador.NombreVendedor</td>
+                    <td>@ganador.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")</td>
+
+                    <td>
+                        <a href="@Url.Action("detallesproducto", "Producto", new { productoID = ganador.ProductoID })" class="nav-registro">Ver Subasta</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay ganadores de subastas para mostrar.</p>
+}
+
+
