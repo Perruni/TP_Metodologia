@@ -181,15 +181,18 @@ namespace Web_Subasta.Controllers
 
             var ofertamasalta = await _service.GetOfertaGanadora(productoID);
 
-            var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
+            
 
             bool esSubastaFinalizada = subasta.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || subasta.fechaFinalizado <= DateTime.Now;
 
             bool esVendedor = false;
             bool esGanador = false;
+            string nombreGanador = null;
 
             if (esSubastaFinalizada)
             {
+                var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
+                nombreGanador = ganador.nombre + " " + ganador.apellido;
 
                 if (User.Identity.IsAuthenticated)
                 {
@@ -219,7 +222,7 @@ namespace Web_Subasta.Controllers
                     EsSubastaFinalizada = esSubastaFinalizada,
                     EsVendedor = esVendedor,
                     EsGanador = esGanador,
-                    NombreGanador =ganador.nombre +" "+ ganador.apellido
+                    NombreGanador = nombreGanador
 
 
                 };
@@ -362,55 +365,54 @@ namespace Web_Subasta.Controllers
             return NotFound();
 
         }
-        [HttpGet("GanadoresSubastas")]
-        public async Task<IActionResult> GanadoresSubastas()
+        [HttpGet("GanadoresSubastas/{subastaID}")]
+        public async Task<IActionResult> GanadoresSubastas(int subastaID)
         {
-            var finalizadas = await _service.GetSubastasFinalizadas();
-            if (finalizadas == null || !finalizadas.Any())
+            var subasta = await _service.GetSubasta(subastaID);
+            if (subasta == null)
             {
-                return NotFound("No hay subastas finalizadas.");
+                return NotFound("Subasta no encontrada.");
+            }
+
+            var subastaConProductos = await _service.GetSubastaProductos(subastaID);
+            if (subastaConProductos?.listaProductos == null || !subastaConProductos.listaProductos.Any())
+            {
+                TempData["ErrorMessage"] = "No hay ganadores en esta subasta.";
+                return RedirectToAction("Finalizadas", "Subasta");
             }
 
             var ganadoresViewModel = new List<GanadorSubastaViewModel>();
 
-            foreach (var subasta in finalizadas)
+            foreach (var producto in subastaConProductos.listaProductos)
             {
-                var subastaConProductos = await _service.GetSubastaProductos(subasta.subastaID);
+                var ofertaGanadora = await _service.GetOfertaGanadora(producto.productoID);
 
-                if (subastaConProductos?.listaProductos != null)
+                if (ofertaGanadora != null)
                 {
-                    foreach (var producto in subastaConProductos.listaProductos)
+                    var ganador = await _service.GetDatosUsuario(ofertaGanadora.usuarioID.Value);
+                    if (ganador != null)
                     {
-                        var ofertaGanadora = await _service.GetOfertaGanadora(producto.productoID);
+                        var vendedor = await _service.GetDatosUsuario(producto.usuarioID.Value);
 
-                        if (ofertaGanadora != null)
+                        var ganadorViewModel = new GanadorSubastaViewModel
                         {
-                            var ganador = await _service.GetDatosUsuario(ofertaGanadora.usuarioID.Value);
-                            if (ganador != null)
-                            {
-                                var vendedor = await _service.GetDatosUsuario(producto.usuarioID.Value);
+                            ProductoID = producto.productoID,
+                            NombreProducto = producto.nombreProducto,
+                            PrecioBase = (decimal)ofertaGanadora.montoOferta,
+                            NombreGanador = ganador.nombre + " " + ganador.apellido,
+                            NombreVendedor = vendedor?.nombre + " " + vendedor?.apellido,
+                            TituloSubasta = subasta.titulo,
+                            FechaFinalizadoSubasta = subasta.fechaFinalizado
+                        };
 
-                                var ganadorViewModel = new GanadorSubastaViewModel
-                                {
-                                    ProductoID = producto.productoID,
-                                    NombreProducto = producto.nombreProducto,
-                                    PrecioBase = (decimal)ofertaGanadora.montoOferta,
-                                    NombreGanador = ganador.nombre + " " + ganador.apellido,
-                                    NombreVendedor = vendedor?.nombre + " " + vendedor?.apellido,
-                                    TituloSubasta = subasta.titulo,
-                                    FechaFinalizadoSubasta = subasta.fechaFinalizado
-                                };
-
-                                ganadoresViewModel.Add(ganadorViewModel);
-                            }
-                        }
+                        ganadoresViewModel.Add(ganadorViewModel);
                     }
                 }
             }
 
             return View("~/Views/Home/Ganadores.cshtml", ganadoresViewModel);
-
         }
+
 
 
     }

@@ -30,7 +30,12 @@
                             <a class="nav-link" asp-controller="Home" asp-action="VenderProducto">Vender</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Producto" asp-action="GanadoresSubastas">Ganadores</a>
+                            <a class="nav-link"
+                               asp-controller="Subasta"
+                               asp-action="Finalizadas"
+                               onclick="alert('Elija la subasta para ver los ganadores.')">
+                                Ganadores
+                            </a>
                         </li>
                     </ul>
                 </div>

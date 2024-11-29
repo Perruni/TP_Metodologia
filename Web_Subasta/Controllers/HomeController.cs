@@ -85,8 +85,10 @@ namespace Web_Subasta.Controllers
 
         public IActionResult Ganadores()
         {
+     
             return View();
         }
+    
 
 
         public async Task<IActionResult> VenderProducto()

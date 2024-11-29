@@ -16,5 +16,6 @@
         public string TituloSubasta { get; set; }
         public DateTime FechaFinalizadoSubasta { get; set; }
 
+        public int SubastaID { get; set; }
     }
 }

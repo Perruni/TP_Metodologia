@@ -8,6 +8,12 @@
     Layout = "_Layout";
     ViewData["ShowSidebar"] = true;  // Deshabilitar el sidebar en esta vista
 }
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <div class="container mt-5">
     <div class="row">
         @foreach (var subasta in Model.subastaLista)
@@ -26,6 +32,14 @@
                            class="btn btn-primary">
                             Ver
                         </a>
+                    
+                            <a asp-controller="Producto"
+                           asp-action="GanadoresSubastas"
+                           asp-route-subastaID="@subasta.subastaID"
+                               class="btn btn-warning mt-2">
+                                Ver Ganador
+                            </a>
+                        
                     </div>
                 </div>
             </div>
