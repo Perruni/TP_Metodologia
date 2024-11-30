@@ -27,7 +27,7 @@ namespace Core.Data
         {
             if (_config != null && !optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_config.ConnectionString);
+                 optionsBuilder.UseMySql(_config.ConnectionString, ServerVersion.AutoDetect(_config.ConnectionString));
             }
         }
 
