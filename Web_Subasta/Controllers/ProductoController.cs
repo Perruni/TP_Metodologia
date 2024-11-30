@@ -179,20 +179,20 @@ namespace Web_Subasta.Controllers
 
             var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
-            var ofertamasalta = await _service.GetOfertaGanadora(productoID);
-
-            
 
             bool esSubastaFinalizada = subasta.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || subasta.fechaFinalizado <= DateTime.Now;
 
             bool esVendedor = false;
             bool esGanador = false;
-            string nombreGanador = null;
+            string nombreGanador = string.Empty;
+
 
             if (esSubastaFinalizada)
             {
-                //var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
-                //nombreGanador = ganador.nombre + " " + ganador.apellido;
+                var ofertamasalta = await _service.GetOfertaGanadora(productoID);
+
+                var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
+                nombreGanador = ganador.nombre + " " + ganador.apellido;
 
                 if (User.Identity.IsAuthenticated)
                 {
