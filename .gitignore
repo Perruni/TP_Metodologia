@@ -375,3 +375,9 @@ FodyWeavers.xsd
 /GestorSubastas/Properties/Settings.Designer.cs.txt
 /GestorSubastas/Properties/DataSources/Settings.settings
 /GestorSubastas/App.config
+/GestorSubastas/App.config
+/GestorSubastas/Properties/Settings.settings
+/GestorSubastas/Properties/Settings.Designer.cs.txt
+/Master_API/appsettings.json
+/Master_API/appsettings.Development.json
+/GestorSubastas/Properties/Settings.Designer.cs
