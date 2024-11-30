@@ -1,15 +1,24 @@
-﻿@model IEnumerable<Web_Subasta.Models.ViewModels.GanadorSubastaViewModel>
+﻿@model Web_Subasta.Models.ViewModels.GanadoresFiltradosViewModel
 
 @{
     ViewData["Title"] = "Ganadores de Subastas";
 }
-@using Web_Subasta.Models.ViewModels
-
 <h1>@ViewData["Title"]</h1>
 
-@if (Model.Any())
+<div class="mb-3">
+    <label for="subastaFilter" class="form-label">Filtrar por Subasta:</label>
+    <select id="subastaFilter" class="form-control">
+        <option value="all">Todas las Subastas</option>
+        @foreach (var subasta in Model.SubastasFinalizadas)
+        {
+            <option value="@subasta.subastaID">@subasta.titulo</option>
+        }
+    </select>
+</div>
+
+@if (Model.Ganadores != null && Model.Ganadores.Any())
 {
-    <table class="table">
+    <table class="table" id="ganadoresTable">
         <thead>
             <tr>
                 <th>Título de Subasta</th>
@@ -18,19 +27,19 @@
                 <th>Nombre del Ganador</th>
                 <th>Nombre del Vendedor</th>
                 <th>Fecha Finalización Subasta</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var ganador in Model)
+            @foreach (var ganador in Model.Ganadores)
             {
-                <tr>
+                <tr data-subasta-id="@ganador.SubastaID">
                     <td>@ganador.TituloSubasta</td>
                     <td>@ganador.NombreProducto</td>
                     <td>@ganador.PrecioBase.ToString("C")</td>
                     <td>@ganador.NombreGanador</td>
                     <td>@ganador.NombreVendedor</td>
                     <td>@ganador.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")</td>
-
                     <td>
                         <a href="@Url.Action("detallesproducto", "Producto", new { productoID = ganador.ProductoID })" class="nav-registro">Ver Subasta</a>
                     </td>
@@ -44,4 +53,26 @@ else
     <p>No hay ganadores de subastas para mostrar.</p>
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#subastaFilter').on('change', function () {
+            var selectedSubastaID = $(this).val();
 
+            if (selectedSubastaID === 'all') {
+                // Mostrar todas las filas
+                $('#ganadoresTable tbody tr').show();
+            } else {
+                // Mostrar solo las filas con el SubastaID seleccionado
+                $('#ganadoresTable tbody tr').each(function () {
+                    var rowSubastaID = $(this).data('subasta-id');
+                    if (rowSubastaID == selectedSubastaID) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    });
+</script>
