@@ -179,6 +179,7 @@ namespace Core.Data
         public Task<List<Oferta>> GetOfertasUsuario(int userID)
         {
             var oferUsuario = _dbContext.Ofertas.Where(o => o.usuarioID == userID)
+                .Include(p => p.producto)            
                 .ToListAsync();
 
             return oferUsuario;
