@@ -191,8 +191,8 @@ namespace Web_Subasta.Controllers
 
             if (esSubastaFinalizada)
             {
-                var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
-                nombreGanador = ganador.nombre + " " + ganador.apellido;
+                //var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
+                //nombreGanador = ganador.nombre + " " + ganador.apellido;
 
                 if (User.Identity.IsAuthenticated)
                 {
@@ -222,7 +222,7 @@ namespace Web_Subasta.Controllers
                     EsSubastaFinalizada = esSubastaFinalizada,
                     EsVendedor = esVendedor,
                     EsGanador = esGanador,
-                    NombreGanador = nombreGanador
+                    //NombreGanador = nombreGanador
 
 
                 };

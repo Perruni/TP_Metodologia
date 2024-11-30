@@ -25,8 +25,11 @@ namespace GestorSubastas
             _ofertaBusiness = ofertaBussiness;
             _subastaBusiness = subastaBusiness;
             _context = context;
+            
             InitializeComponent();
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
