@@ -222,7 +222,7 @@ namespace Web_Subasta.Controllers
                     EsSubastaFinalizada = esSubastaFinalizada,
                     EsVendedor = esVendedor,
                     EsGanador = esGanador,
-                    NombreGanador = nombreGanador
+                    //NombreGanador = nombreGanador
 
 
                 };

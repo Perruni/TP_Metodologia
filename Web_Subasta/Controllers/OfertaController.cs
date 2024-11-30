@@ -65,7 +65,7 @@ namespace Web_Subasta.Controllers
             var producto = await _serviceAPI.GetProducto(userID);
             
 
-            if (oferta != null && oferta.Any())
+            if (oferta != null)
             {
                 var viewModel = new OfertaViewModel
                 {
