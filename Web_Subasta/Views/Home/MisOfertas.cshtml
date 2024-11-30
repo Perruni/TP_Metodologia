@@ -7,15 +7,48 @@
     <title>Mis Ofertas</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .card {
-            margin: 20px;
+        /* Limitar el
+            tamaño de las imágenes */
+        .card img {
+            max-width: 100%; /* Imagen no debe exceder el ancho del contenedor */
+            max-height: 200px; /* Altura máxima para evitar imágenes excesivamente grandes */
+            object-fit: cover; /* Recorta la imagen si no encaja en el tamaño */
+            margin-bottom: 15px; /* Espacio debajo de la imagen */
         }
 
-        .btn-ver {
-            background-color: #FF5A5A;
-            color: white;
+        /* Ajustar el diseño de las tarjetas */
+        .card {
+            max-width: 600px; /* Ancho máximo para las tarjetas */
+            margin: auto; /* Centra las tarjetas dentro de la columna */
+            border-radius: 10px; /* Bordes redondeados */
+        }
+
+        .card-title {
+            font-size: 1.25rem; /* Tamaño de fuente para el título */
+            font-weight: bold;
+            text-align: center; /* Centrar el texto del título */
+            color: #333; /* Color del título */
+        }
+
+        .card-text {
+            font-size: 0.95rem; /* Tamaño más pequeño para el texto */
+            color: #666; /* Color gris para el texto */
+            text-align: justify; /* Justifica el texto para un diseño limpio */
+        }
+
+        /* Ajustes al footer */
+        .card-footer {
+            background-color: #f8f9fa; /* Fondo claro para el footer */
+            padding: 10px;
+        }
+
+        /* Espaciado entre tarjetas */
+        .row .col-md-4 {
+            display: flex; /* Asegura que las tarjetas sean del mismo tamaño */
+            justify-content: center;
         }
     </style>
+
 </head>
 <body>
     <div class="container">
@@ -32,6 +65,7 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
+                                    <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{@oferta.producto.ImagenUrl}")" alt="@oferta.producto.nombreProducto" />
                                     <h5 class="card-title">@oferta.producto.nombreProducto</h5>
                                     <p class="card-text">@oferta.producto.descripcion</p>
                                     <p><strong>Estado:</strong> @oferta.estadoOferta</p>
