@@ -90,5 +90,21 @@ namespace Master_API.Controllers
 
         }
 
+
+        [HttpGet("ProductosOferta/{subastaID}")]
+        public async Task<ActionResult<Producto>> GetProductosSubasta(int subastaID)
+        {
+
+            var subasta = await _subastaBusiness.GetProductosSubasta(subastaID);
+
+            if (subasta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(subasta);
+
+        }
+
     }
 }

@@ -32,6 +32,8 @@ namespace Web_Subasta.Services
         public Task<Oferta> UpdateOferta(Oferta oferta, int userID, int ofertaID);
         public Task<Oferta> DeleteOferta(int userID, int ofertaID);
         public Task<Oferta> GetOfertaId(int ofertaID);
+        public Task<Oferta> GetOfertaGanadora(int porductoID);
+
         public Task<List<Oferta>> GetOfertasGanadoras(int subastaID);
         public Task<Oferta> GetOfertaGanadora(int porductoID);
         public Task<List<Oferta>> GetOfertasUsuario(int usuarioID);

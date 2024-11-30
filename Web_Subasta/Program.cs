@@ -32,7 +32,7 @@ builder.Services.AddScoped<TPI_DbContext>(provider =>
 {
     var config = provider.GetRequiredService<Config>();
     var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
-    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString));
+    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString)); // Cambiado a SQL Server
     return new TPI_DbContext(optionsBuilder.Options, config);
 });
 #endregion
@@ -40,13 +40,13 @@ builder.Services.AddScoped<TPI_DbContext>(provider =>
 //Registro de Conexion
 builder.Services.AddDbContext<TPI_DbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// Configuraci髇 de sesiones
+// Configuraci贸n de sesiones
 builder.Services.AddDistributedMemoryCache();  // Usamos memoria para las sesiones
 builder.Services.AddSession(options =>
 {
-    options.Cookie.Name = ".UsuarioSesion";  // Nombre de la cookie que contiene la sesi髇
-    options.IdleTimeout = TimeSpan.FromMinutes(30);  // Tiempo de sesi髇
-    options.Cookie.IsEssential = true;  // Marca la cookie como esencial para la aplicaci髇
+    options.Cookie.Name = ".UsuarioSesion";  // Nombre de la cookie que contiene la sesi贸n
+    options.IdleTimeout = TimeSpan.FromMinutes(30);  // Tiempo de sesi贸n
+    options.Cookie.IsEssential = true;  // Marca la cookie como esencial para la aplicaci贸n
 });
 
 // Add services to the container.
@@ -90,7 +90,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Usar sesiones en la aplicaci髇
+// Usar sesiones en la aplicaci贸n
 app.UseSession();
 
 app.UseAuthorization();

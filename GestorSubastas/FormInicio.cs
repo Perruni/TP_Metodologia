@@ -1,6 +1,7 @@
 using Core.Busisness.Interfaces;
 using Core.Data;
 using Core.Data.Interface;
+using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestorSubastas
@@ -107,19 +108,55 @@ namespace GestorSubastas
 
         private void BotonEditar_Click(object sender, EventArgs e)
         {
-            var formEditarSubasta = new FormEditarSubasta(_subastaBusiness);
-            formEditarSubasta.ShowDialog();
+            // Verificar si se ha seleccionado alguna fila en el DataGridView
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, seleccione una subasta para editar.");
+                return;
+            }
+
+            // Obtener la subasta seleccionada
+            var filaSeleccionada = dataGridView1.SelectedRows[0];
+            var subastaSeleccionada = (Subasta)filaSeleccionada.DataBoundItem;
+
+            // Verificar si la subasta seleccionada es activa o próxima
+            if (subastaSeleccionada != null)
+            {
+                // Comprobamos el estado de la subasta
+                if (subastaSeleccionada.estadoSubasta == Subasta.EstadoSubasta.Activa || subastaSeleccionada.estadoSubasta == Subasta.EstadoSubasta.Proxima)
+                {
+                    // Si la subasta es activa o próxima, permitimos la edición
+                    var formEditarSubasta = new FormEditarSubasta(_subastaBusiness, subastaSeleccionada, _context);
+                    formEditarSubasta.ShowDialog();
+                }
+                else
+                {
+                    // Si la subasta no está activa ni próxima, mostramos un mensaje
+                    MessageBox.Show("Solo puede editar subastas activas o próximas.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se encontró una subasta válida para editar.");
+            }
         }
 
         private void BotonInformes_Click(object sender, EventArgs e)
         {
-            var formInformes = new FormInformes(_subastaBusiness, _context);
+            var formInformes = new FormInformes(_projectRepository, _context);
             formInformes.ShowDialog();
 
         }
 
         private void FormInicio_Load_1(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness);
+            formDetallesOfertantes.ShowDialog();
 
         }
     }

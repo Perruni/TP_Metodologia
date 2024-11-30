@@ -21,19 +21,17 @@ namespace GestorSubastas
         private readonly ISubastaBusiness _subastaBusiness;
         private readonly TPI_DbContext _context;
         private readonly IProjectRepository _projectRepository;
-        public FormInformes(ISubastaBusiness subastaBusiness, TPI_DbContext context)
+        public FormInformes(IProjectRepository projectRepository, TPI_DbContext context)
         {
             InitializeComponent();
-            _subastaBusiness = subastaBusiness;
             _context = context;
+            _projectRepository = projectRepository;
 
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness);
-            formDetallesOfertantes.ShowDialog();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -69,19 +67,39 @@ namespace GestorSubastas
             formProductosVendidos.ShowDialog();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
-            var formProductosNOOfertados = new FormProductosNOOfertados(_projectRepository, _context);
-            formProductosNOOfertados.ShowDialog();
+            try
+            {
+                var productosSinOfertas = await _projectRepository.GetProductosSinOfertas();
+
+                if (productosSinOfertas == null || productosSinOfertas.Count == 0)
+                {
+                    MessageBox.Show("No hay productos sin ofertas.");
+                    return;
+                }
+
+                var formProductosNOOfertados = new FormProductosNOOfertados(productosSinOfertas, _context);
+                formProductosNOOfertados.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los productos sin ofertas: " + ex.Message);
+            }
+
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            var formGananciaSubastas = new FormGananciaSubastas(_projectRepository, _context);
+            formGananciaSubastas.ShowDialog();
 
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
+            var formAportesUsuario = new FormAportesUsuario(_projectRepository, _context);
+            formAportesUsuario.ShowDialog();
 
         }
     }

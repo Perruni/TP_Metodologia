@@ -55,6 +55,9 @@ namespace Core.Data.Interface
         public bool CreateUser(string email, byte[] hashedPassword, byte[] saltBytes);
         public Usuario ObtainUsuario(string email);
 
+        public Task<List<Producto>?> GetProductosSubasta(int subastaID);
+
+
 
 
 

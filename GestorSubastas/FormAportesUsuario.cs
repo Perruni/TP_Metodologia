@@ -1,10 +1,5 @@
-﻿using Core.Busisness;
-using Core.Busisness.Interfaces;
+﻿using Core.Data.Interface;
 using Core.Data;
-using Core.Data.Interface;
-using Core.Entities;
-using iText.Commons.Actions.Contexts;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,77 +9,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iText.Kernel.Font;
 using iText.Layout.Properties;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Kernel.Colors;
+using iText.Commons.Actions.Contexts;
 using static Core.Entities.Oferta;
 using static Core.Entities.Producto;
-using iText.Kernel.Font;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace GestorSubastas
 {
-    public partial class FormGestionGanancias : Form
+    public partial class FormAportesUsuario : Form
     {
-
         private readonly IProjectRepository _projectRepository;
         private readonly TPI_DbContext _context;
 
-
-
-
-        public FormGestionGanancias(IProjectRepository projectRepository, TPI_DbContext context)
+        public FormAportesUsuario(IProjectRepository projectRepository, TPI_DbContext context)
         {
-
             _projectRepository = projectRepository;
             _context = context;
 
             InitializeComponent();
+
+            this.Load += new EventHandler(FormAportesUsuario_Load);
         }
 
-        private void productoBindingSource_CurrentChanged(object sender, EventArgs e)
+        private async void FormAportesUsuario_Load(object sender, EventArgs e)
         {
-
+            await CargarUsuarios();
         }
 
-        private async void FormGestionGanancias_Load(object sender, EventArgs e)
+        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            await CargarSubastasFinalizadas();
-        }
-
-        private async Task CargarSubastasFinalizadas()
-        {
-            var subastas = await _projectRepository.GetSubastasFinalizadas();
-
-            if (subastas != null && subastas.Any())
+            if (comboBox1.SelectedItem != null)
             {
-                ComboFinalizadas.Items.Clear();
-
-                foreach (var subasta in subastas)
-                {
-                    ComboFinalizadas.Items.Add(new { Titulo = subasta.titulo, SubastaID = subasta.subastaID });
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("No se encontraron subastas finalizadas.");
-            }
-        }
-
-        private async void ComboFinalizadas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            var seleccion = ComboFinalizadas.SelectedItem as dynamic;
-
-            if (seleccion != null)
-            {
-                int subastaID = seleccion.SubastaID;
+                var seleccion = comboBox1.SelectedItem as dynamic;
+                int usuarioID = seleccion.UsuarioID;
 
                 var productosVendidos = await _context.Productos
-                    .Where(p => p.subastaID == subastaID && p.estadoProducto == EstadoProducto.Vendido)
+                    .Where(p => p.usuarioID == usuarioID && p.estadoProducto == EstadoProducto.Vendido)
                     .ToListAsync();
 
                 if (productosVendidos.Any())
@@ -100,7 +67,7 @@ namespace GestorSubastas
                                 .Where(o => o.productoID == p.productoID && o.estadoOferta == EstadoOferta.Ganadora)
                                 .ToList()
                         })
-                        .Where(p => p.ofertas.Any()) 
+                        .Where(p => p.ofertas.Any())
                         .SelectMany(p => p.ofertas, (p, oferta) => new
                         {
                             p.productoID,
@@ -108,54 +75,57 @@ namespace GestorSubastas
                             p.precioBase,
                             p.estadoProducto,
                             montoOferta = oferta.montoOferta,
-                            montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m 
+                            montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m
                         })
                         .ToList();
 
-                    GridProductosG.DataSource = productosConOfertas;
+                    dataGridView1.DataSource = productosConOfertas;
 
                     decimal gananciaTotal = productosConOfertas.Sum(p => p.montoOfertaMultiplicado);
-                    label3.Text = $"Ganancia total para la empresa: ${gananciaTotal:F2}";
                 }
                 else
                 {
-                    MessageBox.Show("No se encontraron productos vendidos para la subasta seleccionada.");
+                    MessageBox.Show("No se encontraron productos vendidos para el usuario seleccionado.");
                 }
-
             }
             else
             {
-                MessageBox.Show("No se seleccionó una subasta válida.");
+                MessageBox.Show("No se seleccionó un usuario válido.");
             }
         }
-        private void GridProductosG_CellContentClick(object sender, DataGridViewCellEventArgs e)
+
+        private async Task CargarUsuarios()
         {
+            var usuarios = await _projectRepository.GetUsuarios();
 
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void generarpdf_Click(object sender, EventArgs e)
-        {
-            if (ComboFinalizadas.SelectedItem == null)
+            if (usuarios != null && usuarios.Any())
             {
-                MessageBox.Show("Por favor, selecciona una subasta antes de generar el PDF.");
+                comboBox1.Items.Clear();
+
+                foreach (var usuario in usuarios)
+                {
+                    comboBox1.Items.Add(new { Nombre = usuario.email, UsuarioID = usuario.usuarioID });
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron usuarios.");
+            }
+        }
+        
+        private async void generarPDF_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Por favor, selecciona un usuario.");
                 return;
             }
 
-            var seleccion = ComboFinalizadas.SelectedItem as dynamic;
-            int subastaID = seleccion.SubastaID;
+            var seleccion = comboBox1.SelectedItem as dynamic;
+            int usuarioID = seleccion.UsuarioID;
 
             var productosVendidos = await _context.Productos
-                .Where(p => p.subastaID == subastaID && p.estadoProducto == EstadoProducto.Vendido)
+                .Where(p => p.usuarioID == usuarioID && p.estadoProducto == EstadoProducto.Vendido)
                 .ToListAsync();
 
             if (productosVendidos.Any())
@@ -178,14 +148,14 @@ namespace GestorSubastas
                         p.nombreProducto,
                         p.precioBase,
                         p.estadoProducto,
-                        montoOferta = oferta.montoOferta, 
-                        montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m 
+                        montoOferta = oferta.montoOferta,
+                        montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m
                     })
                     .ToList();
 
                 decimal gananciaTotal = productosConOfertas.Sum(p => p.montoOfertaMultiplicado);
-                label3.Text = $"Ganancia total para la empresa: ${gananciaTotal:F2}";
-                string rutaPDF = @$"C:\Users\{Environment.UserName}\Downloads\ReporteSubastaganancias.pdf";
+
+                string rutaPDF = @$"C:\Users\{Environment.UserName}\Downloads\AporteUsuario.pdf";
 
                 try
                 {
@@ -195,35 +165,29 @@ namespace GestorSubastas
                     {
                         PdfFont boldFont = PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_BOLD);
 
-                        document.Add(new Paragraph("MEW Subastas Informe de Ganancias")
-                            .SetFont(boldFont) 
+                        document.Add(new Paragraph("MEW SubastasInforme de Ganancias del Usuario")
+                            .SetFont(boldFont)
                             .SetFontSize(18)
                             .SetTextAlignment(TextAlignment.CENTER));
 
-                        // Agregar la fecha actual
                         document.Add(new Paragraph($"Fecha: {DateTime.Now:dd/MM/yyyy}")
                             .SetFontSize(12)
                             .SetTextAlignment(TextAlignment.RIGHT));
 
-                        // Agregar información general de la subasta
-                        document.Add(new Paragraph($"Subasta: {seleccion.Titulo}")
-                            .SetFont(boldFont) 
+                        document.Add(new Paragraph($"Usuario: {seleccion.Nombre}")
+                            .SetFont(boldFont)
                             .SetFontSize(14));
 
-                        // Agregar espacio
                         document.Add(new Paragraph(" "));
 
-                        // Crear tabla para los productos
-                        Table table = new Table(new float[] { 1, 3, 2, 2 }); 
+                        Table table = new Table(new float[] { 1, 3, 2, 2 });
                         table.SetWidth(UnitValue.CreatePercentValue(100));
 
-                        // Encabezados de la tabla
                         table.AddHeaderCell(new Cell().Add(new Paragraph("ID Producto").SetFont(boldFont)));
                         table.AddHeaderCell(new Cell().Add(new Paragraph("Nombre Producto").SetFont(boldFont)));
                         table.AddHeaderCell(new Cell().Add(new Paragraph("Estado").SetFont(boldFont)));
                         table.AddHeaderCell(new Cell().Add(new Paragraph("Ganancia").SetFont(boldFont)));
 
-                        // Llenar la tabla con los datos de productos y ofertas
                         foreach (var producto in productosConOfertas)
                         {
                             table.AddCell(producto.productoID.ToString());
@@ -232,17 +196,14 @@ namespace GestorSubastas
                             table.AddCell($"${producto.montoOfertaMultiplicado:F2}");
                         }
 
-                        // Agregar la tabla al documento
                         document.Add(table);
 
-                        // Agregar ganancia total al final del PDF
                         document.Add(new Paragraph(" "));
-                        document.Add(new Paragraph($"Ganancia total para la empresa: ${gananciaTotal:F2}")
+                        document.Add(new Paragraph($"Ganancia total para el usuario: ${gananciaTotal:F2}")
                             .SetFont(boldFont)
                             .SetFontSize(14)
                             .SetTextAlignment(TextAlignment.RIGHT));
 
-                        // Mensaje de confirmación
                         MessageBox.Show($"PDF generado correctamente en {rutaPDF}");
                     }
                 }
@@ -253,10 +214,9 @@ namespace GestorSubastas
             }
             else
             {
-                MessageBox.Show("No se encontraron productos vendidos para la subasta seleccionada.");
+                MessageBox.Show("No se encontraron productos vendidos para el usuario seleccionado.");
             }
+
         }
-
-
     }
 }

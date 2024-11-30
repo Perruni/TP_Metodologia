@@ -2,9 +2,9 @@ using Core.Busisness.Interfaces;
 using Core.Busisness;
 using Core.Data.Interface;
 using Core.Data;
+using MySql.Data.MySqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Core.Configuration;
-using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,7 +58,7 @@ namespace GestorSubastas
             {
                 var config = provider.GetRequiredService<Config>();
                 var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
-                optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString));
+                optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString)); // Cambiado a SQL Server
                 return new TPI_DbContext(optionsBuilder.Options, config);
             });
 
