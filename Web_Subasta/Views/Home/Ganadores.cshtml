@@ -18,35 +18,27 @@
 
 @if (Model.Ganadores != null && Model.Ganadores.Any())
 {
-    <table class="table" id="ganadoresTable">
-        <thead>
-            <tr>
-                <th>Título de Subasta</th>
-                <th>Producto</th>
-                <th>Precio Final</th>
-                <th>Nombre del Ganador</th>
-                <th>Nombre del Vendedor</th>
-                <th>Fecha Finalización Subasta</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var ganador in Model.Ganadores)
-            {
-                <tr data-subasta-id="@ganador.SubastaID">
-                    <td>@ganador.TituloSubasta</td>
-                    <td>@ganador.NombreProducto</td>
-                    <td>@ganador.PrecioBase.ToString("C")</td>
-                    <td>@ganador.NombreGanador</td>
-                    <td>@ganador.NombreVendedor</td>
-                    <td>@ganador.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        <a href="@Url.Action("detallesproducto", "Producto", new { productoID = ganador.ProductoID })" class="nav-registro">Ver Subasta</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row">
+        @foreach (var ganador in Model.Ganadores)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card" data-subasta-id="@ganador.SubastaID"> <!-- Aquí asignamos el data-subasta-id -->
+                    <div class="card-body">
+                        <h5 class="card-title">@ganador.TituloSubasta</h5>
+                        <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{ganador.imagenUrl}")" alt="Imagen del producto" />
+                        <h6 class="card-subtitle mb-2 text-muted">@ganador.NombreProducto</h6>
+                        <p class="card-text">
+                            <strong>Precio Final:</strong> @ganador.PrecioBase.ToString("C")<br>
+                            <strong>Ganador:</strong> @ganador.NombreGanador<br>
+                            <strong>Vendedor:</strong> @ganador.NombreVendedor<br>
+                            <strong>Fecha Finalización:</strong> @ganador.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")
+                        </p>
+                        <a href="@Url.Action("detallesproducto", "Producto", new { productoID = ganador.ProductoID })" class="btn btn-primary">Ver Subasta</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 else
 {
@@ -56,20 +48,21 @@ else
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Filtrar las tarjetas de acuerdo al subasta seleccionado
         $('#subastaFilter').on('change', function () {
-            var selectedSubastaID = $(this).val();
+            var selectedSubastaID = $(this).val(); // Obtén el subastaID seleccionado
 
             if (selectedSubastaID === 'all') {
-                // Mostrar todas las filas
-                $('#ganadoresTable tbody tr').show();
+                // Si seleccionas "Todas las Subastas", mostrar todas las tarjetas
+                $('.card').show();
             } else {
-                // Mostrar solo las filas con el SubastaID seleccionado
-                $('#ganadoresTable tbody tr').each(function () {
-                    var rowSubastaID = $(this).data('subasta-id');
-                    if (rowSubastaID == selectedSubastaID) {
-                        $(this).show();
+                // Si no, filtrar por el subastaID
+                $('.card').each(function () {
+                    var cardSubastaID = $(this).data('subasta-id'); // Obtener el subastaID de la tarjeta
+                    if (cardSubastaID == selectedSubastaID) {
+                        $(this).show(); // Mostrar solo las tarjetas que coinciden con el subastaID
                     } else {
-                        $(this).hide();
+                        $(this).hide(); // Ocultar las demás
                     }
                 });
             }

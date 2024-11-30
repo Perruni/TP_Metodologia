@@ -406,7 +406,8 @@ namespace Web_Subasta.Controllers
                                     NombreVendedor = vendedor?.nombre + " " + vendedor?.apellido,
                                     TituloSubasta = subasta.titulo,
                                     FechaFinalizadoSubasta = subasta.fechaFinalizado,
-                                    SubastaID = subasta.subastaID
+                                    SubastaID = subasta.subastaID,
+                                    imagenUrl = producto.ImagenUrl
                                 };
                                 ganadoresViewModel.Add(ganadorViewModel);
                             }
