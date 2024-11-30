@@ -36,7 +36,7 @@ builder.Services.AddScoped<TPI_DbContext>(provider =>
 {
     var config = provider.GetRequiredService<Config>();
     var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
-    optionsBuilder.UseSqlServer(config.ConnectionString); // Cambiado a SQL Server
+    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString)); // Cambiado a SQL Server
     return new TPI_DbContext(optionsBuilder.Options, config);
 });
 
