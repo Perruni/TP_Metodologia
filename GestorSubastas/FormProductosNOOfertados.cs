@@ -46,8 +46,12 @@ namespace GestorSubastas
             {
                 // Traer los productos relacionados con la subasta seleccionada
                 var productos = await _context.Productos
-                    .Where(p => p.subastaID == subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
-                    .ToListAsync();
+                                .Where(p => p.subastaID == subastaID &&
+                                            p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado &&
+                                            p.estadoProducto == Producto.EstadoProducto.NoVendido)
+                                .Include(p => p.listaOfertas)  // Asegura que las ofertas sean incluidas
+                                .Where(p => !p.listaOfertas.Any())  // Filtra productos sin ofertas
+                                .ToListAsync();
 
                 // Crear una lista ordenada de productos
                 var sortableList = new SortableBindingList<Producto>(productos);

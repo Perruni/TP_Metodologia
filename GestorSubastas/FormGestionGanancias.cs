@@ -100,7 +100,7 @@ namespace GestorSubastas
                                 .Where(o => o.productoID == p.productoID && o.estadoOferta == EstadoOferta.Ganadora)
                                 .ToList()
                         })
-                        .Where(p => p.ofertas.Any()) 
+                        .Where(p => p.ofertas.Any())
                         .SelectMany(p => p.ofertas, (p, oferta) => new
                         {
                             p.productoID,
@@ -108,7 +108,7 @@ namespace GestorSubastas
                             p.precioBase,
                             p.estadoProducto,
                             montoOferta = oferta.montoOferta,
-                            montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m 
+                            montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m
                         })
                         .ToList();
 
@@ -178,8 +178,8 @@ namespace GestorSubastas
                         p.nombreProducto,
                         p.precioBase,
                         p.estadoProducto,
-                        montoOferta = oferta.montoOferta, 
-                        montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m 
+                        montoOferta = oferta.montoOferta,
+                        montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m
                     })
                     .ToList();
 
@@ -196,7 +196,7 @@ namespace GestorSubastas
                         PdfFont boldFont = PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_BOLD);
 
                         document.Add(new Paragraph("MEW Subastas Informe de Ganancias")
-                            .SetFont(boldFont) 
+                            .SetFont(boldFont)
                             .SetFontSize(18)
                             .SetTextAlignment(TextAlignment.CENTER));
 
@@ -207,14 +207,14 @@ namespace GestorSubastas
 
                         // Agregar información general de la subasta
                         document.Add(new Paragraph($"Subasta: {seleccion.Titulo}")
-                            .SetFont(boldFont) 
+                            .SetFont(boldFont)
                             .SetFontSize(14));
 
                         // Agregar espacio
                         document.Add(new Paragraph(" "));
 
                         // Crear tabla para los productos
-                        Table table = new Table(new float[] { 1, 3, 2, 2 }); 
+                        Table table = new Table(new float[] { 1, 3, 2, 2 });
                         table.SetWidth(UnitValue.CreatePercentValue(100));
 
                         // Encabezados de la tabla
@@ -257,6 +257,9 @@ namespace GestorSubastas
             }
         }
 
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
