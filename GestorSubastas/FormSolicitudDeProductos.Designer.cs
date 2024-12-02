@@ -28,9 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             button1 = new Button();
             button2 = new Button();
             dataGridViewSubastas = new DataGridView();
+            nombreProductoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            fechaSolicitudDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            productoBindingSource = new BindingSource(components);
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -41,7 +45,10 @@
             ProductoEntrega = new Label();
             ImagenProducto = new PictureBox();
             ProductoDescripcion = new TextBox();
+            label6 = new Label();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSubastas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)productoBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ImagenProducto).BeginInit();
             SuspendLayout();
             // 
@@ -49,7 +56,7 @@
             // 
             button1.BackColor = Color.FromArgb(0, 192, 0);
             button1.Font = new Font("Verdana", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(175, 374);
+            button1.Location = new Point(171, 429);
             button1.Name = "button1";
             button1.Size = new Size(183, 54);
             button1.TabIndex = 0;
@@ -61,7 +68,7 @@
             // 
             button2.BackColor = Color.IndianRed;
             button2.Font = new Font("Verdana", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(425, 374);
+            button2.Location = new Point(444, 429);
             button2.Name = "button2";
             button2.Size = new Size(183, 54);
             button2.TabIndex = 1;
@@ -71,13 +78,32 @@
             // 
             // dataGridViewSubastas
             // 
+            dataGridViewSubastas.AutoGenerateColumns = false;
             dataGridViewSubastas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewSubastas.Columns.AddRange(new DataGridViewColumn[] { nombreProductoDataGridViewTextBoxColumn, fechaSolicitudDataGridViewTextBoxColumn });
+            dataGridViewSubastas.DataSource = productoBindingSource;
             dataGridViewSubastas.Location = new Point(25, 82);
             dataGridViewSubastas.Name = "dataGridViewSubastas";
             dataGridViewSubastas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewSubastas.Size = new Size(329, 275);
             dataGridViewSubastas.TabIndex = 8;
             dataGridViewSubastas.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // nombreProductoDataGridViewTextBoxColumn
+            // 
+            nombreProductoDataGridViewTextBoxColumn.DataPropertyName = "nombreProducto";
+            nombreProductoDataGridViewTextBoxColumn.HeaderText = "Producto";
+            nombreProductoDataGridViewTextBoxColumn.Name = "nombreProductoDataGridViewTextBoxColumn";
+            // 
+            // fechaSolicitudDataGridViewTextBoxColumn
+            // 
+            fechaSolicitudDataGridViewTextBoxColumn.DataPropertyName = "fechaSolicitud";
+            fechaSolicitudDataGridViewTextBoxColumn.HeaderText = "Solicitud";
+            fechaSolicitudDataGridViewTextBoxColumn.Name = "fechaSolicitudDataGridViewTextBoxColumn";
+            // 
+            // productoBindingSource
+            // 
+            productoBindingSource.DataSource = typeof(Core.Entities.Producto);
             // 
             // label1
             // 
@@ -161,7 +187,7 @@
             // 
             // ImagenProducto
             // 
-            ImagenProducto.Location = new Point(552, 47);
+            ImagenProducto.Location = new Point(570, 176);
             ImagenProducto.Name = "ImagenProducto";
             ImagenProducto.Size = new Size(224, 247);
             ImagenProducto.TabIndex = 18;
@@ -174,11 +200,33 @@
             ProductoDescripcion.Size = new Size(168, 23);
             ProductoDescripcion.TabIndex = 19;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(549, 82);
+            label6.Name = "label6";
+            label6.Size = new Size(81, 18);
+            label6.TabIndex = 20;
+            label6.Text = "Subasta:";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Location = new Point(549, 107);
+            label7.Name = "label7";
+            label7.Size = new Size(74, 18);
+            label7.TabIndex = 21;
+            label7.Text = "Subasta";
+            // 
             // FormSolicitudDeProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(862, 495);
+            Controls.Add(label7);
+            Controls.Add(label6);
             Controls.Add(ImagenProducto);
             Controls.Add(ProductoEntrega);
             Controls.Add(ProductoPrecio);
@@ -196,6 +244,7 @@
             Text = "FormSolicitudDeProductos";
             Load += FormSolicitudDeProductos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewSubastas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)productoBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)ImagenProducto).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -216,5 +265,10 @@
         private Label ProductoEntrega;
         private PictureBox ImagenProducto;
         private TextBox ProductoDescripcion;
+        private DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn fechaSolicitudDataGridViewTextBoxColumn;
+        private BindingSource productoBindingSource;
+        private Label label6;
+        private Label label7;
     }
 }

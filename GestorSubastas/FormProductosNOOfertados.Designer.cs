@@ -31,25 +31,31 @@
             components = new System.ComponentModel.Container();
             dataGridView1 = new DataGridView();
             nombreProductoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            estadoProductoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             precioBaseDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             fechaSolicitudDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             productoBindingSource = new BindingSource(components);
             label1 = new Label();
             button1 = new Button();
             dataGridView2 = new DataGridView();
+            subastaIDDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            tituloDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            fechaInicioDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            fechaFinalizadoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            estadoSubastaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            subastaBindingSource = new BindingSource(components);
             label2 = new Label();
             label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)productoBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)subastaBindingSource).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { nombreProductoDataGridViewTextBoxColumn, estadoProductoDataGridViewTextBoxColumn, precioBaseDataGridViewTextBoxColumn, fechaSolicitudDataGridViewTextBoxColumn });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { nombreProductoDataGridViewTextBoxColumn, precioBaseDataGridViewTextBoxColumn, fechaSolicitudDataGridViewTextBoxColumn });
             dataGridView1.DataSource = productoBindingSource;
             dataGridView1.Location = new Point(12, 290);
             dataGridView1.Name = "dataGridView1";
@@ -62,12 +68,6 @@
             nombreProductoDataGridViewTextBoxColumn.DataPropertyName = "nombreProducto";
             nombreProductoDataGridViewTextBoxColumn.HeaderText = "Producto";
             nombreProductoDataGridViewTextBoxColumn.Name = "nombreProductoDataGridViewTextBoxColumn";
-            // 
-            // estadoProductoDataGridViewTextBoxColumn
-            // 
-            estadoProductoDataGridViewTextBoxColumn.DataPropertyName = "estadoProducto";
-            estadoProductoDataGridViewTextBoxColumn.HeaderText = "Estado";
-            estadoProductoDataGridViewTextBoxColumn.Name = "estadoProductoDataGridViewTextBoxColumn";
             // 
             // precioBaseDataGridViewTextBoxColumn
             // 
@@ -107,11 +107,49 @@
             // 
             // dataGridView2
             // 
+            dataGridView2.AutoGenerateColumns = false;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { subastaIDDataGridViewTextBoxColumn, tituloDataGridViewTextBoxColumn, fechaInicioDataGridViewTextBoxColumn, fechaFinalizadoDataGridViewTextBoxColumn, estadoSubastaDataGridViewTextBoxColumn });
+            dataGridView2.DataSource = subastaBindingSource;
             dataGridView2.Location = new Point(12, 84);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.Size = new Size(654, 150);
             dataGridView2.TabIndex = 3;
+            dataGridView2.CellContentClick += dataGridView2_CellContentClick;
+            // 
+            // subastaIDDataGridViewTextBoxColumn
+            // 
+            subastaIDDataGridViewTextBoxColumn.DataPropertyName = "subastaID";
+            subastaIDDataGridViewTextBoxColumn.HeaderText = "ID";
+            subastaIDDataGridViewTextBoxColumn.Name = "subastaIDDataGridViewTextBoxColumn";
+            // 
+            // tituloDataGridViewTextBoxColumn
+            // 
+            tituloDataGridViewTextBoxColumn.DataPropertyName = "titulo";
+            tituloDataGridViewTextBoxColumn.HeaderText = "Titulo";
+            tituloDataGridViewTextBoxColumn.Name = "tituloDataGridViewTextBoxColumn";
+            // 
+            // fechaInicioDataGridViewTextBoxColumn
+            // 
+            fechaInicioDataGridViewTextBoxColumn.DataPropertyName = "fechaInicio";
+            fechaInicioDataGridViewTextBoxColumn.HeaderText = "Inicio";
+            fechaInicioDataGridViewTextBoxColumn.Name = "fechaInicioDataGridViewTextBoxColumn";
+            // 
+            // fechaFinalizadoDataGridViewTextBoxColumn
+            // 
+            fechaFinalizadoDataGridViewTextBoxColumn.DataPropertyName = "fechaFinalizado";
+            fechaFinalizadoDataGridViewTextBoxColumn.HeaderText = "Finalizado";
+            fechaFinalizadoDataGridViewTextBoxColumn.Name = "fechaFinalizadoDataGridViewTextBoxColumn";
+            // 
+            // estadoSubastaDataGridViewTextBoxColumn
+            // 
+            estadoSubastaDataGridViewTextBoxColumn.DataPropertyName = "estadoSubasta";
+            estadoSubastaDataGridViewTextBoxColumn.HeaderText = "Estado";
+            estadoSubastaDataGridViewTextBoxColumn.Name = "estadoSubastaDataGridViewTextBoxColumn";
+            // 
+            // subastaBindingSource
+            // 
+            subastaBindingSource.DataSource = typeof(Core.Entities.Subasta);
             // 
             // label2
             // 
@@ -150,6 +188,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)productoBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)subastaBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -159,13 +198,18 @@
         private DataGridView dataGridView1;
         private Label label1;
         private Button button1;
-        private DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn estadoProductoDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn precioBaseDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn fechaSolicitudDataGridViewTextBoxColumn;
         private BindingSource productoBindingSource;
         private DataGridView dataGridView2;
         private Label label2;
         private Label label3;
+        private DataGridViewTextBoxColumn subastaIDDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn tituloDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn fechaInicioDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn fechaFinalizadoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn estadoSubastaDataGridViewTextBoxColumn;
+        private BindingSource subastaBindingSource;
+        private DataGridViewTextBoxColumn nombreProductoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn precioBaseDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn fechaSolicitudDataGridViewTextBoxColumn;
     }
 }

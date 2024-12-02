@@ -102,7 +102,7 @@ namespace GestorSubastas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var formSolicitudDeProducto = new FormSolicitudDeProductos(_productoBusiness);
+            var formSolicitudDeProducto = new FormSolicitudDeProductos(_productoBusiness,_subastaBusiness);
             formSolicitudDeProducto.ShowDialog();
         }
 

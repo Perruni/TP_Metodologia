@@ -17,8 +17,9 @@ namespace GestorSubastas
     {
         private Producto _producto;
         private readonly IProductoBusiness _productoBusiness;
+        private readonly ISubastaBusiness _subastaBusiness;
 
-        public FormSolicitudDeProductos( IProductoBusiness productoBusiness)
+        public FormSolicitudDeProductos( IProductoBusiness productoBusiness, ISubastaBusiness subastaBusiness)
         {
             InitializeComponent();
 
@@ -34,6 +35,7 @@ namespace GestorSubastas
 
             this.Controls.Add(ProductoDescripcion); // Agregar el TextBox al formulario
             _productoBusiness = productoBusiness;
+            _subastaBusiness = subastaBusiness;
             CargarSubastas();
 
             
@@ -59,6 +61,24 @@ namespace GestorSubastas
             ProductoEntrega.Text = _producto.metodoEntrega;
             ProductoDescripcion.Text = _producto.descripcion;
             string imageUrl = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/" + _producto.ImagenUrl;
+
+            if (_producto.subastaID.HasValue)
+            {
+                var subasta = await _subastaBusiness.GetSubasta(_producto.subastaID.Value);
+
+                if (subasta != null)
+                {
+                    label7.Text = subasta.titulo; // Asumimos que Subasta tiene una propiedad Titulo
+                }
+                else
+                {
+                    label7.Text = "Subasta no disponible";
+                }
+            }
+            else
+            {
+                label7.Text = "Subasta no disponible";
+            }
 
             // Cargar la imagen en el PictureBox de forma asíncrona
             await LoadImageFromUrlAsync(imageUrl);
@@ -128,12 +148,15 @@ namespace GestorSubastas
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Comprobar que se hace clic en una fila válida
+            if (e.RowIndex >= 0)
             {
+                dataGridViewSubastas.Rows[e.RowIndex].Selected = true;
+
                 _producto = (Producto)dataGridViewSubastas.Rows[e.RowIndex].DataBoundItem;
+
                 CargarDatosProducto();
             }
-            
+
         }
     }
 }

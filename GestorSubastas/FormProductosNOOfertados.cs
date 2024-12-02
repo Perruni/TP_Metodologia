@@ -18,6 +18,7 @@ using iText.Kernel.Colors;
 using Core.Entities;
 using GestorSubastas.Helper;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestorSubastas
 {
@@ -39,26 +40,33 @@ namespace GestorSubastas
 
         }
 
-        private async Task CargarProductosSinOfertas()
+        private async Task CargarProductosSinOfertas(int subastaID)
         {
             try
             {
+                // Traer los productos relacionados con la subasta seleccionada
+                var productos = await _context.Productos
+                    .Where(p => p.subastaID == subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
+                    .ToListAsync();
 
-                var sortableList = new SortableBindingList<Producto>(_productosSinOfertas);
+                // Crear una lista ordenada de productos
+                var sortableList = new SortableBindingList<Producto>(productos);
 
+                // Asignar la lista de productos a dataGridView1
                 dataGridView1.DataSource = sortableList;
 
+                // Ajustar el modo de columnas para llenar todo el DataGrid
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los productos sin ofertas: " + ex.Message);
+                MessageBox.Show("Error al cargar los productos de la subasta: " + ex.Message);
             }
         }
 
         private async void FormProductosNOOfertados_Load(object sender, EventArgs e)
         {
-            await CargarProductosSinOfertas();
+            await CargarSubastas();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -126,5 +134,43 @@ namespace GestorSubastas
                 MessageBox.Show("Error al generar el PDF: " + ex.Message);
             }
         }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Obtener el subastaID de la fila seleccionada (suponiendo que está en la primera columna)
+                var subastaID = (int)dataGridView2.Rows[e.RowIndex].Cells[0].Value; // Ajusta el índice de la celda según corresponda
+
+                // Cargar los productos asociados a la subasta seleccionada
+                CargarProductosSinOfertas(subastaID);
+            }
+
+        }
+
+        private async Task CargarSubastas()
+        {
+            try
+            {
+                // Traer las subastas activas desde la base de datos
+                var subastas = await _context.Subastas
+                    .Where(s => s.estadoSubasta == Subasta.EstadoSubasta.Activa || s.estadoSubasta == Subasta.EstadoSubasta.Finalizadas)
+                    .ToListAsync();
+
+                // Usar SortableBindingList para hacer que los datos sean ordenables
+                var sortableList = new SortableBindingList<Subasta>(subastas);
+
+                // Asignar las subastas ordenables a dataGridView2
+                dataGridView2.DataSource = sortableList;
+
+                // Ajustar el modo de columnas para llenar todo el DataGrid
+                dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar las subastas: " + ex.Message);
+            }
+        }
+
     }
 }

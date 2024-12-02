@@ -41,13 +41,48 @@ namespace GestorSubastas
 
         }
 
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 var productoId = (int)dataGridViewProductos.Rows[e.RowIndex].Cells["productoID"].Value;
 
-                // Realiza la consulta filtrando solo por el productoID, sin Enum.IsDefined
+
+                var producto = await _context.Productos
+                .Where(p => p.productoID == productoId)
+                .FirstOrDefaultAsync();
+
+                if (producto != null && !string.IsNullOrEmpty(producto.ImagenUrl))
+                {
+                    try
+                    {
+                        string baseUri = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
+                        Uri imageUri = new Uri(baseUri + producto.ImagenUrl); // Concatenar la URL de la imagen
+
+                        using (var webClient = new System.Net.WebClient())
+                        {
+                            byte[] imageBytes = await webClient.DownloadDataTaskAsync(imageUri);
+                            using (var ms = new System.IO.MemoryStream(imageBytes))
+                            {
+                                var imagen = Image.FromStream(ms);
+
+                                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox1.Image = imagen;
+
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                        pictureBox1.Image = null; // En caso de error, limpiar el PictureBox
+                    }
+                }
+                else
+                {
+                    pictureBox1.Image = null; // Si no hay URL o imagen, limpiar el PictureBox
+                }
+
                 var ofertantes = _context.Ofertas
                     .Where(o => o.productoID == productoId)
                     .Include(o => o.usuario)
