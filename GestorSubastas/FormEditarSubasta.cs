@@ -100,6 +100,21 @@ namespace GestorSubastas
             // Ahora intenta actualizarla
             var resultado = await _subastaBusiness.UpdateSubasta(subastaActualizada);
 
+            if (subastaActualizada.estadoSubasta == Subasta.EstadoSubasta.Activa)
+            {
+                var productosAsociados = await _context.Productos
+                    .Where(p => p.subastaID == subastaActualizada.subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
+                    .ToListAsync();
+
+                foreach (var producto in productosAsociados)
+                {
+                    producto.estadoProducto = Producto.EstadoProducto.EnSubasta;
+                    _context.Productos.Update(producto);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
             if (resultado != null)
             {
                 MessageBox.Show("Subasta actualizada exitosamente.");

@@ -35,8 +35,10 @@
             label3 = new Label();
             comboBox1 = new ComboBox();
             label4 = new Label();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOfertantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // dataGridViewOfertantes
@@ -106,11 +108,21 @@
             label4.TabIndex = 7;
             label4.Text = "Subasta:";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(671, 117);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(156, 125);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
+            // 
             // FormDetallesOfertantes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1095, 455);
+            Controls.Add(pictureBox1);
             Controls.Add(label4);
             Controls.Add(comboBox1);
             Controls.Add(label3);
@@ -122,6 +134,7 @@
             Text = "FormDetallesOfertantes";
             ((System.ComponentModel.ISupportInitialize)dataGridViewOfertantes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -135,5 +148,6 @@
         private Label label3;
         private ComboBox comboBox1;
         private Label label4;
+        private PictureBox pictureBox1;
     }
 }

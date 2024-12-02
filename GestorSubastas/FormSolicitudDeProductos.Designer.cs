@@ -72,8 +72,9 @@
             // dataGridViewSubastas
             // 
             dataGridViewSubastas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewSubastas.Location = new Point(12, 82);
+            dataGridViewSubastas.Location = new Point(25, 82);
             dataGridViewSubastas.Name = "dataGridViewSubastas";
+            dataGridViewSubastas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewSubastas.Size = new Size(329, 275);
             dataGridViewSubastas.TabIndex = 8;
             dataGridViewSubastas.CellContentClick += dataGridView1_CellContentClick;

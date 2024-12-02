@@ -16,6 +16,8 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using iText.Kernel.Colors;
 using Core.Entities;
+using GestorSubastas.Helper;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace GestorSubastas
 {
@@ -42,18 +44,9 @@ namespace GestorSubastas
             try
             {
 
+                var sortableList = new SortableBindingList<Producto>(_productosSinOfertas);
 
-
-                dataGridView1.DataSource = _productosSinOfertas.Select(p => new
-                {
-                    p.productoID,
-                    p.nombreProducto,
-                    p.precioBase,
-                    p.estadoProducto
-
-
-                }).ToList();
-
+                dataGridView1.DataSource = sortableList;
 
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             }

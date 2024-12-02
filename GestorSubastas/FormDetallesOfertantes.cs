@@ -21,11 +21,13 @@ namespace GestorSubastas
 
         private readonly TPI_DbContext _context;
         private readonly ISubastaBusiness _subastaBusiness;
-        public FormDetallesOfertantes(TPI_DbContext context, ISubastaBusiness subastaBusiness)
+        private readonly Subasta _subasta;
+        public FormDetallesOfertantes(TPI_DbContext context, ISubastaBusiness subastaBusiness, Subasta subasta)
         {
-            
+
             _context = context;
             _subastaBusiness = subastaBusiness;
+            _subasta = subasta;
             InitializeComponent();
 
             this.Load += new EventHandler(FormDetallesOfertantes_Load);
@@ -71,7 +73,7 @@ namespace GestorSubastas
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,6 +131,11 @@ namespace GestorSubastas
                 // Manejar errores (por ejemplo, si la consulta falla)
                 MessageBox.Show($"Error al cargar las subastas activas: {ex.Message}");
             }
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

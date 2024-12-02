@@ -163,11 +163,11 @@
             // 
             // Ofertantes
             // 
-            Ofertantes.Location = new Point(455, 12);
+            Ofertantes.Location = new Point(156, 109);
             Ofertantes.Name = "Ofertantes";
-            Ofertantes.Size = new Size(102, 44);
+            Ofertantes.Size = new Size(114, 23);
             Ofertantes.TabIndex = 7;
-            Ofertantes.Text = "Ofertantes";
+            Ofertantes.Text = "Ver Detalles";
             Ofertantes.UseVisualStyleBackColor = true;
             Ofertantes.Click += button1_Click_1;
             // 

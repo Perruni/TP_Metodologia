@@ -155,8 +155,38 @@ namespace GestorSubastas
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness);
-            formDetallesOfertantes.ShowDialog();
+            // Verificar si se ha seleccionado alguna fila en el DataGridView
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, seleccione una subasta para ver en detalle.");
+                return;
+            }
+
+            // Obtener la subasta seleccionada
+            var filaSeleccionada = dataGridView1.SelectedRows[0];
+            var subastaSeleccionada = (Subasta)filaSeleccionada.DataBoundItem;
+
+            // Verificar si la subasta seleccionada es activa o próxima
+            if (subastaSeleccionada != null)
+            {
+                // Comprobamos el estado de la subasta
+                if (subastaSeleccionada.estadoSubasta == Subasta.EstadoSubasta.Activa || subastaSeleccionada.estadoSubasta == Subasta.EstadoSubasta.Proxima)
+                {
+                    // Si la subasta es activa o próxima, permitimos la edición
+                    var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness, subastaSeleccionada);
+                    formDetallesOfertantes.ShowDialog();
+
+                }
+                else
+                {
+                    // Si la subasta no está activa ni próxima, mostramos un mensaje
+                    MessageBox.Show("Solo puede editar subastas activas o próximas.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se encontró una subasta válida para editar.");
+            }
 
         }
     }

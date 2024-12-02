@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using static Core.Entities.Oferta;
+using static Core.Entities.Producto;
 
 namespace Core.Data
 {
@@ -55,7 +56,8 @@ namespace Core.Data
         public Task<List<Producto>> GetProductosSinOfertas()
         {
             var productosSinOfertas = _dbContext.Productos
-                .Where(p => !_dbContext.Ofertas.Any(o => o.productoID == p.productoID))
+                .Where(p => p.estadoSolicitud == EstadoSolicitud.Aprobado &&
+                            !_dbContext.Ofertas.Any(o => o.productoID == p.productoID))
                 .ToListAsync();
 
             return productosSinOfertas;

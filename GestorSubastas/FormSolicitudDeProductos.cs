@@ -68,41 +68,16 @@ namespace GestorSubastas
         {
             try
             {
-                using (HttpClient client = new HttpClient())
-                {
-                    // Descargar los datos de la imagen como un arreglo de bytes
-                    byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
+                string baseUrl = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
 
-                    // Convertir los bytes en un objeto Image y asignarlo al PictureBox
-                    using (var ms = new System.IO.MemoryStream(imageBytes))
-                    {
-                        using (var originalImage = Image.FromStream(ms))
-                        {
-                            // Definir el tamaño máximo
-                            const int maxWidth = 200;  // Ancho máximo
-                            const int maxHeight = 200; // Alto máximo
+                string fullUrl = $"{baseUrl}{imageUrl}";
 
-                            // Calcular la escala
-                            double ratioX = (double)maxWidth / originalImage.Width;
-                            double ratioY = (double)maxHeight / originalImage.Height;
-                            double ratio = Math.Min(ratioX, ratioY);
-
-                            // Calcular las dimensiones escaladas
-                            int newWidth = (int)(originalImage.Width * ratio);
-                            int newHeight = (int)(originalImage.Height * ratio);
-
-                            // Crear la imagen escalada
-                            using (var newImage = new Bitmap(originalImage, newWidth, newHeight))
-                            {
-                                ImagenProducto.Image = new Bitmap(newImage); // Asignar la imagen escalada al PictureBox
-                            }
-                        }
-                    }
-                }
+                ImagenProducto.LoadAsync(fullUrl);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar la imagen: " + ex.Message);
+                // Manejar errores al cargar la imagen
+                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
             }
         }
 
