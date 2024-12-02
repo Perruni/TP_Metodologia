@@ -68,11 +68,27 @@ namespace GestorSubastas
         {
             try
             {
-                string baseUrl = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
-
-                string fullUrl = $"{baseUrl}{imageUrl}";
-
-                ImagenProducto.LoadAsync(fullUrl);
+                using (HttpClient client = new HttpClient())
+                {
+                    byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
+                    using (var ms = new System.IO.MemoryStream(imageBytes))
+                    {
+                        using (var originalImage = Image.FromStream(ms))
+                        {
+                            const int maxWidth = 200;  
+                            const int maxHeight = 200; 
+                            double ratioX = (double)maxWidth / originalImage.Width;
+                            double ratioY = (double)maxHeight / originalImage.Height;
+                            double ratio = Math.Min(ratioX, ratioY);
+                            int newWidth = (int)(originalImage.Width * ratio);
+                            int newHeight = (int)(originalImage.Height * ratio);
+                            using (var newImage = new Bitmap(originalImage, newWidth, newHeight))
+                            {
+                                ImagenProducto.Image = new Bitmap(newImage);
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
