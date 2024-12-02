@@ -172,64 +172,61 @@ namespace Web_Subasta.Controllers
         [HttpGet("detallesproducto")]
         public async Task<IActionResult> GetDetallesProducto(int productoID)
         {
-          
             var producto = await _service.GetProducto(productoID);
 
-            var subasta = await _service.GetSubasta((int)producto.subastaID);
+            if (producto == null)
+            {
+                return NotFound();
+            }
 
+            var subasta = await _service.GetSubasta((int)producto.subastaID);
             var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
-
             bool esSubastaFinalizada = subasta.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || subasta.fechaFinalizado <= DateTime.Now;
-
             bool esVendedor = false;
             bool esGanador = false;
-            string nombreGanador = string.Empty;
-
+            string nombreGanador = "No se realizaron ofertas";
 
             if (esSubastaFinalizada)
             {
                 var ofertamasalta = await _service.GetOfertaGanadora(productoID);
 
-                var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
-                nombreGanador = ganador.nombre + " " + ganador.apellido;
-
-                if (User.Identity.IsAuthenticated)
+                if (ofertamasalta != null)
                 {
-                    int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    var ganador = await _service.GetDatosUsuario(ofertamasalta.usuarioID.Value);
+                    nombreGanador = ganador.nombre + " " + ganador.apellido;
 
-                    esVendedor = usuarioID == producto.usuarioID;
-                    esGanador = usuarioID == ofertamasalta?.usuarioID; 
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        int usuarioID = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                        esVendedor = usuarioID == producto.usuarioID;
+                        esGanador = usuarioID == ofertamasalta.usuarioID;
+                    }
                 }
             }
 
+            var viewModel = new ProductoViewModel
+            {
+                ProductoID = productoID,
+                Producto = producto,
+                Subasta = subasta,
+                fechaInicio = subasta.fechaInicio,
+                fechaFinalizado = subasta.fechaFinalizado,
+                NombreProducto = producto.nombreProducto,
+                Descripcion = producto.descripcion,
+                PrecioBase = producto.precioBase,
+                CantidadOfertas = cantidadOfertas,
+                Titulo = subasta.titulo,
+                EstadoProducto = (EstadoProducto)producto.estadoProducto,
+                EsSubastaFinalizada = esSubastaFinalizada,
+                EsVendedor = esVendedor,
+                EsGanador = esGanador,
+                NombreGanador = nombreGanador
+            };
 
-            if (producto != null)
-                {
-                var viewModel = new ProductoViewModel
-                {
-                    ProductoID = productoID,
-                    Producto = producto,
-                    Subasta = subasta,
-                    fechaInicio = subasta.fechaInicio,
-                    fechaFinalizado = subasta.fechaFinalizado,
-                    NombreProducto = producto.nombreProducto,
-                    Descripcion = producto.descripcion,
-                    PrecioBase = producto.precioBase,
-                    CantidadOfertas = cantidadOfertas,
-                    Titulo = subasta.titulo,
-                    EstadoProducto = (EstadoProducto)producto.estadoProducto,
-                    EsSubastaFinalizada = esSubastaFinalizada,
-                    EsVendedor = esVendedor,
-                    EsGanador = esGanador,
-                    //NombreGanador = nombreGanador
-
-
-                };
-                    return View("~/Views/Home/productos.cshtml", viewModel);
-                }
-                return NotFound(); 
+            return View("~/Views/Home/productos.cshtml", viewModel);
         }
+
         [HttpGet("productosubasta")]
         public async Task<IActionResult> ProductosEnSubasta(int subastaID)
         {
