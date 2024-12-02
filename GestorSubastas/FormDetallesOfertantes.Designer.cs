@@ -33,7 +33,6 @@
             dataGridViewProductos = new DataGridView();
             label2 = new Label();
             label3 = new Label();
-            comboBox1 = new ComboBox();
             label4 = new Label();
             pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOfertantes).BeginInit();
@@ -89,15 +88,6 @@
             label3.TabIndex = 5;
             label3.Text = "Control de Ofertantes";
             // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(12, 73);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 6;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -110,9 +100,9 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(671, 117);
+            pictureBox1.Location = new Point(661, 117);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(156, 125);
+            pictureBox1.Size = new Size(164, 150);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
@@ -124,7 +114,6 @@
             ClientSize = new Size(1095, 455);
             Controls.Add(pictureBox1);
             Controls.Add(label4);
-            Controls.Add(comboBox1);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(dataGridViewProductos);
@@ -146,7 +135,6 @@
         private DataGridView dataGridViewProductos;
         private Label label2;
         private Label label3;
-        private ComboBox comboBox1;
         private Label label4;
         private PictureBox pictureBox1;
     }

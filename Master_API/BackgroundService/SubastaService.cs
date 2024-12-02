@@ -38,7 +38,7 @@ namespace Master_API.Services
                 foreach (var producto in subasta.listaProductos)
                 {
 
-                    if (producto.estadoProducto == Producto.EstadoProducto.EnRevision ||
+                    if (producto.estadoSolicitud == Producto.EstadoSolicitud.Pendiente ||
                         producto.estadoProducto == Producto.EstadoProducto.NoVendido)
                     {
                         continue;
@@ -68,7 +68,8 @@ namespace Master_API.Services
                     }
                 }
             }
-                await _dbContext.SaveChangesAsync();            
+
+            await _dbContext.SaveChangesAsync();            
         }
 
         public async Task OpenSubastaAsync(Subasta subasta)
