@@ -48,12 +48,12 @@ else
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Filtrar las tarjetas de acuerdo al subasta seleccionado
+        
         $('#subastaFilter').on('change', function () {
-            var selectedSubastaID = $(this).val(); // Obtén el subastaID seleccionado
+            var selectedSubastaID = $(this).val();
 
             if (selectedSubastaID === 'all') {
-                // Si seleccionas "Todas las Subastas", mostrar todas las tarjetas
+               
                 $('.card').show();
             } else {
                 // Si no, filtrar por el subastaID
@@ -69,3 +69,13 @@ else
         });
     });
 </script>
+
+<style>
+    .card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 4px;
+        padding: 10px;
+    }
+</style>
