@@ -50,16 +50,16 @@
             // GridProductosG
             // 
             GridProductosG.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            GridProductosG.Location = new Point(12, 139);
+            GridProductosG.Location = new Point(12, 130);
             GridProductosG.Name = "GridProductosG";
-            GridProductosG.Size = new Size(685, 299);
+            GridProductosG.Size = new Size(685, 308);
             GridProductosG.TabIndex = 1;
             GridProductosG.CellContentClick += GridProductosG_CellContentClick;
             // 
             // ComboFinalizadas
             // 
             ComboFinalizadas.FormattingEnabled = true;
-            ComboFinalizadas.Location = new Point(12, 78);
+            ComboFinalizadas.Location = new Point(12, 88);
             ComboFinalizadas.Name = "ComboFinalizadas";
             ComboFinalizadas.Size = new Size(203, 23);
             ComboFinalizadas.TabIndex = 2;

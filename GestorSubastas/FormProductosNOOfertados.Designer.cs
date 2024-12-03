@@ -113,6 +113,7 @@
             dataGridView2.DataSource = subastaBindingSource;
             dataGridView2.Location = new Point(12, 84);
             dataGridView2.Name = "dataGridView2";
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView2.Size = new Size(654, 150);
             dataGridView2.TabIndex = 3;
             dataGridView2.CellContentClick += dataGridView2_CellContentClick;

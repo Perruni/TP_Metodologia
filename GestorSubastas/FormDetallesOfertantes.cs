@@ -37,6 +37,9 @@ namespace GestorSubastas
 
         private async void FormDetallesOfertantes_Load(object sender, EventArgs e)
         {
+
+            label9.Text = _subasta.titulo;
+
             await CargarSubastasActivasAsync();
 
         }
@@ -47,72 +50,74 @@ namespace GestorSubastas
             {
                 var productoId = (int)dataGridViewProductos.Rows[e.RowIndex].Cells["productoID"].Value;
 
-
                 var producto = await _context.Productos
-                .Where(p => p.productoID == productoId)
-                .FirstOrDefaultAsync();
+                    .Where(p => p.productoID == productoId)
+                    .FirstOrDefaultAsync();
 
-                if (producto != null && !string.IsNullOrEmpty(producto.ImagenUrl))
+                if (producto != null)
                 {
-                    try
+                    var cantidadOfertas = await _context.Ofertas
+                        .Where(o => o.productoID == productoId)
+                        .CountAsync();
+
+                    label6.Text = $"Cantidad de ofertas: {cantidadOfertas}";
+                    label8.Text = producto.descripcion;
+                    label8.Width = 50; 
+                    label8.Height = 200;  
+
+                    label8.BorderStyle = BorderStyle.FixedSingle;
+
+                    label8.TextAlign = ContentAlignment.MiddleCenter;
+
+                    if (!string.IsNullOrEmpty(producto.ImagenUrl))
                     {
-                        string baseUri = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
-                        Uri imageUri = new Uri(baseUri + producto.ImagenUrl); // Concatenar la URL de la imagen
-
-                        using (var webClient = new System.Net.WebClient())
+                        try
                         {
-                            byte[] imageBytes = await webClient.DownloadDataTaskAsync(imageUri);
-                            using (var ms = new System.IO.MemoryStream(imageBytes))
+                            string baseUri = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
+                            Uri imageUri = new Uri(baseUri + producto.ImagenUrl);
+
+                            using (var webClient = new System.Net.WebClient())
                             {
-                                var imagen = Image.FromStream(ms);
-
-                                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                                pictureBox1.Image = imagen;
-
+                                byte[] imageBytes = await webClient.DownloadDataTaskAsync(imageUri);
+                                using (var ms = new System.IO.MemoryStream(imageBytes))
+                                {
+                                    var imagen = Image.FromStream(ms);
+                                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                                    pictureBox1.Image = imagen;
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                            pictureBox1.Image = null;
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
-                        pictureBox1.Image = null; // En caso de error, limpiar el PictureBox
+                        pictureBox1.Image = null;
                     }
-                }
-                else
-                {
-                    pictureBox1.Image = null; // Si no hay URL o imagen, limpiar el PictureBox
-                }
 
-                var ofertantes = _context.Ofertas
-                    .Where(o => o.productoID == productoId)
-                    .Include(o => o.usuario)
-                    .ToList() // Ejecuta la consulta y trae los datos a memoria
-                    .Where(o => Enum.IsDefined(typeof(EstadoOferta), o.estadoOferta)) // Filtra en memoria por el estado de la oferta
-                    .Select(o => new
+                    var ofertantes = await _context.Ofertas
+                        .Where(o => o.productoID == productoId)
+                        .Include(o => o.usuario)
+                        .ToListAsync();
+
+                    dataGridViewOfertantes.Columns.Clear(); // Limpiar las columnas anteriores
+
+                    dataGridViewOfertantes.Columns.Add("ofertaID", "ID de la Oferta");
+                    dataGridViewOfertantes.Columns.Add("montoOferta", "Monto de la Oferta");
+                    dataGridViewOfertantes.Columns.Add("fechaOferta", "Fecha de la Oferta");
+                    dataGridViewOfertantes.Columns.Add("usuario", "Correo");
+
+                    foreach (var ofertante in ofertantes)
                     {
-                        ofertaID = o.ofertaID,
-                        montoOferta = o.montoOferta,
-                        fechaOferta = o.fechaOferta,
-                        usuario = o.usuario.email,
-
-                    })
-                    .ToList(); // Convierte el resultado en una lista
-
-                dataGridViewProductos.Rows[e.RowIndex].Selected = true;
-
-                dataGridViewOfertantes.Columns.Clear(); // Limpia las columnas anteriores
-
-                dataGridViewOfertantes.Columns.Add("ofertaID", "ID de la Oferta");
-                dataGridViewOfertantes.Columns.Add("montoOferta", "Monto de la Oferta");
-                dataGridViewOfertantes.Columns.Add("fechaOferta", "Fecha de la Oferta");
-                dataGridViewOfertantes.Columns.Add("usuario", "Correo");
-
-                foreach (var ofertante in ofertantes)
-                {
-                    dataGridViewOfertantes.Rows.Add(ofertante.ofertaID, ofertante.montoOferta, ofertante.fechaOferta, ofertante.usuario);
+                        dataGridViewOfertantes.Rows.Add(ofertante.ofertaID, ofertante.montoOferta, ofertante.fechaOferta, ofertante.usuario.email);
+                    }
                 }
             }
         }
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
