@@ -100,6 +100,67 @@ namespace GestorSubastas
             // Ahora intenta actualizarla
             var resultado = await _subastaBusiness.UpdateSubasta(subastaActualizada);
 
+            await _context.SaveChangesAsync();
+
+            if (resultado.estadoSubasta == Subasta.EstadoSubasta.Activa)
+            {
+                var productosAsociados = await _context.Productos
+                    .Where(p => p.subastaID == resultado.subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
+                    .ToListAsync();
+
+                foreach (var producto in productosAsociados)
+                {
+                    producto.estadoProducto = Producto.EstadoProducto.EnSubasta;
+                    _context.Productos.Update(producto);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            if (resultado.estadoSubasta == Subasta.EstadoSubasta.Finalizadas)
+            {
+
+                var productosAsociados = await _context.Productos
+                                .Where(p => p.subastaID == resultado.subastaID)
+                                .ToListAsync();
+
+                foreach (var producto in productosAsociados)
+                    {
+
+                        if (producto.estadoSolicitud == Producto.EstadoSolicitud.Pendiente ||
+                            producto.estadoProducto == Producto.EstadoProducto.NoVendido)
+                        {
+                            continue;
+                        }
+
+                        var ofertas = await _context.Ofertas
+                                .Where(o => o.productoID == producto.productoID && o.estadoOferta == Oferta.EstadoOferta.Pendiente)
+                                .OrderByDescending(o => o.montoOferta)
+                                .ToListAsync();
+
+                        if (ofertas.Any())
+                        {
+                            var ofertaGanadora = ofertas.First();
+                            ofertaGanadora.estadoOferta = Oferta.EstadoOferta.Ganadora;
+
+                            producto.estadoProducto = Producto.EstadoProducto.Vendido;
+
+                            foreach (var oferta in ofertas.Skip(1))
+                            {
+                                oferta.estadoOferta = Oferta.EstadoOferta.NoGanadora;
+                            }
+
+                        }
+                        else
+                        {
+                            producto.estadoProducto = Producto.EstadoProducto.NoVendido;
+                        }
+                    }
+               
+
+                await _context.SaveChangesAsync();
+            }
+
             if (resultado != null)
             {
                 MessageBox.Show("Subasta actualizada exitosamente.");

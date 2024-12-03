@@ -33,10 +33,16 @@
             dataGridViewProductos = new DataGridView();
             label2 = new Label();
             label3 = new Label();
-            comboBox1 = new ComboBox();
             label4 = new Label();
+            pictureBox1 = new PictureBox();
+            label5 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOfertantes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // dataGridViewOfertantes
@@ -87,15 +93,6 @@
             label3.TabIndex = 5;
             label3.Text = "Control de Ofertantes";
             // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(12, 73);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 6;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -106,13 +103,72 @@
             label4.TabIndex = 7;
             label4.Text = "Subasta:";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(661, 87);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(207, 180);
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(661, 270);
+            label5.Name = "label5";
+            label5.Size = new Size(115, 15);
+            label5.TabIndex = 9;
+            label5.Text = "Cantidad de Ofertas:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(661, 288);
+            label6.Name = "label6";
+            label6.Size = new Size(55, 15);
+            label6.TabIndex = 10;
+            label6.Text = "Cantidad";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(661, 323);
+            label7.Name = "label7";
+            label7.Size = new Size(72, 15);
+            label7.TabIndex = 12;
+            label7.Text = "Descripción:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(661, 338);
+            label8.Name = "label8";
+            label8.Size = new Size(69, 15);
+            label8.TabIndex = 13;
+            label8.Text = "Descripción";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(86, 55);
+            label9.Name = "label9";
+            label9.Size = new Size(48, 15);
+            label9.TabIndex = 14;
+            label9.Text = "Subasta";
+            // 
             // FormDetallesOfertantes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1095, 455);
+            Controls.Add(label9);
+            Controls.Add(label8);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(pictureBox1);
             Controls.Add(label4);
-            Controls.Add(comboBox1);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(dataGridViewProductos);
@@ -122,6 +178,7 @@
             Text = "FormDetallesOfertantes";
             ((System.ComponentModel.ISupportInitialize)dataGridViewOfertantes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -133,7 +190,12 @@
         private DataGridView dataGridViewProductos;
         private Label label2;
         private Label label3;
-        private ComboBox comboBox1;
         private Label label4;
+        private PictureBox pictureBox1;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
     }
 }

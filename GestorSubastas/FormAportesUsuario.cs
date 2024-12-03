@@ -19,6 +19,8 @@ using iText.Commons.Actions.Contexts;
 using static Core.Entities.Oferta;
 using static Core.Entities.Producto;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using GestorSubastas.Helper;
 
 
 namespace GestorSubastas
@@ -43,86 +45,61 @@ namespace GestorSubastas
             await CargarUsuarios();
         }
 
-        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem != null)
-            {
-                var seleccion = comboBox1.SelectedItem as dynamic;
-                int usuarioID = seleccion.UsuarioID;
-
-                var productosVendidos = await _context.Productos
-                    .Where(p => p.usuarioID == usuarioID && p.estadoProducto == EstadoProducto.Vendido)
-                    .ToListAsync();
-
-                if (productosVendidos.Any())
-                {
-                    var productosConOfertas = productosVendidos
-                        .Select(p => new
-                        {
-                            p.productoID,
-                            p.nombreProducto,
-                            p.precioBase,
-                            p.estadoProducto,
-                            ofertas = _context.Ofertas
-                                .Where(o => o.productoID == p.productoID && o.estadoOferta == EstadoOferta.Ganadora)
-                                .ToList()
-                        })
-                        .Where(p => p.ofertas.Any())
-                        .SelectMany(p => p.ofertas, (p, oferta) => new
-                        {
-                            p.productoID,
-                            p.nombreProducto,
-                            p.precioBase,
-                            p.estadoProducto,
-                            montoOferta = oferta.montoOferta,
-                            montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m
-                        })
-                        .ToList();
-
-                    dataGridView1.DataSource = productosConOfertas;
-
-                    decimal gananciaTotal = productosConOfertas.Sum(p => p.montoOfertaMultiplicado);
-                }
-                else
-                {
-                    MessageBox.Show("No se encontraron productos vendidos para el usuario seleccionado.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No se seleccionó un usuario válido.");
-            }
+            
         }
 
         private async Task CargarUsuarios()
         {
+            if (dataGridView2.Columns.Count == 0)
+            {
+                dataGridView2.Columns.Add("Correo", "Correo");
+                dataGridView2.Columns.Add("UsuarioID", "Usuario ID");
+            }
+
+            dataGridView2.Columns["Correo"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView2.Columns["UsuarioID"].Visible = false;
+
+            var usuariosConVentas = await _context.Productos
+                .Where(p => p.estadoProducto == EstadoProducto.Vendido)
+                .GroupBy(p => p.usuarioID)  
+                .Select(g => g.Key) 
+                .ToListAsync();
+
             var usuarios = await _projectRepository.GetUsuarios();
 
-            if (usuarios != null && usuarios.Any())
-            {
-                comboBox1.Items.Clear();
+            var usuariosConVentasDatos = usuarios
+                .Where(u => usuariosConVentas.Contains(u.usuarioID))  
+                .ToList();
 
-                foreach (var usuario in usuarios)
+            if (usuariosConVentasDatos.Any())
+            {
+                dataGridView2.Rows.Clear();
+
+                foreach (var usuario in usuariosConVentasDatos)
                 {
-                    comboBox1.Items.Add(new { Nombre = usuario.email, UsuarioID = usuario.usuarioID });
+                    dataGridView2.Rows.Add(usuario.email, usuario.usuarioID);
                 }
             }
             else
             {
-                MessageBox.Show("No se encontraron usuarios.");
+                MessageBox.Show("No se encontraron usuarios con productos vendidos.");
             }
         }
-        
+
         private async void generarPDF_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem == null)
+            if (dataGridView2.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Por favor, selecciona un usuario.");
                 return;
             }
 
-            var seleccion = comboBox1.SelectedItem as dynamic;
-            int usuarioID = seleccion.UsuarioID;
+            var filaSeleccionada = dataGridView2.SelectedRows[0];
+
+            int usuarioID = Convert.ToInt32(filaSeleccionada.Cells["UsuarioID"].Value);
+            string nombreUsuario = filaSeleccionada.Cells["Correo"].Value.ToString();
 
             var productosVendidos = await _context.Productos
                 .Where(p => p.usuarioID == usuarioID && p.estadoProducto == EstadoProducto.Vendido)
@@ -174,7 +151,7 @@ namespace GestorSubastas
                             .SetFontSize(12)
                             .SetTextAlignment(TextAlignment.RIGHT));
 
-                        document.Add(new Paragraph($"Usuario: {seleccion.Nombre}")
+                        document.Add(new Paragraph($"Usuario: {nombreUsuario}")
                             .SetFont(boldFont)
                             .SetFontSize(14));
 
@@ -199,7 +176,7 @@ namespace GestorSubastas
                         document.Add(table);
 
                         document.Add(new Paragraph(" "));
-                        document.Add(new Paragraph($"Ganancia total para el usuario: ${gananciaTotal:F2}")
+                        document.Add(new Paragraph($"Aporte total del usuario: ${gananciaTotal:F2}")
                             .SetFont(boldFont)
                             .SetFontSize(14)
                             .SetTextAlignment(TextAlignment.RIGHT));
@@ -216,6 +193,62 @@ namespace GestorSubastas
             {
                 MessageBox.Show("No se encontraron productos vendidos para el usuario seleccionado.");
             }
+
+        }
+
+        private async void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView2.Rows[e.RowIndex].Cells["UsuarioID"].Value != null)
+            {
+                int usuarioID = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells["UsuarioID"].Value);
+
+                var productosVendidos = await _context.Productos
+                    .Where(p => p.usuarioID == usuarioID && p.estadoProducto == EstadoProducto.Vendido)
+                    .ToListAsync();
+
+                if (productosVendidos.Any())
+                {
+                    var productosConOfertas = productosVendidos
+                        .Select(p => new
+                        {
+                            p.productoID,
+                            p.nombreProducto,
+                            p.precioBase,
+                            p.estadoProducto,
+                            ofertas = _context.Ofertas
+                                .Where(o => o.productoID == p.productoID && o.estadoOferta == EstadoOferta.Ganadora)
+                                .ToList()
+                        })
+                        .Where(p => p.ofertas.Any())
+                        .SelectMany(p => p.ofertas, (p, oferta) => new
+                        {
+                            p.productoID,
+                            p.nombreProducto,
+                            p.precioBase,
+                            p.estadoProducto,
+                            montoOferta = oferta.montoOferta,
+                            montoOfertaMultiplicado = Convert.ToDecimal(oferta.montoOferta) * 0.10m
+                        })
+                        .ToList();
+
+                    dataGridView1.DataSource = productosConOfertas;
+
+                    decimal gananciaTotal = productosConOfertas.Sum(p => p.montoOfertaMultiplicado);
+                    label4.Text = gananciaTotal.ToString("C2");
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron productos vendidos para el usuario seleccionado.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un usuario válido.");
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

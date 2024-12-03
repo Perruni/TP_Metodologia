@@ -26,8 +26,11 @@ namespace GestorSubastas
             _ofertaBusiness = ofertaBussiness;
             _subastaBusiness = subastaBusiness;
             _context = context;
+            
             InitializeComponent();
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -99,7 +102,7 @@ namespace GestorSubastas
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var formSolicitudDeProducto = new FormSolicitudDeProductos(_productoBusiness);
+            var formSolicitudDeProducto = new FormSolicitudDeProductos(_productoBusiness,_subastaBusiness);
             formSolicitudDeProducto.ShowDialog();
         }
 
@@ -152,8 +155,31 @@ namespace GestorSubastas
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness);
-            formDetallesOfertantes.ShowDialog();
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, seleccione una subasta para ver en detalle.");
+                return;
+            }
+
+            // Obtener la subasta seleccionada
+            var filaSeleccionada = dataGridView1.SelectedRows[0];
+            var subastaSeleccionada = (Subasta)filaSeleccionada.DataBoundItem;
+
+            // Verificar si la subasta seleccionada es activa o próxima
+            if (subastaSeleccionada != null)
+            {
+                // Comprobamos el estado de la subasta
+                
+                    // Si la subasta es activa o próxima, permitimos la edición
+                    var formDetallesOfertantes = new FormDetallesOfertantes(_context, _subastaBusiness, subastaSeleccionada);
+                    formDetallesOfertantes.ShowDialog();
+
+                
+            }
+            else
+            {
+                MessageBox.Show("No se encontró una subasta válida para ver.");
+            }
 
         }
     }

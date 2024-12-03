@@ -16,17 +16,16 @@ namespace Master_API.Services
 
         public async Task<List<Subasta>> GetSubastasToCloseAsync(DateTime currentTime)
         {
-            return await _dbContext.Subastas.Where(s => (s.fechaFinalizado <= currentTime && s.estadoSubasta == Subasta.EstadoSubasta.Activa) || (s.estadoSubasta == Subasta.EstadoSubasta.Finalizadas))
+            return await _dbContext.Subastas.Where(s => s.fechaFinalizado <= currentTime && s.estadoSubasta == Subasta.EstadoSubasta.Activa)
                                             .Include(p => p.listaProductos)
                                             .ToListAsync();
         }
 
         public async Task<List<Subasta>> GetSubastasToOpenAsync(DateTime currentTime)
         {
-            return await _dbContext.Subastas.Where(s => s.fechaInicio <= currentTime && 
-                                            (s.estadoSubasta == Subasta.EstadoSubasta.Proxima ||
-                                             s.estadoSubasta == Subasta.EstadoSubasta.Activa))
-                                            .ToListAsync();
+            return await _dbContext.Subastas
+                     .Where(s => s.fechaInicio <= currentTime && s.estadoSubasta == Subasta.EstadoSubasta.Proxima)
+                     .ToListAsync();
         }
 
         public async Task CloseSubastaAsync(Subasta subasta)
@@ -39,7 +38,7 @@ namespace Master_API.Services
                 foreach (var producto in subasta.listaProductos)
                 {
 
-                    if (producto.estadoProducto == Producto.EstadoProducto.EnRevision ||
+                    if (producto.estadoSolicitud == Producto.EstadoSolicitud.Pendiente ||
                         producto.estadoProducto == Producto.EstadoProducto.NoVendido)
                     {
                         continue;
@@ -69,25 +68,13 @@ namespace Master_API.Services
                     }
                 }
             }
-                await _dbContext.SaveChangesAsync();            
+
+            await _dbContext.SaveChangesAsync();            
         }
 
         public async Task OpenSubastaAsync(Subasta subasta)
         {
-            if (subasta.estadoSubasta == Subasta.EstadoSubasta.Activa)
-            {
-                var productosAsociados = await _dbContext.Productos
-                    .Where(p => p.subastaID == subasta.subastaID && p.estadoSolicitud == Producto.EstadoSolicitud.Aprobado)
-                    .ToListAsync();
-
-                foreach (var producto in productosAsociados)
-                {
-                    producto.estadoProducto = Producto.EstadoProducto.EnSubasta;
-                    _dbContext.Productos.Update(producto);
-                }
-            }
-            else
-            {
+            
                 subasta.estadoSubasta = Subasta.EstadoSubasta.Activa;
                 _dbContext.Subastas.Update(subasta);
 
@@ -101,7 +88,7 @@ namespace Master_API.Services
                     producto.estadoProducto = Producto.EstadoProducto.EnSubasta;
                     _dbContext.Productos.Update(producto);
                 }
-            }
+            
 
             await _dbContext.SaveChangesAsync();
         }

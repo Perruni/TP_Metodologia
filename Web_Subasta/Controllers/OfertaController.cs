@@ -61,16 +61,14 @@ namespace Web_Subasta.Controllers
             List<Oferta>? oferta = await _serviceAPI.GetOfertasUsuario(userID);
 
 
-            
-            var producto = await _serviceAPI.GetProducto(userID);
+          
             
 
-            if (oferta != null && oferta.Any())
+            if (oferta != null)
             {
                 var viewModel = new OfertaViewModel
                 {
                     ofertasUsuario = oferta,
-                    producto = producto
 
                 };
                 return View("~/Views/Home/MisOfertas.cshtml", viewModel); 

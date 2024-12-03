@@ -52,21 +52,36 @@ namespace Web_Subasta.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!_userBusiness.CreateUser(model.Email, model.Password))
+                
+                var existingUser = _userBusiness.ObtainUsuario(model.Email);
+
+                if (existingUser != null)
                 {
+                   
                     ViewData["ExistUser"] = "El usuario ya existe";
-                    return View("~/Views/Acount/register.cshtml",model);
+                    return View("~/Views/Acount/register.cshtml", model);
                 }
 
+                
+                if (!_userBusiness.CreateUser(model.Email, model.Password))
+                {
+                    
+                    ViewData["Error"] = "Hubo un error al crear la cuenta.";
+                    return View("~/Views/Acount/register.cshtml", model);
+                }
+
+                
                 var user = _userBusiness.ObtainUsuario(model.Email);
 
                 if (user != null)
-        {
-            // Redirigimos a la vista 'DatosUsuario' pasando el 'userId'
-            return RedirectToAction("DatosUsuario", "Usuario", new { userId = user.usuarioID });
-        }
+                {
+                    
+                    return RedirectToAction("DatosUsuario", "Usuario", new { userId = user.usuarioID });
+                }
             }
-            return View("~/Views/Acount/register.cshtml",model);
+
+            
+            return View("~/Views/Acount/register.cshtml", model);
         }
 
 

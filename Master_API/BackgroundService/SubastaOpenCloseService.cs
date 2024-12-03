@@ -21,7 +21,7 @@ namespace Master_API.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 await CheckAndOpenCloseSubastasAsync();
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
             }
         }
 

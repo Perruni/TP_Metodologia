@@ -1,13 +1,19 @@
 ﻿@model Web_Subasta.Models.ViewModels.SubastaViewModel
 @{
     Layout = "_Layout";
-
     ViewData["Title"] = "Subastas Finalizadas";
 }
 @{
     Layout = "_Layout";
-    ViewData["ShowSidebar"] = true;  // Deshabilitar el sidebar en esta vista
+    ViewData["ShowSidebar"] = true;  // Deshabilitar el sidebar en esta vista
 }
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <div class="container mt-5">
     <div class="row">
         @foreach (var subasta in Model.subastaLista)
@@ -20,6 +26,15 @@
                         <p class="card-text">Fecha de fin: @subasta.fechaFinalizado.ToShortDateString()</p>
                         <p class="card-text">Estado: @subasta.estadoSubasta.ToString()</p>
                         <p class="card-text">Método de Pago: @subasta.metodosdePago.ToString()</p>
+
+                        <!-- Botón para ver los ganadores -->
+                        <a asp-controller="Producto"
+                           asp-action="GanadoresSubastas"
+                           asp-route-subastaID="@subasta.subastaID"
+                           class="btn btn-primary">
+                            Ver Ganadores
+                        </a>
+
                         <a asp-controller="Producto"
                            asp-action="ProductosEnSubasta"
                            asp-route-subastaID="@subasta.subastaID"
@@ -30,7 +45,5 @@
                 </div>
             </div>
         }
-
     </div>
 </div>
-

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Web_Subasta.Models.ViewModels.GanadorSubastaViewModel>
+
+@{
+    ViewData["Title"] = "Ganadores de Subastas";
+}
+@using Web_Subasta.Models.ViewModels
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio Base</th>
+                <th>Nombre del Ganador</th>
+                <th>Contacto del Ganador</th>
+                <th>Domicilio del Ganador</th>
+                <th>DNI del Ganador</th>
+                <th>Nombre del Vendedor</th>
+                <th>Contacto del Vendedor</th>
+                <th>Domicilio del Vendedor</th>
+                <th>DNI del Vendedor</th>
+                <th>Título de Subasta</th>
+                <th>Fecha Finalización Subasta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ganador in Model)
+            {
+                <tr>
+                    <td>@ganador.NombreProducto</td>
+                    <td>@ganador.PrecioBase.ToString("C")</td>
+                    <td>@ganador.NombreGanador</td>
+                    <td>@ganador.ContactoGanador</td>
+                    <td>@ganador.DomicilioGanador</td>
+                    <td>@ganador.DniGanador</td>
+                    <td>@ganador.NombreVendedor</td>
+                    <td>@ganador.ContactoVendedor</td>
+                    <td>@ganador.DomicilioVendedor</td>
+                    <td>@ganador.DniVendedor</td>
+                    <td>@ganador.TituloSubasta</td>
+                    <td>@ganador.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay ganadores de subastas para mostrar.</p>
+}
+
+

@@ -3,6 +3,49 @@
 @{
     ViewData["Title"] = "Productos de la Subasta";
 }
+<style>
+         /* Limitar el
+    tamaño de las imágenes */
+     .card img {
+
+         max-width: 100%; /* Imagen no debe exceder el ancho del contenedor */
+         max-height: 200px; /* Altura máxima para evitar imágenes excesivamente grandes */
+         object-fit: cover; /* Recorta la imagen si no encaja en el tamaño */
+         margin-bottom: 15px; /* Espacio debajo de la imagen */
+     }
+
+     /* Ajustar el diseño de las tarjetas */
+     .card {
+         max-width: 600px; /* Ancho máximo para las tarjetas */
+         margin: auto; /* Centra las tarjetas dentro de la columna */
+         border-radius: 10px; /* Bordes redondeados */
+     }
+
+     .card-title {
+         font-size: 1.25rem; /* Tamaño de fuente para el título */
+         font-weight: bold;
+         text-align: center; /* Centrar el texto del título */
+         color: #333; /* Color del título */
+     }
+
+     .card-text {
+         font-size: 0.95rem; /* Tamaño más pequeño para el texto */
+         color: #666; /* Color gris para el texto */
+         text-align: justify; /* Justifica el texto para un diseño limpio */
+     }
+
+     /* Ajustes al footer */
+     .card-footer {
+         background-color: #f8f9fa; /* Fondo claro para el footer */
+         padding: 10px;
+     }
+
+     /* Espaciado entre tarjetas */
+     .row .col-md-4 {
+         display: flex; /* Asegura que las tarjetas sean del mismo tamaño */
+         justify-content: center;
+     }
+</style>
 
 
 @if (Model != null)
@@ -26,31 +69,35 @@
 
     @if (Model.productoUsuario != null && Model.productoUsuario.Any())
     {
-
-        <div class="row">
-            @foreach (var producto in Model.productoUsuario)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-lg">
-                        <div class="card-body">
-                            <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{producto.ImagenUrl}")"/>
-                            <h5 class="card-title">@producto.nombreProducto</h5>
-                            <p class="card-text">@producto.descripcion</p>
-                            <p><strong>Precio Base:</strong> @producto.precioBase.ToString("C")</p>
-                            <p><strong>Método de Entrega:</strong> @producto.metodoEntrega</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <a asp-controller="Producto"
-                               asp-action="GetDetallesProducto"
-                               asp-route-productoID="@producto.productoID"
-                               class="btn btn-primary">
-                                Ver Detalles
-                            </a>
+        <div class="container">
+            <div class="row">
+                @foreach (var producto in Model.productoUsuario)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-lg">
+                            <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{producto.ImagenUrl}")"
+                                 class="card-img-top img-fluid"
+                                 style="max-height: 200px; object-fit: cover;" />
+                            <div class="card-body">
+                                <h5 class="card-title">@producto.nombreProducto</h5>
+                                <p class="card-text">@producto.descripcion</p>
+                                <p><strong>Precio Base:</strong> @producto.precioBase.ToString("C")</p>
+                                <p><strong>Método de Entrega:</strong> @producto.metodoEntrega</p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a asp-controller="Producto"
+                                   asp-action="GetDetallesProducto"
+                                   asp-route-productoID="@producto.productoID"
+                                   class="btn btn-primary">
+                                    Ver Detalles
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
+
     }
     else
     {

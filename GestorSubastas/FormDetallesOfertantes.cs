@@ -21,11 +21,13 @@ namespace GestorSubastas
 
         private readonly TPI_DbContext _context;
         private readonly ISubastaBusiness _subastaBusiness;
-        public FormDetallesOfertantes(TPI_DbContext context, ISubastaBusiness subastaBusiness)
+        private readonly Subasta _subasta;
+        public FormDetallesOfertantes(TPI_DbContext context, ISubastaBusiness subastaBusiness, Subasta subasta)
         {
-            
+
             _context = context;
             _subastaBusiness = subastaBusiness;
+            _subasta = subasta;
             InitializeComponent();
 
             this.Load += new EventHandler(FormDetallesOfertantes_Load);
@@ -35,100 +37,137 @@ namespace GestorSubastas
 
         private async void FormDetallesOfertantes_Load(object sender, EventArgs e)
         {
+
+            label9.Text = _subasta.titulo;
+
             await CargarSubastasActivasAsync();
 
         }
 
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 var productoId = (int)dataGridViewProductos.Rows[e.RowIndex].Cells["productoID"].Value;
 
-                // Realiza la consulta filtrando solo por el productoID, sin Enum.IsDefined
-                var ofertantes = _context.Ofertas
-                    .Where(o => o.productoID == productoId)
-                    .Include(o => o.usuario) // Incluye la entidad relacionada usuario
-                    .ToList()  // Ejecuta la consulta y trae los datos a memoria
-                    .Where(o => Enum.IsDefined(typeof(EstadoOferta), o.estadoOferta))  // Filtra en memoria por el estado de la oferta
-                    .Select(o => new
+                var producto = await _context.Productos
+                    .Where(p => p.productoID == productoId)
+                    .FirstOrDefaultAsync();
+
+                if (producto != null)
+                {
+                    var cantidadOfertas = await _context.Ofertas
+                        .Where(o => o.productoID == productoId)
+                        .CountAsync();
+
+                    label6.Text = $"Cantidad de ofertas: {cantidadOfertas}";
+                    label8.Text = producto.descripcion;
+                    label8.Width = 50; 
+                    label8.Height = 200;  
+
+                    label8.BorderStyle = BorderStyle.FixedSingle;
+
+                    label8.TextAlign = ContentAlignment.MiddleCenter;
+
+                    if (!string.IsNullOrEmpty(producto.ImagenUrl))
                     {
-                        ofertaID = o.ofertaID,
-                        montoOferta = o.montoOferta,
-                        fechaOferta = o.fechaOferta,
-                        usuarioID = o.usuario.usuarioID,
-                        usuario = o.usuario
-                    })
-                    .ToList();  // Convierte el resultado en una lista
+                        try
+                        {
+                            string baseUri = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
+                            Uri imageUri = new Uri(baseUri + producto.ImagenUrl);
 
-                // Marca la fila seleccionada
-                dataGridViewProductos.Rows[e.RowIndex].Selected = true;
+                            using (var webClient = new System.Net.WebClient())
+                            {
+                                byte[] imageBytes = await webClient.DownloadDataTaskAsync(imageUri);
+                                using (var ms = new System.IO.MemoryStream(imageBytes))
+                                {
+                                    var imagen = Image.FromStream(ms);
+                                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                                    pictureBox1.Image = imagen;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                            pictureBox1.Image = null;
+                        }
+                    }
+                    else
+                    {
+                        pictureBox1.Image = null;
+                    }
 
-                // Asigna los resultados al DataGridView de ofertantes
-                dataGridViewOfertantes.DataSource = ofertantes;
+                    var ofertantes = await _context.Ofertas
+                        .Where(o => o.productoID == productoId)
+                        .Include(o => o.usuario)
+                        .ToListAsync();
+
+                    dataGridViewOfertantes.Columns.Clear(); // Limpiar las columnas anteriores
+
+                    dataGridViewOfertantes.Columns.Add("ofertaID", "ID de la Oferta");
+                    dataGridViewOfertantes.Columns.Add("montoOferta", "Monto de la Oferta");
+                    dataGridViewOfertantes.Columns.Add("fechaOferta", "Fecha de la Oferta");
+                    dataGridViewOfertantes.Columns.Add("usuario", "Correo");
+
+                    foreach (var ofertante in ofertantes)
+                    {
+                        dataGridViewOfertantes.Rows.Add(ofertante.ofertaID, ofertante.montoOferta, ofertante.fechaOferta, ofertante.usuario.email);
+                    }
+                }
             }
         }
 
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex != -1)
-            {
-                var selectedSubasta = (Subasta)comboBox1.SelectedItem;
-
-                var selectedSubastaId = selectedSubasta.subastaID;
-
-                // Filtrar los productos que pertenecen a la subasta seleccionada
-                var productos = _context.Productos
-                    .Where(p => p.subastaID == selectedSubastaId)
-                    .Select(p => new
-                    {
-                        productoID = p.productoID,
-                        nombreProducto = p.nombreProducto,
-                        precioBase = p.precioBase,
-                        usuarioID = p.usuarioID,
-                        Usuario = p.Usuario,
-                        subastaID = p.subastaID,
-                        Subasta = p.Subasta,
-                    })
-                    .ToList();
-
-                // Asignar los productos al DataGridView
-                dataGridViewProductos.DataSource = productos;
-                dataGridViewProductos.Columns["productoID"].Visible = false; // Ocultar la columna de ID
-            }
-            else
-            {
-                // Si no hay subasta seleccionada, limpiar el DataGridView
-                dataGridViewProductos.DataSource = null;
-                dataGridViewOfertantes.DataSource = null;
-            }
-
+            
 
         }
         private async Task CargarSubastasActivasAsync()
         {
-            try
-            {
-                // Obtener las subastas activas asincrónicamente
-                var subastasActivas = await _subastaBusiness.GetSubastasActivas(); // Asegúrate de tener un método asincrónico en tu negocio
+            var selectedSubasta = _subasta;
 
-                // Asignar al ComboBox de manera sincronizada después de la carga
-                comboBox1.DataSource = subastasActivas;
-                comboBox1.DisplayMember = "Titulo";  // Cambia por el nombre de la propiedad
-                comboBox1.ValueMember = "subastaID"; // Cambia por el ID de la subasta
+            var selectedSubastaId = selectedSubasta.subastaID;
 
-                comboBox1.SelectedIndex = -1; // Para no seleccionar ningún ítem inicialmente
-            }
-            catch (Exception ex)
-            {
-                // Manejar errores (por ejemplo, si la consulta falla)
-                MessageBox.Show($"Error al cargar las subastas activas: {ex.Message}");
-            }
+            // Filtrar los productos que pertenecen a la subasta seleccionada
+            var productos = _context.Productos
+                .Where(p => p.subastaID == selectedSubastaId)
+                .Select(p => new
+                {
+                    productoID = p.productoID,
+                    nombreProducto = p.nombreProducto,
+                    precioBase = p.precioBase,
+                    Usuario = p.Usuario.email,
+                })
+                .ToList();
+
+
+            dataGridViewProductos.DataSource = productos;
+
+            if (dataGridViewProductos.Columns["productoID"] != null)
+                dataGridViewProductos.Columns["productoID"].HeaderText = "ID";
+
+            if (dataGridViewProductos.Columns["nombreProducto"] != null)
+                dataGridViewProductos.Columns["nombreProducto"].HeaderText = "Producto";
+
+            if (dataGridViewProductos.Columns["precioBase"] != null)
+                dataGridViewProductos.Columns["precioBase"].HeaderText = "Precio Base";
+
+            if (dataGridViewProductos.Columns["usuario"] != null)
+                dataGridViewProductos.Columns["usuario"].HeaderText = "Correo del Dueño";
+
+            dataGridViewProductos.Columns["productoID"].Visible = false; // Ocultar la columna de ID
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

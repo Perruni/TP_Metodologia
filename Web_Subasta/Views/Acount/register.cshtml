@@ -29,7 +29,7 @@
                                 <!-- Campo para contraseña -->
                                 <div class="form-outline mb-4">
                                     <label asp-for="Password" class="form-label">Contraseña</label>
-                                    <input asp-for="Password" type="password" class="form-control form-control-lg" />                                    
+                                    <input asp-for="Password" type="password" class="form-control form-control-lg" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
 
@@ -38,7 +38,6 @@
                                     <input asp-for="ConfirmPassword" type="password" class="form-control form-control-lg" />
                                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                 </div>
-
 
                                 <!-- Botón de registrarse -->
                                 <div class="pt-1 mb-4">
@@ -53,6 +52,13 @@
                             </form>
 
                             <!-- Mostrar errores de validación -->
+                            @if (ViewData["ExistUser"] != null)
+                            {
+                                <div class="alert alert-danger mt-3">
+                                    @ViewData["ExistUser"]
+                                </div>
+                            }
+
                             @if (ViewData.ModelState.ErrorCount > 0)
                             {
                                 <div class="alert alert-danger mt-3">

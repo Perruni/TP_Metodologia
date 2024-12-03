@@ -1,0 +1,81 @@
+﻿@model Web_Subasta.Models.ViewModels.GanadoresFiltradosViewModel
+
+@{
+    ViewData["Title"] = "Ganadores de Subastas";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="mb-3">
+    <label for="subastaFilter" class="form-label">Filtrar por Subasta:</label>
+    <select id="subastaFilter" class="form-control">
+        <option value="all">Todas las Subastas</option>
+        @foreach (var subasta in Model.SubastasFinalizadas)
+        {
+            <option value="@subasta.subastaID">@subasta.titulo</option>
+        }
+    </select>
+</div>
+
+@if (Model.Ganadores != null && Model.Ganadores.Any())
+{
+    <div class="row">
+        @foreach (var ganador in Model.Ganadores)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card" data-subasta-id="@ganador.SubastaID"> <!-- Aquí asignamos el data-subasta-id -->
+                    <div class="card-body">
+                        <h5 class="card-title">@ganador.TituloSubasta</h5>
+                        <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{ganador.imagenUrl}")" alt="Imagen del producto" />
+                        <h6 class="card-subtitle mb-2 text-muted">@ganador.NombreProducto</h6>
+                        <p class="card-text">
+                            <strong>Precio Final:</strong> @ganador.PrecioBase.ToString("C")<br>
+                            <strong>Ganador:</strong> @ganador.NombreGanador<br>
+                            <strong>Vendedor:</strong> @ganador.NombreVendedor<br>
+                            <strong>Fecha Finalización:</strong> @ganador.FechaFinalizadoSubasta.ToString("dd/MM/yyyy")
+                        </p>
+                        <a href="@Url.Action("detallesproducto", "Producto", new { productoID = ganador.ProductoID })" class="btn btn-primary">Ver Subasta</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No hay ganadores de subastas para mostrar.</p>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        $('#subastaFilter').on('change', function () {
+            var selectedSubastaID = $(this).val();
+
+            if (selectedSubastaID === 'all') {
+               
+                $('.card').show();
+            } else {
+                // Si no, filtrar por el subastaID
+                $('.card').each(function () {
+                    var cardSubastaID = $(this).data('subasta-id'); // Obtener el subastaID de la tarjeta
+                    if (cardSubastaID == selectedSubastaID) {
+                        $(this).show(); // Mostrar solo las tarjetas que coinciden con el subastaID
+                    } else {
+                        $(this).hide(); // Ocultar las demás
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<style>
+    .card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 4px;
+        padding: 10px;
+    }
+</style>
