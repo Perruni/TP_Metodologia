@@ -180,7 +180,11 @@
         <!-- Formulario de ofertas -->
         @if (User.Identity.IsAuthenticated)
         {
-            if (Model.EstadoProducto == Core.Entities.Producto.EstadoProducto.EnSubasta)
+            if (Model.EsVendedor)
+            {
+                <p class="alert alert-warning">No puedes realizar ofertas en tu propio producto.</p>
+            }
+            else if (Model.EstadoProducto == Core.Entities.Producto.EstadoProducto.EnSubasta)
             {
                 <div class="form-container">
                     <h4>Realiza una oferta</h4>
@@ -197,6 +201,7 @@
                 <p class="text-danger">Este producto no está en subasta, por lo que no se pueden realizar ofertas.</p>
             }
         }
+
         else if (Model.EstadoProducto == Core.Entities.Producto.EstadoProducto.EnSubasta)
         {
             <p class="text-danger">Debes estar autenticado para realizar una oferta.</p>
