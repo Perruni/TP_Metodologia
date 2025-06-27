@@ -31,15 +31,15 @@ namespace Web_Subasta.Controllers
         private readonly TPI_DbContext _context;
         private readonly IServiceAPI _service;
         private readonly IProductoBusiness _productoBusiness;
-        private readonly IAzureBlobStorageService _azureBlobStorageService;      
+        private readonly ILocalStorageService _localStorageService;
 
 
-        public ProductoController(TPI_DbContext context, IServiceAPI serviceAPI, IProductoBusiness productoBusiness, IAzureBlobStorageService azureBlobStorageService)
+        public ProductoController(TPI_DbContext context, IServiceAPI serviceAPI, IProductoBusiness productoBusiness, ILocalStorageService localStorageService)
         {
             _context = context;
             _service = serviceAPI;
             _productoBusiness = productoBusiness;
-            _azureBlobStorageService = azureBlobStorageService;
+            _localStorageService = localStorageService;
 
 
         }
@@ -76,7 +76,7 @@ namespace Web_Subasta.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> PostProducto(ProductoViewModel productoVM, int subastaId)
+        public async Task<IActionResult> PostProducto(ProductoViewModel productoVM)
         {
 
             var userClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -92,15 +92,17 @@ namespace Web_Subasta.Controllers
             }
             string imagenUrl = null;
 
-            if (productoVM.ImagenUrlArchivo != null && productoVM.ImagenUrlArchivo.Length > 0)
+            //Aca tambien se cambio imagenurlarchivo a imagenurl
+
+            if (productoVM.imagenUrlArchivo != null && productoVM.imagenUrlArchivo.Length > 0)
             {
-                imagenUrl = await _azureBlobStorageService.UploadAsync(productoVM.ImagenUrlArchivo, Container.contenedorimagenes);
+                imagenUrl = await _localStorageService.UploadAsync(productoVM.imagenUrlArchivo, "uploads");
             }
 
             var nuevoProducto = new Producto
             {
                 usuarioID = userID,
-                subastaID = subastaId,
+                subastaID = productoVM.subastaId,
                 nombreProducto = productoVM.NombreProducto,
                 precioBase = productoVM.PrecioBase,
                 metodoEntrega = productoVM.MetodoEntrega,
@@ -179,7 +181,10 @@ namespace Web_Subasta.Controllers
                 return NotFound();
             }
 
-            var subasta = await _service.GetSubasta((int)producto.subastaID);
+            //var subasta = await _service.GetSubasta((int)producto.subastaID);
+            //var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
+
+            var subasta = await _service.GetSubasta(producto.subastaID.Value);
             var cantidadOfertas = await _service.GetCantidadOfertas(productoID);
 
             bool esSubastaFinalizada = subasta.estadoSubasta == Subasta.EstadoSubasta.Finalizadas || subasta.fechaFinalizado <= DateTime.Now;
@@ -215,13 +220,36 @@ namespace Web_Subasta.Controllers
                 NombreProducto = producto.nombreProducto,
                 Descripcion = producto.descripcion,
                 PrecioBase = producto.precioBase,
+                MetodoEntrega = producto.metodoEntrega,
+                EstadoSolicitud = producto.estadoSolicitud,
+                FechaSolicitud = producto.fechaSolicitud,
                 CantidadOfertas = cantidadOfertas,
                 Titulo = subasta.titulo,
                 EstadoProducto = (EstadoProducto)producto.estadoProducto,
                 EsSubastaFinalizada = esSubastaFinalizada,
                 EsVendedor = esVendedor,
                 EsGanador = esGanador,
-                NombreGanador = nombreGanador
+                NombreGanador = nombreGanador,
+                imagenUrl = producto.ImagenUrl
+
+                //             ProductoID = productoID,
+                //NombreProducto = producto.nombreProducto,
+                //Descripcion = producto.descripcion,
+                //PrecioBase = producto.precioBase,
+                //MetodoEntrega = producto.metodoEntrega,
+                //imagenUrl = producto.ImagenUrl,
+                //Titulo = subasta.titulo,
+                //fechaInicio = subasta.fechaInicio,
+                //fechaFinalizado = subasta.fechaFinalizado,
+                //EstadoProducto = (EstadoProducto)producto.estadoProducto,
+                //EstadoSubasta = subasta.estadoSubasta,
+                //CantidadOfertas = cantidadOfertas,
+                //EsSubastaFinalizada = esSubastaFinalizada,
+                //EsVendedor = esVendedor,
+                //EsGanador = esGanador,
+                //NombreGanador = nombreGanador,
+                //Subasta = subasta,
+                //Producto = producto
             };
 
             return View("~/Views/Home/productos.cshtml", viewModel);

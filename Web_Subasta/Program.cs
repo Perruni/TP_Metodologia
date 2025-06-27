@@ -28,13 +28,13 @@ builder.Services.AddScoped<Config>(p =>
     return config;
 });
 
-builder.Services.AddScoped<TPI_DbContext>(provider =>
-{
-    var config = provider.GetRequiredService<Config>();
-    var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
-    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString)); // Cambiado a SQL Server
-    return new TPI_DbContext(optionsBuilder.Options, config);
-});
+//builder.Services.AddScoped<TPI_DbContext>(provider =>
+//{
+//    var config = provider.GetRequiredService<Config>();
+//    var optionsBuilder = new DbContextOptionsBuilder<TPI_DbContext>();
+//    optionsBuilder.UseMySql(config.ConnectionString, ServerVersion.AutoDetect(config.ConnectionString)); // Cambiado a SQL Server
+//    return new TPI_DbContext(optionsBuilder.Options, config);
+//});
 #endregion
 
 //Registro de Conexion
@@ -53,7 +53,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IServiceAPI, ServiceAPI>();
-builder.Services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
+builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
 builder.Services.AddScoped<IDatosUsuarioBusiness, DatosUsuarioBusiness>();
@@ -84,6 +84,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -62,8 +62,8 @@ namespace GestorSubastas
 
                     label6.Text = $"Cantidad de ofertas: {cantidadOfertas}";
                     label8.Text = producto.descripcion;
-                    label8.Width = 50; 
-                    label8.Height = 200;  
+                    label8.Width = 50;
+                    label8.Height = 200;
 
                     label8.BorderStyle = BorderStyle.FixedSingle;
 
@@ -73,23 +73,29 @@ namespace GestorSubastas
                     {
                         try
                         {
-                            string baseUri = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/";
-                            Uri imageUri = new Uri(baseUri + producto.ImagenUrl);
+                            // Ruta base absoluta a la carpeta "uploads" de tu proyecto web
+                            string rutaBase = @"C:\Users\Facundo Lesteyme\Documents\Repositorios\2025\Web_Subasta\wwwroot";
 
-                            using (var webClient = new System.Net.WebClient())
+                            // Asegurarse de quitar la barra inicial y convertir las barras
+                            string relativePath = producto.ImagenUrl.TrimStart('/').Replace("/", "\\");
+
+                            // Ruta completa a la imagen
+                            string fullPath = Path.Combine(rutaBase, relativePath);
+
+                            if (File.Exists(fullPath))
                             {
-                                byte[] imageBytes = await webClient.DownloadDataTaskAsync(imageUri);
-                                using (var ms = new System.IO.MemoryStream(imageBytes))
-                                {
-                                    var imagen = Image.FromStream(ms);
-                                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                                    pictureBox1.Image = imagen;
-                                }
+                                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox1.Image = Image.FromFile(fullPath);
+                            }
+                            else
+                            {
+                                pictureBox1.Image = null;
+                                MessageBox.Show($"La imagen no fue encontrada en:\n{fullPath}");
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                            MessageBox.Show($"Error al cargar imagen local: {ex.Message}");
                             pictureBox1.Image = null;
                         }
                     }
@@ -97,6 +103,8 @@ namespace GestorSubastas
                     {
                         pictureBox1.Image = null;
                     }
+
+
 
                     var ofertantes = await _context.Ofertas
                         .Where(o => o.productoID == productoId)
@@ -126,7 +134,7 @@ namespace GestorSubastas
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
         }
         private async Task CargarSubastasActivasAsync()
@@ -166,6 +174,11 @@ namespace GestorSubastas
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void FormDetallesOfertantes_Load_1(object sender, EventArgs e)
         {
 
         }

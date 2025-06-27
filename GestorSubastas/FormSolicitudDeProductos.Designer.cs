@@ -192,6 +192,7 @@
             ImagenProducto.Size = new Size(224, 247);
             ImagenProducto.TabIndex = 18;
             ImagenProducto.TabStop = false;
+            ImagenProducto.Click += ImagenProducto_Click;
             // 
             // ProductoDescripcion
             // 

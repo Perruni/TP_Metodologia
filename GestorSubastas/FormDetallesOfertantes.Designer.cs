@@ -176,6 +176,7 @@
             Controls.Add(dataGridViewOfertantes);
             Name = "FormDetallesOfertantes";
             Text = "FormDetallesOfertantes";
+            Load += FormDetallesOfertantes_Load_1;
             ((System.ComponentModel.ISupportInitialize)dataGridViewOfertantes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProductos).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

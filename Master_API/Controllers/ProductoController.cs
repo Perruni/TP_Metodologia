@@ -1,5 +1,4 @@
-﻿using BlobImagesTest.Services;
-using Core.Busisness.Interfaces;
+﻿using Core.Busisness.Interfaces;
 using Core.Data;
 using Core.Data.Interface;
 using Core.Entities;
@@ -8,6 +7,7 @@ using Core.Shared.DTOs.Producto;
 using Core.Shared.DTOs.Subastas;
 using Core.Shared.DTOs.Usuario;
 using Core.Shared.Enum;
+using Master_API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,16 +18,17 @@ namespace Master_API.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
-        private readonly IProductoBusiness _productoBusiness;
-        private readonly IAzureBlobStorageService _azureBlobStorageService;
+        private readonly IProductoBusiness _productoBusiness; 
+        
+        private readonly ILocalStorageService _localStorageService;
 
-        public ProductoController(IProductoBusiness productoBusiness, IAzureBlobStorageService azureBlobStorageService)
+        public ProductoController(IProductoBusiness productoBusiness, ILocalStorageService localStorageService)
         {
             _productoBusiness = productoBusiness;
-            _azureBlobStorageService = azureBlobStorageService;
+            _localStorageService = localStorageService;
         }
 
-        
+
         [HttpGet("{productID}")]
         public async Task<ActionResult<Producto>> GetProductID(int productID)
         {
@@ -41,7 +42,9 @@ namespace Master_API.Controllers
 
             return Ok(product);
 
-        }        
+        }
+
+
 
         [HttpGet("Productos")]
         public async Task<ActionResult<Producto>> GetAll()
@@ -87,7 +90,7 @@ namespace Master_API.Controllers
 
             if (request.imagenUrl != null)
             {
-                imagenUrl = await _azureBlobStorageService.UploadAsync(request.imagenUrl, Container.contenedorimagenes);
+                imagenUrl = await _localStorageService.UploadAsync(request.imagenUrl, "uploads");
             }
 
             // Crear una nueva instancia de Producto

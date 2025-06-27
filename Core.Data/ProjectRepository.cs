@@ -68,12 +68,22 @@ namespace Core.Data
             return _dbContext.Productos.ToListAsync();
         }
 
-        public Task<Producto> GetProducto(int productoID)
-        {
-            var producto = _dbContext.Productos.Where(p => p.productoID == productoID).FirstOrDefaultAsync();
+        //public Task<Producto> GetProducto(int productoID)
+        //{
+        //    var producto = _dbContext.Productos.Where(p => p.productoID == productoID).FirstOrDefaultAsync();
 
-            return producto;
+        //    return producto;
+        //}
+
+        public async Task<Producto> GetProducto(int productoID)
+        {
+            return await _dbContext.Productos
+                .Include(p => p.Subasta)
+                .Include(p => p.Usuario)
+                .FirstOrDefaultAsync(p => p.productoID == productoID);
         }
+
+
 
         public Task<List<Oferta>> GetProductoOfertas(int productoID)
         {

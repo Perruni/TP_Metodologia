@@ -24,15 +24,13 @@ namespace Web_Subasta.Models.ViewModels
 
         public EstadoSolicitud EstadoSolicitud { get; set; }
 
-        public IFormFile ImagenUrlArchivo { get; set; }
+        public IFormFile imagenUrlArchivo { get; set; }
 
         public List<Producto>? productoUsuario { get; set; } = new List<Producto>();
 
-        //public List<Subasta>? subastaLista { get; set; } = new List<SubastaDTO>();
+        public List<Subasta> subastaLista { get; set; } = new List<Subasta>();
 
-        public List<Subasta> subastaLista { get; set; }
-
-        public string titulo { get; set; }
+        //public List<Subasta> subastaLista { get; set; }
 
         public DateTime fechaInicio { get; set; }
 
@@ -60,6 +58,7 @@ namespace Web_Subasta.Models.ViewModels
         public bool EsGanador { get; set; }
 
         public string NombreGanador { get; set; }
+
 
     }
 }

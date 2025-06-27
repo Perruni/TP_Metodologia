@@ -20,7 +20,7 @@ namespace Web_Subasta.Services
         public ServiceAPI() 
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-            _baseurl = builder.GetSection("ApiSettings:baseUrl").Value;
+            _baseurl = builder.GetSection("ApiSettings:Connection").Value;
 
             _client = new HttpClient
             {
@@ -450,34 +450,72 @@ namespace Web_Subasta.Services
             return result;
         }
 
+        //   public async Task<Producto> GetProducto(int productoID)
+        //   {
+        //       Producto? result = null;
+        //       try
+        //       {
+        //           var response = await _client.GetAsync($"Producto/{productoID}");
+        //if (response.IsSuccessStatusCode)
+        //           {
+        //               var jsonResponse = await response.Content.ReadAsStringAsync();
+        //               result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
+        //               {
+        //                   PropertyNameCaseInsensitive = true
+        //               });
+        //           }
+        //       }
+        //       catch (HttpRequestException ex)
+        //       {
+        //           // Manejar errores de solicitud HTTP
+        //           Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+        //       }
+        //       catch (Exception ex)
+        //       {
+        //           // Manejar otros errores
+        //           Console.WriteLine($"Error: {ex.Message}");
+        //       }
+
+        //       return result;
+        //   }
+
         public async Task<Producto> GetProducto(int productoID)
         {
             Producto? result = null;
             try
             {
                 var response = await _client.GetAsync($"Producto/{productoID}");
-     if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
+
+                    try
                     {
-                        PropertyNameCaseInsensitive = true
-                    });
+                        result = JsonSerializer.Deserialize<Producto>(jsonResponse, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("🚨 Error al deserializar el JSON:");
+                        Console.WriteLine(jsonResponse); // imprime el JSON recibido
+                        Console.WriteLine($"Mensaje de error: {ex.Message}");
+                    }
                 }
             }
             catch (HttpRequestException ex)
             {
-                // Manejar errores de solicitud HTTP
                 Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // Manejar otros errores
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error general: {ex.Message}");
             }
 
-            return result;
+            return result!;
         }
+
 
         public async Task<List<Producto>> GetProductoUsuario(int userID)
         {
@@ -567,36 +605,80 @@ namespace Web_Subasta.Services
             return result;
         }
 
+        //public async Task<List<Subasta>> GetSubastasActivas()
+        //{
+        //    List<Subasta>? result = null;
+
+        //    try
+        //    {
+        //        Console.WriteLine("_client is null? " + (_client == null));
+        //        var response = await _client.GetAsync("Subasta/Activas");
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var jsonResponse = await response.Content.ReadAsStringAsync();
+        //            result = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
+        //            {
+        //                PropertyNameCaseInsensitive = true
+        //            });
+        //        }
+        //    }
+        //    catch (HttpRequestException ex)
+        //    {
+        //        // Manejar errores de solicitud HTTP
+        //        Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Manejar otros errores
+        //        Console.WriteLine($"Error: {ex.Message}");
+        //    }
+
+        //    return result;
+
+        //}
+
         public async Task<List<Subasta>> GetSubastasActivas()
         {
-            List<Subasta>? result = null;
-
             try
             {
+                Console.WriteLine("➡️ Intentando enviar GET a: Subasta/Activas");
+
                 var response = await _client.GetAsync("Subasta/Activas");
+
+                Console.WriteLine("📥 Se obtuvo respuesta del servidor");
+
+                if (response == null)
+                {
+                    Console.WriteLine("❌ response es null después del GET");
+                    return new List<Subasta>();
+                }
+
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
+                    Console.WriteLine("✅ JSON recibido:");
+                    Console.WriteLine(jsonResponse);
+
+                    var result = JsonSerializer.Deserialize<List<Subasta>>(jsonResponse, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
+
+                    return result ?? new List<Subasta>();
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                // Manejar errores de solicitud HTTP
-                Console.WriteLine($"Error al realizar la solicitud HTTP: {ex.Message}");
+                else
+                {
+                    Console.WriteLine($"⚠️ Respuesta con error: {response.StatusCode}");
+                }
             }
             catch (Exception ex)
             {
-                // Manejar otros errores
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"❌ Excepción al hacer GET: {ex.Message}");
             }
 
-            return result;
-
+            return new List<Subasta>();
         }
+
 
         public async Task<List<Subasta>> GetSubastasFinalizadas()
         {

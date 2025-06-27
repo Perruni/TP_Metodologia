@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Core.Entities;
 
@@ -22,6 +23,8 @@ namespace Core.Entities
         public string metodoEntrega { get; set; }
         public DateTime fechaSolicitud { get; set; }
         public EstadoSolicitud estadoSolicitud { get; set; }
+
+        [JsonPropertyName("imagenUrl")]
         public string ImagenUrl { get; set; }
 
         public int? usuarioID { get; set; }

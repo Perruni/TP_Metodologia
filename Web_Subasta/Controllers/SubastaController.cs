@@ -56,30 +56,22 @@ namespace Web_Subasta.Controllers
         }
 
 
-        [HttpGet("Activas")]
-        public async Task<IActionResult> Activas()
-        {
 
-            List<Subasta> subasta = null;
-
-            subasta = await _service.GetSubastasActivas();
-           
-
-            if (subasta != null)
+            [HttpGet("Activas")]
+            public async Task<IActionResult> Activas()
             {
+                var subastas = await _service.GetSubastasActivas();
+
                 var viewModel = new SubastaViewModel
                 {
-                    subastaLista = subasta
+                    subastaLista = subastas ?? new List<Subasta>()
                 };
+
                 return View("~/Views/Home/Activas.cshtml", viewModel);
             }
 
-            
-            return NotFound();
-        }
 
-        
-        [HttpGet("Proximas")]
+            [HttpGet("Proximas")]
         public async Task<IActionResult> Proximas()
         {
             List<Subasta> subasta = null;

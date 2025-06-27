@@ -19,7 +19,7 @@ namespace GestorSubastas
         private readonly IProductoBusiness _productoBusiness;
         private readonly ISubastaBusiness _subastaBusiness;
 
-        public FormSolicitudDeProductos( IProductoBusiness productoBusiness, ISubastaBusiness subastaBusiness)
+        public FormSolicitudDeProductos(IProductoBusiness productoBusiness, ISubastaBusiness subastaBusiness)
         {
             InitializeComponent();
 
@@ -38,12 +38,35 @@ namespace GestorSubastas
             _subastaBusiness = subastaBusiness;
             CargarSubastas();
 
-            
+
         }
+
+        private void MostrarImagenDesdeRutaLocal(string rutaRelativaWeb)
+        {
+            // Ruta absoluta de la carpeta donde están las imágenes
+            string carpetaUploads = @"C:\Users\Facundo Lesteyme\Documents\Repositorios\2025\Web_Subasta\wwwroot\uploads";
+
+            // Obtener el nombre del archivo desde la ruta relativa web
+            string nombreArchivo = Path.GetFileName(rutaRelativaWeb);
+
+            // Combinar con la ruta absoluta
+            string rutaAbsoluta = Path.Combine(carpetaUploads, nombreArchivo);
+
+            // Verificar si la imagen existe y cargarla
+            if (File.Exists(rutaAbsoluta))
+            {
+                ImagenProducto.Image = Image.FromFile(rutaAbsoluta);
+            }
+            else
+            {
+                MessageBox.Show("La imagen no fue encontrada.\nRuta esperada:\n" + rutaAbsoluta);
+            }
+        }
+
 
         private async Task CargarSubastas()
         {
-  
+
             List<Producto> todosLosProductos = await _productoBusiness.GetProductos();
 
 
@@ -60,7 +83,7 @@ namespace GestorSubastas
             ProductoPrecio.Text = _producto.precioBase.ToString("C", new CultureInfo("es-AR"));
             ProductoEntrega.Text = _producto.metodoEntrega;
             ProductoDescripcion.Text = _producto.descripcion;
-            string imageUrl = "https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/" + _producto.ImagenUrl;
+            MostrarImagenDesdeRutaLocal(_producto.ImagenUrl);
 
             if (_producto.subastaID.HasValue)
             {
@@ -81,41 +104,41 @@ namespace GestorSubastas
             }
 
             // Cargar la imagen en el PictureBox de forma asíncrona
-            await LoadImageFromUrlAsync(imageUrl);
+            //await LoadImageFromUrlAsync(imageUrl);
         }
 
-        private async Task LoadImageFromUrlAsync(string imageUrl)
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
-                    using (var ms = new System.IO.MemoryStream(imageBytes))
-                    {
-                        using (var originalImage = Image.FromStream(ms))
-                        {
-                            const int maxWidth = 200;  
-                            const int maxHeight = 200; 
-                            double ratioX = (double)maxWidth / originalImage.Width;
-                            double ratioY = (double)maxHeight / originalImage.Height;
-                            double ratio = Math.Min(ratioX, ratioY);
-                            int newWidth = (int)(originalImage.Width * ratio);
-                            int newHeight = (int)(originalImage.Height * ratio);
-                            using (var newImage = new Bitmap(originalImage, newWidth, newHeight))
-                            {
-                                ImagenProducto.Image = new Bitmap(newImage);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Manejar errores al cargar la imagen
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
-            }
-        }
+        //private async Task LoadImageFromUrlAsync(string imageUrl)
+        //{
+        //    try
+        //    {
+        //        using (HttpClient client = new HttpClient())
+        //        {
+        //            byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
+        //            using (var ms = new System.IO.MemoryStream(imageBytes))
+        //            {
+        //                using (var originalImage = Image.FromStream(ms))
+        //                {
+        //                    const int maxWidth = 200;
+        //                    const int maxHeight = 200;
+        //                    double ratioX = (double)maxWidth / originalImage.Width;
+        //                    double ratioY = (double)maxHeight / originalImage.Height;
+        //                    double ratio = Math.Min(ratioX, ratioY);
+        //                    int newWidth = (int)(originalImage.Width * ratio);
+        //                    int newHeight = (int)(originalImage.Height * ratio);
+        //                    using (var newImage = new Bitmap(originalImage, newWidth, newHeight))
+        //                    {
+        //                        ImagenProducto.Image = new Bitmap(newImage);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Manejar errores al cargar la imagen
+        //        MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+        //    }
+        //}
 
         private void button1_ClickAsync(object sender, EventArgs e)
         {
@@ -132,7 +155,7 @@ namespace GestorSubastas
         private void button2_Click(object sender, EventArgs e)
         {
             _producto.estadoSolicitud = Producto.EstadoSolicitud.Rechazado;
-            
+
 
 
             var resultado = _productoBusiness.UpdateProducto(_producto);
@@ -156,6 +179,11 @@ namespace GestorSubastas
 
                 CargarDatosProducto();
             }
+
+        }
+
+        private void ImagenProducto_Click(object sender, EventArgs e)
+        {
 
         }
     }

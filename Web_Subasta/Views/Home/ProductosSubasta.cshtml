@@ -75,9 +75,7 @@
                 {
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-lg">
-                            <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{producto.ImagenUrl}")"
-                                 class="card-img-top img-fluid"
-                                 style="max-height: 200px; object-fit: cover;" />
+                            <img src="@Url.Content(producto.ImagenUrl)" alt="Imagen del producto" class="img-fluid" style="max-height: 300px;" />
                             <div class="card-body">
                                 <h5 class="card-title">@producto.nombreProducto</h5>
                                 <p class="card-text">@producto.descripcion</p>
