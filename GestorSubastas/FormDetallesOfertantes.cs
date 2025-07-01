@@ -2,6 +2,7 @@
 using Core.Data;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,13 +51,16 @@ namespace GestorSubastas
             {
                 var productoId = (int)dataGridViewProductos.Rows[e.RowIndex].Cells["productoID"].Value;
 
-                var producto = await _context.Productos
+                // Crear una nueva instancia del contexto para evitar conflictos de hilos
+                using var context = DbContextFactory.Create();
+
+                var producto = await context.Productos
                     .Where(p => p.productoID == productoId)
                     .FirstOrDefaultAsync();
 
                 if (producto != null)
                 {
-                    var cantidadOfertas = await _context.Ofertas
+                    var cantidadOfertas = await context.Ofertas
                         .Where(o => o.productoID == productoId)
                         .CountAsync();
 
@@ -64,22 +68,15 @@ namespace GestorSubastas
                     label8.Text = producto.descripcion;
                     label8.Width = 50;
                     label8.Height = 200;
-
                     label8.BorderStyle = BorderStyle.FixedSingle;
-
                     label8.TextAlign = ContentAlignment.MiddleCenter;
 
                     if (!string.IsNullOrEmpty(producto.ImagenUrl))
                     {
                         try
                         {
-                            // Ruta base absoluta a la carpeta "uploads" de tu proyecto web
                             string rutaBase = @"C:\Users\Facundo Lesteyme\Documents\Repositorios\2025\Web_Subasta\wwwroot";
-
-                            // Asegurarse de quitar la barra inicial y convertir las barras
                             string relativePath = producto.ImagenUrl.TrimStart('/').Replace("/", "\\");
-
-                            // Ruta completa a la imagen
                             string fullPath = Path.Combine(rutaBase, relativePath);
 
                             if (File.Exists(fullPath))
@@ -104,14 +101,12 @@ namespace GestorSubastas
                         pictureBox1.Image = null;
                     }
 
-
-
-                    var ofertantes = await _context.Ofertas
+                    var ofertantes = await context.Ofertas
                         .Where(o => o.productoID == productoId)
                         .Include(o => o.usuario)
                         .ToListAsync();
 
-                    dataGridViewOfertantes.Columns.Clear(); // Limpiar las columnas anteriores
+                    dataGridViewOfertantes.Columns.Clear();
 
                     dataGridViewOfertantes.Columns.Add("ofertaID", "ID de la Oferta");
                     dataGridViewOfertantes.Columns.Add("montoOferta", "Monto de la Oferta");
