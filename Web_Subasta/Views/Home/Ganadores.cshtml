@@ -25,7 +25,7 @@
                 <div class="card" data-subasta-id="@ganador.SubastaID"> <!-- Aquí asignamos el data-subasta-id -->
                     <div class="card-body">
                         <h5 class="card-title">@ganador.TituloSubasta</h5>
-                        <img src="@($"https://tpimetodologiaimagenes.blob.core.windows.net/contenedorimagenes/{ganador.imagenUrl}")" alt="Imagen del producto" />
+                        <img src="@Url.Content(ganador.imagenUrl)" alt="Imagen del producto" class="img-fluid" />
                         <h6 class="card-subtitle mb-2 text-muted">@ganador.NombreProducto</h6>
                         <p class="card-text">
                             <strong>Precio Final:</strong> @ganador.PrecioBase.ToString("C")<br>
